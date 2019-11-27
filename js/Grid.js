@@ -5,6 +5,7 @@ export default{
         Tile,
     },
     props: {
+        level: Object,
         size: Number,
     },
     template: `
@@ -26,7 +27,7 @@ export default{
             for(let row = 0; row < this.size; row++){
                 this.tiles[row] = [];
                 for(let col = 0; col < this.size; col++){
-                    this.tiles[row].push(new Tile('dirt', row, col))
+                    this.tiles[row].push(new Tile(this.level.map[row] [col], row, col))
                 }
                 this.tiles.push(this.tiles[row]);
             }
