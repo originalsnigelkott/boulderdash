@@ -1,0 +1,13 @@
+*{
+    box-sizing: border-box;
+    text-align: center;
+}
+.grid{
+    display: flex;
+    width: 90vw;
+    flex-wrap: wrap;
+    margin: auto;
+}
+.tile{
+    width: 33.33333333333%;
+}
