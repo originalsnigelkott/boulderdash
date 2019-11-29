@@ -4,7 +4,6 @@ import Level1 from './Level1.js'
 export default{
     components: {
         Grid,
-        Level1,
     },
     template: `
     <div id="app">
