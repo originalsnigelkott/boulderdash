@@ -18,9 +18,10 @@ export default{
         return {
             level1: new Level1(),
             size: 0,
+            playerPosition: {},
         }
     },
     created() {
         this.size = this.level1.map.length;
-    }
+    },
 }
