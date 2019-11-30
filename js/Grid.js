@@ -1,10 +1,8 @@
 import Tile from './Tile.js'
-import Maps from './Maps.js'
 
 export default{
     components: {
         Tile,
-        Maps,
     },
     props: {
         size: Number,
@@ -150,13 +148,13 @@ export default{
                 this.tiles[row] = [];
                 for(let col = 0; col < this.size; col++){
                     if( this.map1[row][col] === 'D'){
-                        this.tiles[row].push(new Tile('dirt', row, col, false))
+                        this.tiles[row].push(new Tile('d', row, col, false))
                     }else if(this.map1[row][col] === 'P'){
-                        this.tiles[row].push(new Tile('playerModel', row, col, false))
+                        this.tiles[row].push(new Tile('p', row, col, false))
                     }else if(this.map1[row][col] === 'W'){
-                        this.tiles[row].push(new Tile('wall', row, col, false))
+                        this.tiles[row].push(new Tile('w', row, col, false))
                     }else if(this.map1[row][col] === 'G'){
-                        this.tiles[row].push(new Tile('gem', row, col, false))
+                        this.tiles[row].push(new Tile('g', row, col, false))
                     }
                     else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
