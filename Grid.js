@@ -68,7 +68,7 @@ export default{
         handleKeyUp(e) {
             //canMoveTo - true -> move y-1
             if(this.canMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
-                this.move(e);
+                this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
@@ -82,7 +82,7 @@ export default{
         handleKeyDown(e){
             //canMoveTo - true -> move y+1
             if(this.canMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
-                this.move(e);
+                this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
@@ -92,7 +92,7 @@ export default{
         handleKeyLeft(e){
             //canMoveTo - true -> move x-1
             if(this.canMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
-                this.move(e);
+                this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
@@ -102,7 +102,7 @@ export default{
         handleKeyRight(e){
             //canMoveTo - true -> move x+1
             if(this.canMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
-                this.move(e);
+                this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
