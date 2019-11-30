@@ -4,10 +4,12 @@
 }
 .grid{
     display: flex;
-    width: 90vw;
+    width: 400px;
+    height: 400px;
     flex-wrap: wrap;
     margin: auto;
+    background-color: aqua;
 }
 .tile{
-    width: 33.33333333333%;
+    width: 5%;
 }
