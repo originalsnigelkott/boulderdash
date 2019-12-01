@@ -2,14 +2,53 @@
     box-sizing: border-box;
     text-align: center;
 }
+body{
+    margin: 0%;
+}
 .grid{
     display: flex;
-    width: 400px;
-    height: 400px;
+    width: 47.5vw;
+    height: 67.5vh;
     flex-wrap: wrap;
     margin: auto;
-    background-color: aqua;
+    border: solid black 2px;
+    background-color:rgb(39, 39, 39);
+    border: white solid 0.5px;
 }
 .tile{
     width: 5%;
+    height: 5%;
+    border: solid black 0.5px;
+}
+#app{
+
+    color: wheat;
+    background-image: url('./img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#gameInfoBox{
+    display: flex;
+    height: 10vh;
+    width: 47.5vw;
+    border: white solid 0.1px;
+}
+#highScoreBox{
+    display: flex;
+    height: 20vh;
+    width: 47.5vw;
+    border: white solid 0.1px;
+}
+#gridBox{
+    display: flex;
+    margin: 0%;
+    align-content: center;
 }
