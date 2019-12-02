@@ -58,12 +58,20 @@ img{
 }
 #diamondCounter{
     border: solid white 0.1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5vh;
     width: 33.33333%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 #gameTimer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5vh;
     width: 33.33333%;
 }
 .headerImg{
