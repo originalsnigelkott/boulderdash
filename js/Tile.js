@@ -1,14 +1,14 @@
 export default class Tile{
     position;
     tileState;
-    movingBoulder;
+    isMoving;
 
-    constructor(tileState, x, y, movingBoulder) {
+    constructor(tileState, x, y, isMoving) {
         this.tileState = tileState;
         this.position = {
             x: x,
             y: y
         }
-        this.movingBoulder = movingBoulder;
+        this.isMoving = isMoving;
     }
 }
