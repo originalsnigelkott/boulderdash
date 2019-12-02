@@ -51,6 +51,7 @@ body{
     display: flex;
     margin: 0%;
     align-content: center;
-  img{
+}
+img{
     width: 100%;
-  }
+}
