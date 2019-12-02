@@ -20,6 +20,10 @@ export default{
     data() {
         return {
             playerPosition: [7,3], //x,y
+            boulderPositions: [
+                [6,2],
+                [7,2],
+            ],
             tiles: [],
             diamondCount: 0,
             map1:[
@@ -166,8 +170,9 @@ export default{
                         this.tiles[row].push(new Tile('w', row, col, false))
                     }else if(this.map1[row][col] === 'G'){
                         this.tiles[row].push(new Tile('g', row, col, false))
-                    }
-                    else if(this.map1[row][col] === 'X'){
+                    }else if(this.map1[row][col] === 'B'){
+                        this.tiles[row].push(new Tile('b', row, col, false))
+                    }else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
                     }
                 }
@@ -183,11 +188,12 @@ export default{
         },
         setKeyHandler(e) {            
             window.addEventListener("keydown", this.keyHandler);
-        }
-    },
-    updatedPlayerPosition(x,y){
-        let player = new 
-        this.tiles()
+        },
+        placeBoulders(){
+            for(let i = 0; i < this.boulderPositions.length; i++){
+                this.map1[this.boulderPositions[i][1]][this.boulderPositions[i][0]] = 'B';
+            }
+        },
     },
     computed: {
         flatTiles() {
@@ -196,6 +202,7 @@ export default{
     },
     created() {
         this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+        this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
     }
