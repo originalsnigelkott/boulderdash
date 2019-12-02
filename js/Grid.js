@@ -70,7 +70,9 @@ export default{
             } else if (e.keyCode === 40) {
               this.handleKeyDown(e);
             }
-            this.setTileIsMoving()
+            this.setTileIsMoving();
+            this.canFallTo(7,2);
+            //this.moveBoulders();
         },
         handleKeyUp(e) {
             //canMoveTo - true -> move y-1
@@ -166,21 +168,21 @@ export default{
                 this.tiles[row] = [];
                 for(let col = 0; col < this.size; col++){
                     if( this.map1[row][col] === 'D'){
-                        this.tiles[row].push(new Tile('d', row, col, false))
+                        this.tiles[row].push(new Tile('D', row, col, false))
                     }else if(this.map1[row][col] === 'P'){
-                        this.tiles[row].push(new Tile('p', row, col, false))
+                        this.tiles[row].push(new Tile('P', row, col, false))
                     }else if(this.map1[row][col] === 'W'){
-                        this.tiles[row].push(new Tile('w', row, col, false))
+                        this.tiles[row].push(new Tile('W', row, col, false))
                     }else if(this.map1[row][col] === 'G'){
                         this.amountOfDiamonds()
-                        this.tiles[row].push(new Tile('g', row, col, false))
+                        this.tiles[row].push(new Tile('G', row, col, false))
                     }else if(this.map1[row][col] === 'B'){
-                        this.tiles[row].push(new Tile('b', row, col, false))
+                        this.tiles[row].push(new Tile('B', row, col, false))
                     }else if(this.map1[row][col] === 'X'){
                     }else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
                     }else if(this.map1[row][col] === 'E'){
-                        this.tiles[row].push(new Tile('e', row, col, false))
+                        this.tiles[row].push(new Tile('E', row, col, false))
                     }
                 }
             }
@@ -189,7 +191,7 @@ export default{
             let pictureLocation = "img/" + tileState + ".png";
             return pictureLocation;
         },
-        tileId(tilesRow, tilesCol){
+        tileId(tilesCol, tilesRow){
             let tileId ='x'+tilesCol+'y'+tilesRow;
             return tileId;
         },
@@ -203,11 +205,37 @@ export default{
         },
         setTileIsMoving(){
             for(let i = 0; i < this.boulderPositions.length; i++){
-                console.log(this.boulderPositions[i][1]);
                 if(this.map1[(this.boulderPositions[i][1]) + 1][this.boulderPositions[i][0]] === 'X') {
                     this.tiles[this.boulderPositions[i][0]][this.boulderPositions[i][1]].isMoving = true;
                 }
             }
+        },
+        /*moveBoulders(){
+            for(let i = 0; i < this.boulderPositions.length; i++){
+                let x = this.boulderPositions[i][0];
+                let y = this.boulderPositions[i][1];
+                if(this.tiles[x][y].isMoving === true){
+                    console.log('Boulder is moving')
+                    if(this.canFallTo(x, y)){
+                        console.log('Boulder falling')
+                        let tempTile = this.tiles[x][y];
+                        this.tiles[x][y] = this.tiles[x][y + 1];
+                        this.tiles[x][y + 1] = tempTile;
+                        let tempMap = this.map1[x][y];
+                        this.map1[x][y] = this.map1[x][y + 1];
+                        this.map1[x][y + 1] = tempMap;
+                    }
+                }
+            }
+        },*/
+        canFallTo(boulderX, boulderY){
+            let nextPosition = this.map1[boulderX][boulderY + 1];
+            if(this.map1[boulderX][boulderY + 1] === 'X'){
+                console.log('Boulder can move')
+                return true;
+            }
+            console.log('Boulder cant move')
+            return false;
         },
         amountOfDiamonds(){
             this.totalAmountOfDiamonds++;
