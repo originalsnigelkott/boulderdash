@@ -9,11 +9,12 @@ export default{
     },
     template: `
     <div class="grid">
-      <img
+      <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
-        class="tile" 
-        :src="tilePicture(tile.tileState)">
+        class="tile" >
+        <img  :src="tilePicture(tile.tileState)">
+        </div>
     </div>
     `,
     data() {
@@ -121,6 +122,8 @@ export default{
         },
         playerMove(e){
             this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'X';
+            this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
+            //changeDivContent(this.playerPosition[0],this.playerPosition[1]);
             if(e.keyCode === 37){
                 //moveLeft x-1
                 this.playerPosition[0]=this.playerPosition[0]-1;
@@ -137,7 +140,9 @@ export default{
                 this.playerPosition[1]=this.playerPosition[1]+1;
             }
             //new position on the map            
-            this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';    
+            this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+            this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
+            this.$forceUpdate();
         },
         randomMove(x,y){
             //canMoveTo
@@ -165,6 +170,10 @@ export default{
         tilePicture(tileState){
             let pictureLocation = "img/" + tileState + ".png";
             return pictureLocation;
+        },
+        tileId(tilesRow, tilesCol){
+            let tileId ='x'+tilesCol+'y'+tilesRow;
+            return tileId;
         },
         setKeyHandler(e) {            
             window.addEventListener("keydown", this.keyHandler);
