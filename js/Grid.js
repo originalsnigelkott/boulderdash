@@ -27,6 +27,7 @@ export default{
             ],
             tiles: [],
             diamondCount: 0,
+            totalAmountOfDiamonds: 0,
             map1:[
                 ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
@@ -170,9 +171,11 @@ export default{
                     }else if(this.map1[row][col] === 'W'){
                         this.tiles[row].push(new Tile('w', row, col, false))
                     }else if(this.map1[row][col] === 'G'){
+                        this.amountOfDiamonds()
                         this.tiles[row].push(new Tile('g', row, col, false))
                     }else if(this.map1[row][col] === 'B'){
                         this.tiles[row].push(new Tile('b', row, col, false))
+                    }else if(this.map1[row][col] === 'X'){
                     }else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
                     }else if(this.map1[row][col] === 'E'){
@@ -197,11 +200,15 @@ export default{
                 this.map1[this.boulderPositions[i][1]][this.boulderPositions[i][0]] = 'B';
             }
         },
+        amountOfDiamonds(){
+            this.totalAmountOfDiamonds++;
+            this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
+        },
     },
     computed: {
         flatTiles() {
             return this.tiles.flat();
-        }
+        },
     },
     created() {
         //player
