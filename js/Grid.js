@@ -1,3 +1,5 @@
+let enemyMovementCase = 0
+
 import Tile from './Tile.js'
 
 export default{
@@ -20,7 +22,7 @@ export default{
     data() {
         return {
             playerPosition: [7,3], //x,y
-            enemyPosition: [10,15],
+            enemyPosition: [14,15],
             boulderPositions: [
                 [6,2],
                 [7,2],
@@ -39,17 +41,16 @@ export default{
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W', 'W' ,'W' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
+                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'D' ,'D' ,'D' ,'W'],
+                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'X' ,'D' ,'D' ,'G' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
+                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
+                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
+                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
+                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'X' ,'X' ,'X' ,'' ,'X' ,'D' ,'D' ,'D' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
                 ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
-
             ]
         }
     },
@@ -72,8 +73,8 @@ export default{
             }
         },
         handleKeyUp(e) {
-            //canMoveTo - true -> move y-1
-            if(this.canMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
+            //PlayerCanMoveTo - true -> move y-1
+            if(this.PlayerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -86,8 +87,8 @@ export default{
             
         },
         handleKeyDown(e){
-            //canMoveTo - true -> move y+1
-            if(this.canMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
+            //PlayerCanMoveTo - true -> move y+1
+            if(this.PlayerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -96,8 +97,8 @@ export default{
             }    
         },
         handleKeyLeft(e){
-            //canMoveTo - true -> move x-1
-            if(this.canMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
+            //PlayerCanMoveTo - true -> move x-1
+            if(this.PlayerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -106,8 +107,8 @@ export default{
             }    
         },
         handleKeyRight(e){
-            //canMoveTo - true -> move x+1
-            if(this.canMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
+            //PlayerCanMoveTo - true -> move x+1
+            if(this.PlayerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -115,13 +116,24 @@ export default{
                 console.log('Right: not possible');
             }    
         },
-        canMoveTo(x,y){
+        PlayerCanMoveTo(x,y){
             //inside the map
             if(x < 0 ||x > this.size || y < 0 || y >= this.size){
                 return false;
             }
             //you can only go down the road
             if(this.map1[y][x] !== 'D' && this.map1[y][x] !== 'X' && this.map1[y][x] !== 'G'){
+                console.log(this.map1[y][x]);
+                return false;
+            }
+            return true;
+        },
+        enemyCanMoveTo(x,y){
+            if(x < 0 ||x > this.size || y < 0 || y >= this.size){
+                return false;
+            }
+            //you can only go on empty spaces(X)
+            if(this.map1[y][x] !== 'X'){
                 console.log(this.map1[y][x]);
                 return false;
             }
@@ -156,10 +168,54 @@ export default{
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
             this.$forceUpdate();
         },
-        randomMove(x,y){
-            //canMoveTo
-            //Move
+        enemyMove(){
+            this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'X';
+            this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
+
+            switch(enemyMovementCase){
+                case 0:
+                        if(this.map1[this.enemyPosition[1]][this.enemyPosition[0]-1] === 'X'){
+                            this.enemyPosition[0]=this.enemyPosition[0]-1;
+                            console.log('Enemy moved left')
+                            break;
+                        }else{
+                            enemyMovementCase++;
+                            break;
+                        }
+                case 1:
+                        if(this.map1[this.enemyPosition[1]-1][this.enemyPosition[0]] === 'X'){
+                            this.enemyPosition[1]=this.enemyPosition[1]-1;
+                            console.log('Enemy moved up')
+                            break;
+                        }else{
+                            enemyMovementCase++;
+                            break;
+                        }
+                case 2:
+                        if(this.map1[this.enemyPosition[1]][this.enemyPosition[0]+1] == 'X'){
+                            this.enemyPosition[0]=this.enemyPosition[0]+1;
+                            console.log('Enemy moved right')
+                            break;
+                        }else{
+                            enemyMovementCase++;
+                            break;
+                        }
+                case 3:
+                        if(this.map1[this.enemyPosition[1]+1][this.enemyPosition[0]] === 'X'){
+                            this.enemyPosition[1]=this.enemyPosition[1]+1;
+                            console.log('Enemy moved down')
+                            break;
+                        }else{
+                            enemyMovementCase = 0;
+                            break;
+                        }
+                    }
+
+            this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+            this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='E';
+            this.$forceUpdate();
         },
+
         fillTiles() {
             for(let row = 0; row < this.size; row++){
                 this.tiles[row] = [];
@@ -175,7 +231,6 @@ export default{
                         this.tiles[row].push(new Tile('g', row, col, false))
                     }else if(this.map1[row][col] === 'B'){
                         this.tiles[row].push(new Tile('b', row, col, false))
-                    }else if(this.map1[row][col] === 'X'){
                     }else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
                     }else if(this.map1[row][col] === 'E'){
@@ -204,6 +259,13 @@ export default{
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
         },
+        updateEnvironments(){
+            setTimeout(() => {
+                this.updateEnvironment -= 1
+                this.updateEnvironments()
+                this.enemyMove();
+            }, 150)
+        },
     },
     computed: {
         flatTiles() {
@@ -218,5 +280,6 @@ export default{
         this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
+        this.updateEnvironments();
     }
 }
