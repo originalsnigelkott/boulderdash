@@ -6,9 +6,10 @@ export default{
         Grid,
     },
     template:`
-    <div>
-        <div class="headerImg"><img src="img/g.png"></div>
-        <p> {{ diamondCount }} / {{ totalAmountOfDiamonds }}</p> 
+    <div id='diamondCounter'>
+        <div class="headerImg">
+            <img src="img/g.png"></div>
+            <h3> {{ diamondCount }} / {{ totalAmountOfDiamonds }}</h3> 
     </div>
     `,
 }
