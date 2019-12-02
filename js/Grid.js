@@ -184,10 +184,6 @@ export default{
             window.addEventListener("keydown", this.keyHandler);
         }
     },
-    updatedPlayerPosition(x,y){
-        let player = new 
-        this.tiles()
-    },
     computed: {
         flatTiles() {
             return this.tiles.flat();
