@@ -7,12 +7,22 @@ export default{
     },
     template: `
     <div id="app">
-        <h1>Boulder dash</h1>
-        <grid 
-        :level="level1"
-        :size="size"
-        />
-    </div>        
+
+<div id='gameInfoBox'> 
+Timer points etc 
+</div>
+
+<Grid 
+id="gridBox"        
+:level="level1"
+:size="size"
+/>
+
+<div 
+id='highScoreBox'>
+Highscores etc
+</div>
+</div>       
     `,
     data() {
         return {
