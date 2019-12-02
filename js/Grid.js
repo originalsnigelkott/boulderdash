@@ -142,6 +142,7 @@ export default{
             }            
             if(this.map1[this.playerPosition[1]][this.playerPosition[0]] == 'G'){
                 this.diamondCount+=1;
+                this.$emit('getDiamondCount', this.diamondCount);
                 console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
@@ -183,6 +184,10 @@ export default{
         setKeyHandler(e) {            
             window.addEventListener("keydown", this.keyHandler);
         }
+    },
+    updatedPlayerPosition(x,y){
+        let player = new 
+        this.tiles()
     },
     computed: {
         flatTiles() {
