@@ -1,15 +1,22 @@
 import Grid from './Grid.js'
 import Level1 from './Level1.js'
+import Timer from './Timer.js'
+import DiamondCounter from './DiamondCounter.js'
 
 export default{
     components: {
         Grid,
+        Timer,
+        DiamondCounter,
     },
     template: `
     <div id="app">
 
 <div id='gameInfoBox'> 
-Timer points etc 
+    <DiamondCounter 
+    id='diamondCounter'
+    :diamondCount='diamondCount'
+    :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
 </div>
 
 <Grid 
@@ -17,12 +24,12 @@ id="gridBox"
 :level="level1"
 :size="size"
 @getDiamondCount='getDiamondCount'
+@totalAmountOfDiamonds='diamonds'
 />
 
 <div 
 id='highScoreBox'>
 Highscores etc
-{{ diamondCount }}
 </div>
 </div>       
     `,
@@ -32,6 +39,7 @@ Highscores etc
             size: 0,
             playerPosition: {},
             diamondCount: 0,
+            totalAmountOfDiamonds: 0,
         }
     },
     created() {
@@ -40,6 +48,9 @@ Highscores etc
     methods: {
         getDiamondCount(diamondCount) {
             this.diamondCount = diamondCount;
-        }
+        },
+        diamonds(totalAmountOfDiamonds) {
+            this.totalAmountOfDiamonds = totalAmountOfDiamonds;
+        },    
     }
 }
