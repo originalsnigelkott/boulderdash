@@ -20,6 +20,7 @@ export default{
     data() {
         return {
             playerPosition: [7,3], //x,y
+            enemyPosition: [10,15],
             boulderPositions: [
                 [6,2],
                 [7,2],
@@ -177,6 +178,8 @@ export default{
                     }else if(this.map1[row][col] === 'X'){
                     }else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
+                    }else if(this.map1[row][col] === 'E'){
+                        this.tiles[row].push(new Tile('e', row, col, false))
                     }
                 }
             }
@@ -208,7 +211,10 @@ export default{
         },
     },
     created() {
+        //player
         this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+        //enemy
+        this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
         this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
