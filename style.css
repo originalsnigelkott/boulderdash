@@ -63,6 +63,9 @@ img{
     justify-content: center;
     font-size: 5.5vh;
     width: 33.33333%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 #gameTimer{
     display: flex;
@@ -70,4 +73,10 @@ img{
     justify-content: center;
     font-size: 5.5vh;
     width: 33.33333%;
+}
+.headerImg{
+    max-width: 35px;
+    max-height: 35px;
+    padding: 8px;
+    margin: 5px;
 }
