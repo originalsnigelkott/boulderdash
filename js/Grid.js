@@ -20,6 +20,7 @@ export default{
     data() {
         return {
             playerPosition: [7,3], //x,y
+            enemyPosition: [10,15],
             boulderPositions: [
                 [6,2],
                 [7,2],
@@ -203,7 +204,10 @@ export default{
         }
     },
     created() {
+        //player
         this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+        //enemy
+        this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
         this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
