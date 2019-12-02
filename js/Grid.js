@@ -70,6 +70,7 @@ export default{
             } else if (e.keyCode === 40) {
               this.handleKeyDown(e);
             }
+            this.setTileIsMoving()
         },
         handleKeyUp(e) {
             //canMoveTo - true -> move y-1
@@ -122,7 +123,7 @@ export default{
             }
             //you can only go down the road
             if(this.map1[y][x] !== 'D' && this.map1[y][x] !== 'X' && this.map1[y][x] !== 'G'){
-                console.log(this.map1[y][x]);
+                console.log(this.map1[y][x], this.tiles[x][y].isMoving);
                 return false;
             }
             return true;
@@ -200,10 +201,11 @@ export default{
                 this.map1[this.boulderPositions[i][1]][this.boulderPositions[i][0]] = 'B';
             }
         },
-        setMovingBoulder(){
-            for(let boulder in boulderPositions){
-                if(this.map1[boulder[0]][boulder[1] - 1] === 'X') {
-                    //this.map1[boulder[0]][boulder[1]].
+        setTileIsMoving(){
+            for(let i = 0; i < this.boulderPositions.length; i++){
+                console.log(this.boulderPositions[i][1]);
+                if(this.map1[(this.boulderPositions[i][1]) + 1][this.boulderPositions[i][0]] === 'X') {
+                    this.tiles[this.boulderPositions[i][0]][this.boulderPositions[i][1]].isMoving = true;
                 }
             }
         },
