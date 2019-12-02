@@ -18,7 +18,6 @@ export default{
     ></Timer>
 
     <DiamondCounter 
-    id='diamondCounter'
     :diamondCount='diamondCount'
     :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
 </div>
