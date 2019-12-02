@@ -21,6 +21,7 @@ export default{
         return {
             playerPosition: [7,3], //x,y
             tiles: [],
+            diamondCount: 0,
             map1:[
                 ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
@@ -114,7 +115,7 @@ export default{
                 return false;
             }
             //you can only go down the road
-            if(this.map1[y][x] !== 'D' && this.map1[y][x] !== 'X'){
+            if(this.map1[y][x] !== 'D' && this.map1[y][x] !== 'X' && this.map1[y][x] !== 'G'){
                 console.log(this.map1[y][x]);
                 return false;
             }
@@ -138,6 +139,10 @@ export default{
             }else if(e.keyCode === 40){
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
+            }            
+            if(this.map1[this.playerPosition[1]][this.playerPosition[0]] == 'G'){
+                this.diamondCount+=1;
+                console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
             this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
