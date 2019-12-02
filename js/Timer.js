@@ -1,8 +1,8 @@
 export default{
+    props:['timeLimit'],
     template:`
         <div>
-            <h3> {{ timer }}  </h3>
+            <h3> {{ timeLimit }} </h3>
         </div>
     `,
-    props:['timer'],
 }

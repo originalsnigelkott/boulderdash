@@ -57,6 +57,18 @@ img{
     height: 100%;
 }
 #diamondCounter{
-    border: solid white 2px;
+    border: solid white 0.1px;
     width: 33.33333%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#gameTimer{
+    width: 33.33333%;
+}
+.headerImg{
+    max-width: 35px;
+    max-height: 35px;
+    padding: 8px;
+    margin: 5px;
 }
