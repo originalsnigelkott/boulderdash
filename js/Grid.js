@@ -200,6 +200,13 @@ export default{
                 this.map1[this.boulderPositions[i][1]][this.boulderPositions[i][0]] = 'B';
             }
         },
+        setMovingBoulder(){
+            for(let boulder in boulderPositions){
+                if(this.map1[boulder[0]][boulder[1] - 1] === 'X') {
+                    //this.map1[boulder[0]][boulder[1]].
+                }
+            }
+        },
         amountOfDiamonds(){
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
@@ -215,6 +222,7 @@ export default{
         this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
         //enemy
         this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+        //placing boulders from boulderPositions
         this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
