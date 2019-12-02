@@ -16,11 +16,13 @@ Timer points etc
 id="gridBox"        
 :level="level1"
 :size="size"
+@getDiamondCount='getDiamondCount'
 />
 
 <div 
 id='highScoreBox'>
 Highscores etc
+Diamond: {{ diamondCount }}
 </div>
 </div>       
     `,
@@ -29,9 +31,15 @@ Highscores etc
             level1: new Level1(),
             size: 0,
             playerPosition: {},
+            diamondCount: 0,
         }
     },
     created() {
         this.size = this.level1.map.length;
     },
+    methods: {
+        getDiamondCount(diamondCount) {
+            this.diamondCount = diamondCount;
+        }
+    }
 }
