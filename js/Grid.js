@@ -205,6 +205,5 @@ export default{
         this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
-        // new comment
     }
 }
