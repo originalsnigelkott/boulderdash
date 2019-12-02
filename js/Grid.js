@@ -174,6 +174,8 @@ export default{
                         this.tiles[row].push(new Tile('b', row, col, false))
                     }else if(this.map1[row][col] === 'X'){
                         this.tiles[row].push(new Tile('x', row, col, false))
+                    }else if(this.map1[row][col] === 'E'){
+                        this.tiles[row].push(new Tile('e', row, col, false))
                     }
                 }
             }
