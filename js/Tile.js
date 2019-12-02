@@ -3,7 +3,7 @@ export default class Tile{
     tileState;
     isMoving;
 
-    constructor(tileState, x, y, isMoving) {
+    constructor(tileState, y, x, isMoving) {
         this.tileState = tileState;
         this.position = {
             x: x,
