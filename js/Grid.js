@@ -9,17 +9,19 @@ export default{
     },
     template: `
     <div class="grid">
-      <img
+      <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
-        class="tile" 
-        :src="tilePicture(tile.tileState)">
+        class="tile" >
+        <img  :src="tilePicture(tile.tileState)">
+        </div>
     </div>
     `,
     data() {
         return {
             playerPosition: [7,3], //x,y
             tiles: [],
+            diamondCount: 0,
             map1:[
                 ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
                 ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
@@ -113,7 +115,7 @@ export default{
                 return false;
             }
             //you can only go down the road
-            if(this.map1[y][x] !== 'D' && this.map1[y][x] !== 'X'){
+            if(this.map1[y][x] !== 'D' && this.map1[y][x] !== 'X' && this.map1[y][x] !== 'G'){
                 console.log(this.map1[y][x]);
                 return false;
             }
@@ -121,6 +123,8 @@ export default{
         },
         playerMove(e){
             this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'X';
+            this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
+            //changeDivContent(this.playerPosition[0],this.playerPosition[1]);
             if(e.keyCode === 37){
                 //moveLeft x-1
                 this.playerPosition[0]=this.playerPosition[0]-1;
@@ -135,9 +139,15 @@ export default{
             }else if(e.keyCode === 40){
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
+            }            
+            if(this.map1[this.playerPosition[1]][this.playerPosition[0]] == 'G'){
+                this.diamondCount+=1;
+                console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
-            this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';    
+            this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+            this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
+            this.$forceUpdate();
         },
         randomMove(x,y){
             //canMoveTo
@@ -165,6 +175,10 @@ export default{
         tilePicture(tileState){
             let pictureLocation = "img/" + tileState + ".png";
             return pictureLocation;
+        },
+        tileId(tilesRow, tilesCol){
+            let tileId ='x'+tilesCol+'y'+tilesRow;
+            return tileId;
         },
         setKeyHandler(e) {            
             window.addEventListener("keydown", this.keyHandler);
