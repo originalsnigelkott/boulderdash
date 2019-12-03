@@ -14,17 +14,10 @@ export default{
 
 <div id='gameInfoBox'> 
     <Timer 
-    v-if='timeLimit > 0'
     id='gameTimer'
-    :timeLimit='timeLimit'
-    />
-    <p 
-    v-else
-    id='gameTimer'
-    > Out of time</p>
+    ></Timer>
 
     <DiamondCounter 
-    id='diamondCounter'
     :diamondCount='diamondCount'
     :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
 </div>
@@ -40,7 +33,6 @@ id="gridBox"
 <div 
 id='highScoreBox'>
 Highscores etc<br>
-<button type='submit' @click='startTimer'> Testbutton for timer </button> 
 </div>
 </div>       
     `,
@@ -51,7 +43,6 @@ Highscores etc<br>
             playerPosition: {},
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            timeLimit: 45,
         }
     },
     created() {
@@ -64,13 +55,5 @@ Highscores etc<br>
         diamonds(totalAmountOfDiamonds) {
             this.totalAmountOfDiamonds = totalAmountOfDiamonds;
         },
-        startTimer(){
-            if(this.timeLimit != 0) {
-                setTimeout(() => {
-                    this.timeLimit -= 1
-                    this.startTimer()
-                }, 1000)
-            }
-        }, 
     }
 }
