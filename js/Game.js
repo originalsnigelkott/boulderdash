@@ -293,8 +293,8 @@ export default{
         setCurrentLevel(){
             this.diamondCount=0;
             this.totalAmountOfDiamonds=0;
-            Store.currentLevelNum = this.currentLevel;   
-            console.log(Store.currentLevelNum);         
+            this.enemyMovementCase = 0;
+            Store.currentLevelNum = this.currentLevel;
             this.map = Store.maps[Store.currentLevelNum-1];
             this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
             this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
@@ -318,14 +318,14 @@ export default{
         },
         setNextLevel(){
             this.currentLevel += 1;
-            this.setCurrentLevel();
-            this.$forceUpdate();
-            
-            this.fillTiles;
-            this.setKeyHandler();
-            this.updateEnvironments();        
-            this.getLevelTitle();
-            
+            if(this.currentLevel < 3){
+                this.setCurrentLevel();
+                this.$forceUpdate();                
+                this.fillTiles;
+                this.setKeyHandler();
+                this.updateEnvironments();        
+                this.getLevelTitle();
+            }
         }
     },
     computed: {
