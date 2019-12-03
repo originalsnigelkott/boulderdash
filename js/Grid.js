@@ -12,7 +12,8 @@ export default{
     },
     template: `
     <div class="grid">
-      <div :id="tileId(tile.position.x,tile.position.y)"
+        <h1 v-if="gameOver === true" id="game-over"> Game Over!</h1>
+        <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
         class="tile" >
@@ -29,7 +30,8 @@ export default{
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
             currentLevel: 1,
-            map: []
+            map: [],
+            gameOver: false,
         }
     },
     methods: {
@@ -261,6 +263,9 @@ export default{
                         this.map[y+1][x] = 'B';
                         this.tiles[y+1][x].tileState = 'B';
                         this.tiles[y+1][x].isMoving = true;
+                        if(y + 1 === this.playerPosition[1] && x === this.playerPosition[0]) {
+                            this.gameOver = true;
+                        }
                     }
                 }
             }
