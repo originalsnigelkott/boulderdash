@@ -1,4 +1,4 @@
-import Grid from './Grid.js'
+import Game from './Game.js'
 import Level from './Level.js'
 //import Level1 from './Level1.js'
 import Timer from './Timer.js'
@@ -7,7 +7,7 @@ import LevelBox from './LevelBox.js'
 
 export default{
     components: {
-        Grid,
+        Game,
         Timer,
         DiamondCounter,
         LevelBox
@@ -28,7 +28,7 @@ export default{
             :currentLevelTitle= 'currentLevelTitle'/>
         </div>
 
-        <Grid 
+        <Game 
         id="gridBox"        
         :level="level1"
         :size="size"

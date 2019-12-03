@@ -35,10 +35,7 @@ export default{
     methods: {
         keyHandler(e) {
             /**
-              37 - left
-              39 - right
-              38 - up
-              40 - down
+              37 - left, 39 - right, 38 - up, 40 - down
              */
             if (e.keyCode === 37) {
                 this.handleKeyLeft(e);
@@ -56,7 +53,7 @@ export default{
             //PlayerCanMoveTo - true -> move y-1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
                 this.playerMove(e);
-                console.log(this.playerPosition[0]+','+this.playerPosition[1]);
+                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Up: not possible');
@@ -66,7 +63,7 @@ export default{
             //PlayerCanMoveTo - true -> move y+1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
                 this.playerMove(e);
-                console.log(this.playerPosition[0]+','+this.playerPosition[1]);
+                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Down: not possible');
@@ -76,7 +73,7 @@ export default{
             //PlayerCanMoveTo - true -> move x-1
             if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
                 this.playerMove(e);
-                console.log(this.playerPosition[0]+','+this.playerPosition[1]);
+                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Left: not possible');
@@ -86,7 +83,7 @@ export default{
             //PlayerCanMoveTo - true -> move x+1
             if(this.playerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
                 this.playerMove(e);
-                console.log(this.playerPosition[0]+','+this.playerPosition[1]);
+                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Right: not possible');
@@ -152,7 +149,7 @@ export default{
                 case 0:
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]-1].tileState === 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]-1;
-                            console.log('Enemy moved left')
+                            //console.log('Enemy moved left')
                             break;
                         }else{
                             enemyMovementCase++;
@@ -161,7 +158,7 @@ export default{
                 case 1:
                         if(this.tiles[this.enemyPosition[1]-1][this.enemyPosition[0]].tileState === 'X'){
                             this.enemyPosition[1]=this.enemyPosition[1]-1;
-                            console.log('Enemy moved up')
+                            //console.log('Enemy moved up')
                             break;
                         }else{
                             enemyMovementCase++;
@@ -170,7 +167,7 @@ export default{
                 case 2:
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]+1].tileState == 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]+1;
-                            console.log('Enemy moved right')
+                            //console.log('Enemy moved right')
                             break;
                         }else{
                             enemyMovementCase++;
@@ -179,7 +176,7 @@ export default{
                 case 3:
                         if(this.tiles[this.enemyPosition[1]+1][this.enemyPosition[0]].tileState === 'X'){
                             this.enemyPosition[1]=this.enemyPosition[1]+1;
-                            console.log('Enemy moved down')
+                            //console.log('Enemy moved down')
                             break;
                         }else{
                             enemyMovementCase = 0;
