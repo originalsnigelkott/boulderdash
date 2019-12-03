@@ -12,7 +12,8 @@ const maps = [
 const currentLevel = {
     title: [level1.title, level2.title],
     playerPosition: [level1.playerPosition, level2.playerPosition],
-    enemyPosition: [level1.enemyPosition, level2.enemyPosition]
+    enemyPosition: [level1.enemyPosition, level2.enemyPosition],
+    boulderPositions: []
 };
 
 export default {
