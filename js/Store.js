@@ -10,9 +10,10 @@ const maps = [
 ];
 
 const currentLevel = {
-    title: 'Level 1',
+    title: [level1.title, level2.title],
     playerPosition: [level1.playerPosition, level2.playerPosition],
-    enemyPosition: [level1.enemyPosition, level2.enemyPosition]
+    enemyPosition: [level1.enemyPosition, level2.enemyPosition],
+    boulderPositions: [level1.boulderPositions, level2.boulderPositions]
 };
 
 export default {
