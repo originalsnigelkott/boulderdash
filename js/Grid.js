@@ -291,11 +291,13 @@ export default{
         setCurrentLevel(){
             Store.currentLevelNum = 1;            
             this.map1 = Store.maps[Store.currentLevelNum-1];
-            this.title = Store.currentLevel.title;
+            this.title = Store.currentLevel.title[Store.currentLevelNum-1];
             this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
             this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
             //player
             this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+            //placing boulders from boulderPositions        
+            this.placeBoulders();
             //enemy
             //this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
         }
@@ -307,8 +309,6 @@ export default{
     },    
     created() {
         this.setCurrentLevel();        
-        //placing boulders from boulderPositions
-        this.placeBoulders();
         this.fillTiles();
         this.setKeyHandler();
         this.updateEnvironments();
