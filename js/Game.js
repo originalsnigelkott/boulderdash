@@ -30,7 +30,9 @@ export default{
             totalAmountOfDiamonds: 0,
             currentLevelTitle: '',
             currentLevel: 1,
-            map: []
+            map: [],
+            mapSizeX: 20,
+            mapSizeY: 20
         }
     },
     methods: {
@@ -194,9 +196,9 @@ export default{
             this.$forceUpdate();
         },
         fillTiles() {
-            for(let row = 0; row < this.size; row++){
+            for(let row = 0; row < this.mapSizeY; row++){
                 this.tiles[row] = [];
-                for(let col = 0; col < this.size; col++){
+                for(let col = 0; col < this.mapSizeX; col++){
                     if( this.map[row][col] === 'D'){
                         this.tiles[row].push(new Tile('D', row, col, false))
                     }else if(this.map[row][col] === 'P'){
@@ -290,9 +292,12 @@ export default{
         },
         setCurrentLevel(){
             this.diamondCount=0;
+            this.totalAmountOfDiamonds=0;
             Store.currentLevelNum = this.currentLevel;   
             console.log(Store.currentLevelNum);         
             this.map = Store.maps[Store.currentLevelNum-1];
+            this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
+            this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
             this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
             this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
             this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
