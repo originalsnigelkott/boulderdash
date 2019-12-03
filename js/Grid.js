@@ -285,7 +285,7 @@ export default{
             }, 150)
         },
         setCurrentLevel(){
-            Store.currentLevelNum = 2;            
+            Store.currentLevelNum = 1;            
             this.map = Store.maps[Store.currentLevelNum-1];
             this.title = Store.currentLevel.title[Store.currentLevelNum-1];
             this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
