@@ -2,7 +2,11 @@ const level = {
     title: 'Level 2',
     playerPosition: [5,2],
     enemyPosition: [14,15],
-    boulderPositions: [],
+    boulderPositions: [
+        [3,3],
+        [8,5],
+        [2,10],
+    ],
     map: [
         ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
         ['W', 'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
