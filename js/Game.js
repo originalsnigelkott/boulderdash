@@ -29,6 +29,7 @@ export default{
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
             currentLevelTitle: '',
+            currentLevel: 1,
             map: []
         }
     },
@@ -133,6 +134,10 @@ export default{
             }            
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
+                if(this.totalAmountOfDiamonds == this.diamondCount){
+                    console.log('next level');
+                    this.setNextLevel();
+                }
                 this.$emit('getDiamondCount', this.diamondCount);
                 //console.log('Diamond: '+this.diamondCount);
             }
@@ -232,10 +237,10 @@ export default{
                 let y = this.boulderPositions[i][1];
                 let x = this.boulderPositions[i][0];
                 if(this.tiles[y + 1][x].tileState === 'X' || (this.tiles[y + 1][x].tileState === 'P' && this.tiles[y][x].isMoving === true)) {
-                    console.log("Boulder is now a moving tile " + i);                    
+                    //console.log("Boulder is now a moving tile " + i);                    
                     this.tiles[y][x].isMoving = true;
                 } else {
-                    console.log("Boulder is not a moving tile " + i);
+                    //console.log("Boulder is not a moving tile " + i);
                     this.tiles[y][x].isMoving = false;
                 }
             }
@@ -245,9 +250,9 @@ export default{
                 let y = this.boulderPositions[i][1];
                 let x = this.boulderPositions[i][0];
                 if(this.tiles[y][x].isMoving === true){
-                    console.log('Boulder is a moving tile');
+                    //console.log('Boulder is a moving tile');
                     if(this.canFallTo(x, y)){
-                        console.log('Boulder falling');
+                        //console.log('Boulder falling');
                         this.boulderPositions[i][1]++;
                         //this.map[y][x]= 'X';
                         this.tiles[y][x].tileState = 'X';
@@ -263,15 +268,15 @@ export default{
         },
         canFallTo(x, y){
             if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
-                console.log('Boulder can move')
+                //console.log('Boulder can move')
                 return true;
             }
-            console.log('Boulder cant move')
+            //console.log('Boulder cant move')
             return false;
         },
         amountOfDiamonds(){
             this.totalAmountOfDiamonds++;
-            this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
+            this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);            
         },
         getLevelTitle(){
             this.$emit('currentLevelTitle', this.currentLevelTitle);
@@ -284,7 +289,9 @@ export default{
             }, 150)
         },
         setCurrentLevel(){
-            Store.currentLevelNum = 1;            
+            this.diamondCount=0;
+            Store.currentLevelNum = this.currentLevel;   
+            console.log(Store.currentLevelNum);         
             this.map = Store.maps[Store.currentLevelNum-1];
             this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
             this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
@@ -294,8 +301,26 @@ export default{
             this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
             //placing boulders from boulderPositions        
             this.placeBoulders();
+            this.tiles = [];
+            this.fillTiles();
+
+            this.$forceUpdate();
+            this.setKeyHandler();
+            this.updateEnvironments();        
+            this.getLevelTitle();
             //enemy
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+        },
+        setNextLevel(){
+            this.currentLevel += 1;
+            this.setCurrentLevel();
+            this.$forceUpdate();
+            
+            this.fillTiles;
+            this.setKeyHandler();
+            this.updateEnvironments();        
+            this.getLevelTitle();
+            
         }
     },
     computed: {
@@ -305,9 +330,5 @@ export default{
     },    
     created() {
         this.setCurrentLevel();        
-        this.fillTiles();
-        this.setKeyHandler();
-        this.updateEnvironments();        
-        this.getLevelTitle();
     }
 }
