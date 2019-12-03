@@ -1,4 +1,5 @@
 import Grid from './Grid.js'
+import Level from './Level.js'
 import Level1 from './Level1.js'
 import Timer from './Timer.js'
 import DiamondCounter from './DiamondCounter.js'
@@ -20,6 +21,8 @@ export default{
     <DiamondCounter 
     :diamondCount='diamondCount'
     :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
+
+    <div :getLevel= 'level'></div>
 </div>
 
 <Grid 
@@ -38,15 +41,16 @@ Highscores etc<br>
     `,
     data() {
         return {
-            level1: new Level1(),
+            level1: new Level(),
             size: 0,
             playerPosition: {},
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
+            level: 0
         }
     },
     created() {
-        this.size = this.level1.map.length;
+        this.size = 20;
     },
     methods: {
         getDiamondCount(diamondCount) {
@@ -55,5 +59,8 @@ Highscores etc<br>
         diamonds(totalAmountOfDiamonds) {
             this.totalAmountOfDiamonds = totalAmountOfDiamonds;
         },
+        getLevel(currentLevel){
+            this.level = currentLevel;
+        }
     }
 }
