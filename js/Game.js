@@ -292,6 +292,7 @@ export default{
         },
         setCurrentLevel(){
             this.diamondCount=0;
+            this.totalAmountOfDiamonds=0;
             Store.currentLevelNum = this.currentLevel;   
             console.log(Store.currentLevelNum);         
             this.map = Store.maps[Store.currentLevelNum-1];
