@@ -28,7 +28,7 @@ export default{
             tiles: [],
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            currentLevel: 1,
+            currentLevelTitle: '',
             map: []
         }
     },
@@ -276,9 +276,8 @@ export default{
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
         },
-        getLevel(){
-            this.currentLevel;
-            this.$emit('currentLevel', this.currentLevel);
+        getLevelTitle(){
+            this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
         updateEnvironments(){
             setTimeout(() => {
@@ -290,7 +289,7 @@ export default{
         setCurrentLevel(){
             Store.currentLevelNum = 1;            
             this.map = Store.maps[Store.currentLevelNum-1];
-            this.title = Store.currentLevel.title[Store.currentLevelNum-1];
+            this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
             this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
             this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
             this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum-1];
@@ -311,6 +310,7 @@ export default{
         this.setCurrentLevel();        
         this.fillTiles();
         this.setKeyHandler();
-        this.updateEnvironments();
+        this.updateEnvironments();        
+        this.getLevelTitle();
     }
 }

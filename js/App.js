@@ -1,43 +1,47 @@
 import Grid from './Grid.js'
 import Level from './Level.js'
-import Level1 from './Level1.js'
+//import Level1 from './Level1.js'
 import Timer from './Timer.js'
 import DiamondCounter from './DiamondCounter.js'
+import LevelBox from './LevelBox.js'
 
 export default{
     components: {
         Grid,
         Timer,
         DiamondCounter,
+        LevelBox
     },
     template: `
     <div id="app">
 
-<div id='gameInfoBox'> 
-    <Timer 
-    id='gameTimer'
-    ></Timer>
+        <div id='gameInfoBox'> 
+            <Timer 
+            id='gameTimer'
+            ></Timer>
 
-    <DiamondCounter 
-    :diamondCount='diamondCount'
-    :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
+            <DiamondCounter 
+            :diamondCount='diamondCount'
+            :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
 
-    <div :getLevel= 'level'></div>
-</div>
+            <LevelBox
+            :currentLevelTitle= 'currentLevelTitle'/>
+        </div>
 
-<Grid 
-id="gridBox"        
-:level="level1"
-:size="size"
-@getDiamondCount='getDiamondCount'
-@totalAmountOfDiamonds='diamonds'
-/>
+        <Grid 
+        id="gridBox"        
+        :level="level1"
+        :size="size"
+        @getDiamondCount='getDiamondCount'
+        @totalAmountOfDiamonds='diamonds'
+        @currentLevelTitle='getLevelTitle'
+        />
 
-<div 
-id='highScoreBox'>
-Highscores etc<br>
-</div>
-</div>       
+        <div 
+        id='highScoreBox'>
+        Highscores etc<br>
+        </div>
+    </div>       
     `,
     data() {
         return {
@@ -46,7 +50,7 @@ Highscores etc<br>
             playerPosition: {},
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            level: 0
+            currentLevelTitle: ''
         }
     },
     created() {
@@ -59,8 +63,8 @@ Highscores etc<br>
         diamonds(totalAmountOfDiamonds) {
             this.totalAmountOfDiamonds = totalAmountOfDiamonds;
         },
-        getLevel(currentLevel){
-            this.level = currentLevel;
+        getLevelTitle(currentLevelTitle){
+            this.currentLevelTitle = currentLevelTitle;
         }
     }
 }
