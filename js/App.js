@@ -1,4 +1,5 @@
 import Grid from './Grid.js'
+import Level from './Level.js'
 import Level1 from './Level1.js'
 import Timer from './Timer.js'
 import DiamondCounter from './DiamondCounter.js'
@@ -14,19 +15,14 @@ export default{
 
 <div id='gameInfoBox'> 
     <Timer 
-    v-if='timeLimit > 0'
     id='gameTimer'
-    :timeLimit='timeLimit'
-    />
-    <p 
-    v-else
-    id='gameTimer'
-    > Out of time</p>
+    ></Timer>
 
     <DiamondCounter 
-    id='diamondCounter'
     :diamondCount='diamondCount'
     :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
+
+    <div :getLevel= 'level'></div>
 </div>
 
 <Grid 
@@ -40,22 +36,21 @@ id="gridBox"
 <div 
 id='highScoreBox'>
 Highscores etc<br>
-<button type='submit' @click='startTimer'> Testbutton for timer </button> 
 </div>
 </div>       
     `,
     data() {
         return {
-            level1: new Level1(),
+            level1: new Level(),
             size: 0,
             playerPosition: {},
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            timeLimit: 45,
+            level: 0
         }
     },
     created() {
-        this.size = this.level1.map.length;
+        this.size = 20;
     },
     methods: {
         getDiamondCount(diamondCount) {
@@ -64,13 +59,8 @@ Highscores etc<br>
         diamonds(totalAmountOfDiamonds) {
             this.totalAmountOfDiamonds = totalAmountOfDiamonds;
         },
-        startTimer(){
-            if(this.timeLimit != 0) {
-                setTimeout(() => {
-                    this.timeLimit -= 1
-                    this.startTimer()
-                }, 1000)
-            }
-        }, 
+        getLevel(currentLevel){
+            this.level = currentLevel;
+        }
     }
 }
