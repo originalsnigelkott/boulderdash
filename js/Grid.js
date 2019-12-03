@@ -45,13 +45,12 @@ export default{
             } else if (e.keyCode === 39) {
                 this.handleKeyRight(e);
             }else if (e.keyCode === 38) {
-              this.handleKeyUp(e);
+                this.handleKeyUp(e);
             } else if (e.keyCode === 40) {
-              this.handleKeyDown(e);
+                this.handleKeyDown(e);
             }
             this.setTileIsMoving();
-            this.canFallTo(7,2);
-            //this.moveBoulders();
+            this.moveBoulders();
         },
         handleKeyUp(e) {
             //PlayerCanMoveTo - true -> move y-1
@@ -234,32 +233,40 @@ export default{
         },
         setTileIsMoving(){
             for(let i = 0; i < this.boulderPositions.length; i++){
-                if(this.map[(this.boulderPositions[i][1]) + 1][this.boulderPositions[i][0]] === 'X') {
-                    this.tiles[this.boulderPositions[i][0]][this.boulderPositions[i][1]].isMoving = true;
+                let y = this.boulderPositions[i][1];
+                let x = this.boulderPositions[i][0];
+                if(this.map[y + 1][x] === 'X' || (this.map[y + 1][x] === 'P' && this.tiles[y][x].isMoving === true)) {
+                    console.log("Boulder is now a moving tile " + i);                    
+                    this.tiles[y][x].isMoving = true;
+                } else {
+                    console.log("Boulder is not a moving tile " + i);
+                    this.tiles[y][x].isMoving = false;
                 }
             }
         },
-        /*moveBoulders(){
+        moveBoulders(){
             for(let i = 0; i < this.boulderPositions.length; i++){
-                let x = this.boulderPositions[i][0];
                 let y = this.boulderPositions[i][1];
-                if(this.tiles[x][y].isMoving === true){
-                    console.log('Boulder is moving')
+                let x = this.boulderPositions[i][0];
+                if(this.tiles[y][x].isMoving === true){
+                    console.log('Boulder is a moving tile');
                     if(this.canFallTo(x, y)){
-                        console.log('Boulder falling')
-                        let tempTile = this.tiles[x][y];
-                        this.tiles[x][y] = this.tiles[x][y + 1];
-                        this.tiles[x][y + 1] = tempTile;
-                        let tempMap = this.map[x][y];
-                        this.map[x][y] = this.map[x][y + 1];
-                        this.map[x][y + 1] = tempMap;
+                        console.log('Boulder falling');
+                        this.boulderPositions[i][1]++;
+                        this.map[y][x]= 'X';
+                        this.tiles[y][x].tileState = 'X';
+                        this.tiles[y][x].isMoving = 'false';
+
+
+                        this.map[y+1][x] = 'B';
+                        this.tiles[y+1][x].tileState = 'B';
+                        this.tiles[y+1][x].isMoving = true;
                     }
                 }
             }
-        },*/
-        canFallTo(boulderX, boulderY){
-            let nextPosition = this.map[boulderX][boulderY + 1];
-            if(this.map[boulderX][boulderY + 1] === 'X'){
+        },
+        canFallTo(x, y){
+            if(this.map[y + 1][x] === 'X' || this.map[y + 1][x] === 'P'){
                 console.log('Boulder can move')
                 return true;
             }
