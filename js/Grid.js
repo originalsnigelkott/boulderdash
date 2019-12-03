@@ -1,6 +1,7 @@
 let enemyMovementCase = 0
 
 import Tile from './Tile.js'
+import Store from './Store.js'
 
 export default{
     components: {
@@ -21,8 +22,8 @@ export default{
     `,
     data() {
         return {
-            playerPosition: [7,3], //x,y
-            enemyPosition: [14,15],
+            playerPosition: [], //x,y
+            enemyPosition: [],
             boulderPositions: [
                 [6,2],
                 [7,2],
@@ -30,28 +31,8 @@ export default{
             tiles: [],
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            map1:[
-                ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W', 'W' ,'W' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'X' ,'X' ,'X' ,'X' ,'X' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'X' ,'D' ,'D' ,'G' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'X' ,'X' ,'X' ,'' ,'X' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'G' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],
-                ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
-            ]
+            currentLevel: 1,
+            map1: []
         }
     },
     methods: {
@@ -296,6 +277,10 @@ export default{
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
         },
+        getLevel(){
+            this.currentLevel;
+            this.$emit('currentLevel', this.currentLevel);
+        },
         updateEnvironments(){
             setTimeout(() => {
                 this.updateEnvironment -= 1
@@ -303,17 +288,25 @@ export default{
                 this.enemyMove();
             }, 150)
         },
+        setCurrentLevel(){
+            Store.currentLevelNum = 1;            
+            this.map1 = Store.maps[Store.currentLevelNum-1];
+            this.title = Store.currentLevel.title;
+            this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
+            this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
+            //player
+            this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+            //enemy
+            //this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+        }
     },
     computed: {
         flatTiles() {
             return this.tiles.flat();
         },
-    },
+    },    
     created() {
-        //player
-        this.map1[this.playerPosition[1]][this.playerPosition[0]] = 'P';
-        //enemy
-        this.map1[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+        this.setCurrentLevel();        
         //placing boulders from boulderPositions
         this.placeBoulders();
         this.fillTiles();
