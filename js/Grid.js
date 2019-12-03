@@ -24,10 +24,7 @@ export default{
         return {
             playerPosition: [], //x,y
             enemyPosition: [],
-            boulderPositions: [
-                [6,2],
-                [7,2],
-            ],
+            boulderPositions: [],
             tiles: [],
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
@@ -290,6 +287,7 @@ export default{
             this.title = Store.currentLevel.title[Store.currentLevelNum-1];
             this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
             this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
+            this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum-1];
             //player
             this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
             //placing boulders from boulderPositions        
