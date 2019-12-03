@@ -54,7 +54,7 @@ export default{
         },
         handleKeyUp(e) {
             //PlayerCanMoveTo - true -> move y-1
-            if(this.PlayerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
+            if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -64,7 +64,7 @@ export default{
         },
         handleKeyDown(e){
             //PlayerCanMoveTo - true -> move y+1
-            if(this.PlayerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
+            if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -74,7 +74,7 @@ export default{
         },
         handleKeyLeft(e){
             //PlayerCanMoveTo - true -> move x-1
-            if(this.PlayerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
+            if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -84,7 +84,7 @@ export default{
         },
         handleKeyRight(e){
             //PlayerCanMoveTo - true -> move x+1
-            if(this.PlayerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
+            if(this.playerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
                 this.playerMove(e);
                 console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
@@ -92,14 +92,14 @@ export default{
                 console.log('Right: not possible');
             }    
         },
-        PlayerCanMoveTo(x,y){
+        playerCanMoveTo(x,y){
             //inside the map
             if(x < 0 ||x > this.size || y < 0 || y >= this.size){
                 return false;
             }
             //you can only go down the road
-            if(this.map[y][x] !== 'D' && this.map[y][x] !== 'X' && this.map[y][x] !== 'G'){
-                console.log(this.map[y][x], this.tiles[x][y].isMoving);
+            if(this.tiles[y][x].tileState !== 'D' && this.tiles[y][x].tileState !== 'X' && this.tiles[y][x].tileState !== 'G'){
+                //console.log(this.map[y][x], this.tiles[x][y].isMoving);
                 return false;
             }
             return true;
@@ -109,14 +109,14 @@ export default{
                 return false;
             }
             //you can only go on empty spaces(X)
-            if(this.map[y][x] !== 'X'){
-                console.log(this.map[y][x]);
+            if(this.tiles[y][x].tileState !== 'X'){
+                //console.log(this.map[y][x]);
                 return false;
             }
             return true;
         },
         playerMove(e){
-            this.map[this.playerPosition[1]][this.playerPosition[0]] = 'X';
+            //this.map[this.playerPosition[1]][this.playerPosition[0]] = 'X';
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
             //changeDivContent(this.playerPosition[0],this.playerPosition[1]);
             if(e.keyCode === 37){
@@ -134,23 +134,23 @@ export default{
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
             }            
-            if(this.map[this.playerPosition[1]][this.playerPosition[0]] == 'G'){
+            if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
                 this.$emit('getDiamondCount', this.diamondCount);
                 //console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
-            this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+            //this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
             this.$forceUpdate();
         },
         enemyMove(){
-            this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'X';
+            //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'X';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
 
             switch(enemyMovementCase){
                 case 0:
-                        if(this.map[this.enemyPosition[1]][this.enemyPosition[0]-1] === 'X'){
+                        if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]-1].tileState === 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]-1;
                             console.log('Enemy moved left')
                             break;
@@ -159,7 +159,7 @@ export default{
                             break;
                         }
                 case 1:
-                        if(this.map[this.enemyPosition[1]-1][this.enemyPosition[0]] === 'X'){
+                        if(this.tiles[this.enemyPosition[1]-1][this.enemyPosition[0]].tileState === 'X'){
                             this.enemyPosition[1]=this.enemyPosition[1]-1;
                             console.log('Enemy moved up')
                             break;
@@ -168,7 +168,7 @@ export default{
                             break;
                         }
                 case 2:
-                        if(this.map[this.enemyPosition[1]][this.enemyPosition[0]+1] == 'X'){
+                        if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]+1].tileState == 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]+1;
                             console.log('Enemy moved right')
                             break;
@@ -177,7 +177,7 @@ export default{
                             break;
                         }
                 case 3:
-                        if(this.map[this.enemyPosition[1]+1][this.enemyPosition[0]] === 'X'){
+                        if(this.tiles[this.enemyPosition[1]+1][this.enemyPosition[0]].tileState === 'X'){
                             this.enemyPosition[1]=this.enemyPosition[1]+1;
                             console.log('Enemy moved down')
                             break;
@@ -187,11 +187,10 @@ export default{
                         }
                     }
 
-            this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+            //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='E';
             this.$forceUpdate();
         },
-
         fillTiles() {
             for(let row = 0; row < this.size; row++){
                 this.tiles[row] = [];
@@ -208,7 +207,7 @@ export default{
                     }else if(this.map[row][col] === 'B'){
                         this.tiles[row].push(new Tile('B', row, col, false))
                     }else if(this.map[row][col] === 'X'){
-                        this.tiles[row].push(new Tile('x', row, col, false))
+                        this.tiles[row].push(new Tile('X', row, col, false))
                     }else if(this.map[row][col] === 'E'){
                         this.tiles[row].push(new Tile('E', row, col, false))
                     }
@@ -235,7 +234,7 @@ export default{
             for(let i = 0; i < this.boulderPositions.length; i++){
                 let y = this.boulderPositions[i][1];
                 let x = this.boulderPositions[i][0];
-                if(this.map[y + 1][x] === 'X' || (this.map[y + 1][x] === 'P' && this.tiles[y][x].isMoving === true)) {
+                if(this.tiles[y + 1][x].tileState === 'X' || (this.tiles[y + 1][x].tileState === 'P' && this.tiles[y][x].isMoving === true)) {
                     console.log("Boulder is now a moving tile " + i);                    
                     this.tiles[y][x].isMoving = true;
                 } else {
@@ -253,12 +252,12 @@ export default{
                     if(this.canFallTo(x, y)){
                         console.log('Boulder falling');
                         this.boulderPositions[i][1]++;
-                        this.map[y][x]= 'X';
+                        //this.map[y][x]= 'X';
                         this.tiles[y][x].tileState = 'X';
                         this.tiles[y][x].isMoving = 'false';
 
 
-                        this.map[y+1][x] = 'B';
+                        //this.map[y+1][x] = 'B';
                         this.tiles[y+1][x].tileState = 'B';
                         this.tiles[y+1][x].isMoving = true;
                     }
@@ -266,7 +265,7 @@ export default{
             }
         },
         canFallTo(x, y){
-            if(this.map[y + 1][x] === 'X' || this.map[y + 1][x] === 'P'){
+            if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
                 console.log('Boulder can move')
                 return true;
             }
