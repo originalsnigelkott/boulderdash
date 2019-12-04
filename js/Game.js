@@ -40,7 +40,7 @@ export default{
             mapSizeX: 20,
             mapSizeY: 20,
             gameOver: false,
-            style: ''
+            style: 'd'
         }
     },
     methods: {
