@@ -1,9 +1,9 @@
-import Grid from './Grid.js'
+import Game from './Game.js'
 
 export default{
     props:['diamondCount', 'totalAmountOfDiamonds'],
     components:{
-        Grid,
+        Game,
     },
     template:`
     <div id='diamondCounter'>
