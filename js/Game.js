@@ -1,5 +1,6 @@
 let enemyMovementCase = 0
 
+
 import Tile from './Tile.js'
 import Store from './Store.js'
 
@@ -283,7 +284,6 @@ export default{
                         this.tiles[y][x].tileState = 'X';
                         this.tiles[y][x].isMoving = 'false';
 
-
                         //this.map[y+1][x] = 'B';
                         this.tiles[y+1][x].tileState = 'B';
                         this.tiles[y+1][x].isMoving = true;
@@ -312,7 +312,6 @@ export default{
                             this.tiles[y][x].tileState = 'X'
                         }
                 }
-
         },
         playerPushingBoulderLeft(){
             for(let i = 0; i < this.boulderPositions.length ; i++){
@@ -323,8 +322,27 @@ export default{
                     this.tiles[y][x-1].tileState = 'B'
                     this.tiles[y][x].tileState = 'X'
                 }
-        }      
+            }      
     },
+    bouldersFallingFromStack(){
+        for(let i = 0; i < this.boulderPositions.length ; i++){
+            let x = this.boulderPositions[i][0] 
+            let y = this.boulderPositions[i][1]
+            if(this.tiles[y-1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y-1][x+1].tileState === 'X'){
+                this.boulderPositions[i][1] = this.boulderPositions[i][1];
+                this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
+                this.tiles[y][x].tileState = 'X'
+                this.tiles[y][x+1].tileState = 'B'
+            }else if(this.tiles[y-1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y-1][x-1].tileState === 'X'){
+                this.boulderPositions[i][1] = this.boulderPositions[i][1];
+                this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
+                this.tiles[y][x].tileState = 'X'
+                this.tiles[y][x-1].tileState = 'B'
+            }
+        }
+
+    },
+
     enemyCaugthYouGameOver(){
         if(this.enemyPosition[1]-1 == this.playerPosition[1] && this.enemyPosition[0] == this.playerPosition[0]){
             console.log('Got your feet')
@@ -348,7 +366,7 @@ export default{
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
         updateEnvironments(){
-            setTimeout(() => {
+           setTimeout(() => {
                 if(this.gameOver === true) {
                     this.setCurrentLevel(this.gameOver);
                 } else {
@@ -359,6 +377,12 @@ export default{
                 }
             }, 150)
         },
+        CheckForBoulderStacks(){
+            setTimeout(() => {
+                this.bouldersFallingFromStack();
+                this.CheckForBoulderStacks();
+             }, 500)
+         },
         setCurrentLevel(gameOver){
             if(gameOver) {
                 let gameOverMapIndex = Store.maps.length - 1;
@@ -393,7 +417,8 @@ export default{
 
                 this.$forceUpdate();
                 this.setKeyHandler();
-                this.updateEnvironments();        
+                this.updateEnvironments();
+                this.CheckForBoulderStacks()        
                 this.getLevelTitle();
                 //enemy
                 //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
