@@ -300,21 +300,28 @@ export default{
             return false;
         },
         playerPushingBoulderRight(){
-            if(this.tiles[this.playerPosition[1]][this.playerPosition[0]+1].tileState === 'B' && this.tiles[this.playerPosition[1]][this.playerPosition[0]+2].tileState === 'X'){
-                this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState = 'P';  
-                this.tiles[this.playerPosition[1]][this.playerPosition[0]+1].tileState = 'X';
-                this.tiles[this.playerPosition[1]][this.playerPosition[0]+2].tileState = 'B';
-            }  
-            this.$forceUpdate();
+                    for(let i = 0; i < this.boulderPositions.length ; i++){
+                        let x = this.boulderPositions[i][0] 
+                        let y = this.boulderPositions[i][1]
+                        if(this.playerPosition[0]+1 == x && this.playerPosition[1] == y && this.tiles[y][x+1].tileState == 'X'){
+                            this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
+                            this.tiles[y][x+1].tileState = 'B'
+                            this.tiles[y][x].tileState = 'X'
+                        }
+                }
+
         },
         playerPushingBoulderLeft(){
-            if(this.tiles[this.playerPosition[1]][this.playerPosition[0]-1].tileState === 'B' && this.tiles[this.playerPosition[1]][this.playerPosition[0]-2].tileState === 'X'){
-                this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState = 'P';  
-                this.tiles[this.playerPosition[1]][this.playerPosition[0]-1].tileState = 'X';
-                this.tiles[this.playerPosition[1]][this.playerPosition[0]-2].tileState = 'B';
-                console.log('Pushed boulder Left')
-            }  
-        },
+            for(let i = 0; i < this.boulderPositions.length ; i++){
+                let x = this.boulderPositions[i][0] 
+                let y = this.boulderPositions[i][1]
+                if(this.playerPosition[0]-1 == x && this.playerPosition[1] == y && this.tiles[y][x-1].tileState == 'X'){
+                    this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
+                    this.tiles[y][x-1].tileState = 'B'
+                    this.tiles[y][x].tileState = 'X'
+                }
+        }      
+    },
         amountOfDiamonds(){
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);            
