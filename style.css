@@ -85,6 +85,9 @@ img{
     position: absolute;
     z-index: 1;
     color: red;
+    font-size: 3em;
     top: 50%;
+    margin-top: -33.75vh;
     left: 50%;
+    margin-left: -23.75vw;
 }
