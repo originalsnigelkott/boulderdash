@@ -17,7 +17,8 @@ const currentLevel = {
     mapSizeY: [level1.mapSizeY, level2.mapSizeY, GameOverLevel.mapSizeY],
     playerPosition: [level1.playerPosition, level2.playerPosition],
     enemyPosition: [level1.enemyPosition, level2.enemyPosition],
-    boulderPositions: [level1.boulderPositions, level2.boulderPositions]
+    boulderPositions: [level1.boulderPositions, level2.boulderPositions],
+    style: [level1.style, level2.style],
 };
 
 export default {

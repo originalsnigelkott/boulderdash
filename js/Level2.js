@@ -9,6 +9,7 @@ const level = {
     ],
     mapSizeX: 20,
     mapSizeY: 20,
+    style: 'c',
     gameOver: false,
     map: [
         ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
