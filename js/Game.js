@@ -32,7 +32,8 @@ export default{
             currentLevel: 1,
             map: [],
             mapSizeX: 20,
-            mapSizeY: 20
+            mapSizeY: 20,
+            style: ''
         }
     },
     methods: {
@@ -48,6 +49,12 @@ export default{
                 this.handleKeyUp(e);
             } else if (e.keyCode === 40) {
                 this.handleKeyDown(e);
+            }else if (e.keyCode === 69) {
+                this.style = 'e';
+                this.setCurrentLevel();
+            }else if (e.keyCode === 68) {
+                this.style = 'd';
+                this.setCurrentLevel();
             }
             this.setTileIsMoving();
             this.moveBoulders();
@@ -225,7 +232,7 @@ export default{
             }
         },
         tilePicture(tileState){
-            let pictureLocation = "img/" + tileState + ".png";
+            let pictureLocation = "img/" + tileState+this.style + ".png";
             return pictureLocation;
         },
         tileId(tilesCol, tilesRow){
@@ -356,6 +363,6 @@ export default{
         },
     },    
     created() {
-        this.setCurrentLevel();        
+        this.setCurrentLevel();     
     }
 }
