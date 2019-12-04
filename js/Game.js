@@ -12,7 +12,6 @@ export default{
     },
     template: `
     <div class="grid">
-    <h1 v-if="gameOver === true" id="game-over"> Game Over!</h1>
       <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
@@ -40,7 +39,7 @@ export default{
             mapSizeX: 20,
             mapSizeY: 20,
             gameOver: false,
-            style: ''
+            style: 'd'
         }
     },
     methods: {
@@ -63,8 +62,7 @@ export default{
                 this.style = 'd';
                 this.changeStyle();
             }
-            this.setTileIsMoving();
-            this.moveBoulders();
+            console.log("Game over status: " + this.gameOver);
         },
         handleKeyUp(e) {
             //PlayerCanMoveTo - true -> move y-1
@@ -331,36 +329,51 @@ export default{
         },
         updateEnvironments(){
             setTimeout(() => {
-                this.updateEnvironments()
-                this.enemyMove();
-                this.moveBoulders();
+                if(this.gameOver === true) {
+                    this.setCurrentLevel(this.gameOver);
+                } else {
+                    this.updateEnvironments();
+                    this.enemyMove();
+                    this.setTileIsMoving();
+                    this.moveBoulders();
+                }
             }, 150)
         },
-        setCurrentLevel(){
-            this.diamondCount=0;
-            this.totalAmountOfDiamonds=0;
-            this.enemyMovementCase = 0;
-            Store.currentLevelNum = this.currentLevel;
-            this.map = Store.maps[Store.currentLevelNum-1];
-            this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
-            this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
-            this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
-            this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
-            this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
-            this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum-1];
-            //player
-            this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
-            //placing boulders from boulderPositions        
-            this.placeBoulders();
-            this.tiles = [];
-            this.fillTiles();
+        setCurrentLevel(gameOver){
+            if(gameOver) {
+                let gameOverMapIndex = Store.maps.length - 1;
+                this.map = Store.maps[gameOverMapIndex];
+                this.mapSizeX = Store.maps[gameOverMapIndex].mapSizeX;
+                this.mapSizeY = Store.maps[gameOverMapIndex].mapSizeY;
+                this.tiles = [];
+                this.fillTiles();
+                this.$forceUpdate();
+            } else {
+                this.diamondCount=0;
+                this.totalAmountOfDiamonds=0;
+                this.enemyMovementCase = 0;
+                Store.currentLevelNum = this.currentLevel;
+                this.map = Store.maps[Store.currentLevelNum-1];
+                this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
+                this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
+                this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
+                this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
+                this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
+                this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum-1];
+                //player
+                this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
+                //placing boulders from boulderPositions        
+                this.placeBoulders();
+                this.tiles = [];
+                this.fillTiles();
 
-            this.$forceUpdate();
-            this.setKeyHandler();
-            this.updateEnvironments();        
-            this.getLevelTitle();
-            //enemy
-            //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+                this.$forceUpdate();
+                this.setKeyHandler();
+                this.updateEnvironments();        
+                this.getLevelTitle();
+                //enemy
+                //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+            }
         },
         changeStyle(){
             this.setCurrentLevel();
