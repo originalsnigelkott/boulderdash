@@ -17,8 +17,6 @@ body{
     position: relative;
 }
 .tile{
-    width: 5%;
-    height: 5%;
     border: solid black 0.5px;
 }
 #app{

@@ -16,8 +16,13 @@ export default{
       <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
+        :style="{
+                width: calculateTileWidth + '%',
+                height: calculateTileHeight + '%',
+                }"
         class="tile" >
-        <img  :src="tilePicture(tile.tileState)">
+        <img
+        :src="tilePicture(tile.tileState)">
         </div>
     </div>
     `,
@@ -358,6 +363,12 @@ export default{
     computed: {
         flatTiles() {
             return this.tiles.flat();
+        },
+        calculateTileHeight() {
+            return 100 / this.mapSizeY;
+        },
+        calculateTileWidth() {
+            return 100 / this.mapSizeX;
         },
     },    
     created() {
