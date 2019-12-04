@@ -1,3 +1,4 @@
+import GameOverLevel from './GameOverLevel.js'
 import level1 from './Level1.js'
 import level2 from './Level2.js'
 
@@ -6,7 +7,8 @@ const currentLevelNum = 1;
 
 const maps = [
     level1.map,
-    level2.map
+    level2.map,
+    GameOverLevel.map,
 ];
 
 const currentLevel = {
