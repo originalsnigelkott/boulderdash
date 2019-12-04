@@ -32,7 +32,8 @@ export default{
             currentLevel: 1,
             map: [],
             mapSizeX: 20,
-            mapSizeY: 20
+            mapSizeY: 20,
+            style: ''
         }
     },
     methods: {
@@ -48,6 +49,12 @@ export default{
                 this.handleKeyUp(e);
             } else if (e.keyCode === 40) {
                 this.handleKeyDown(e);
+            }else if (e.keyCode === 69) {
+                this.style = 'e';
+                this.setCurrentLevel();
+            }else if (e.keyCode === 68) {
+                this.style = 'd';
+                this.setCurrentLevel();
             }
             this.setTileIsMoving();
             this.moveBoulders();
@@ -73,6 +80,9 @@ export default{
             }    
         },
         handleKeyLeft(e){
+
+            this.playerPushingBoulderLeft()
+
             //PlayerCanMoveTo - true -> move x-1
             if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
                 this.playerMove(e);
@@ -83,6 +93,9 @@ export default{
             }    
         },
         handleKeyRight(e){
+
+            this.playerPushingBoulderRight()
+
             //PlayerCanMoveTo - true -> move x+1
             if(this.playerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
                 this.playerMove(e);
@@ -219,7 +232,7 @@ export default{
             }
         },
         tilePicture(tileState){
-            let pictureLocation = "img/" + tileState + ".png";
+            let pictureLocation = "img/" + tileState+this.style + ".png";
             return pictureLocation;
         },
         tileId(tilesCol, tilesRow){
@@ -276,6 +289,22 @@ export default{
             //console.log('Boulder cant move')
             return false;
         },
+        playerPushingBoulderRight(){
+            if(this.tiles[this.playerPosition[1]][this.playerPosition[0]+1].tileState === 'B' && this.tiles[this.playerPosition[1]][this.playerPosition[0]+2].tileState === 'X'){
+                this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState = 'P';  
+                this.tiles[this.playerPosition[1]][this.playerPosition[0]+1].tileState = 'X';
+                this.tiles[this.playerPosition[1]][this.playerPosition[0]+2].tileState = 'B';
+            }  
+            this.$forceUpdate();
+        },
+        playerPushingBoulderLeft(){
+            if(this.tiles[this.playerPosition[1]][this.playerPosition[0]-1].tileState === 'B' && this.tiles[this.playerPosition[1]][this.playerPosition[0]-2].tileState === 'X'){
+                this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState = 'P';  
+                this.tiles[this.playerPosition[1]][this.playerPosition[0]-1].tileState = 'X';
+                this.tiles[this.playerPosition[1]][this.playerPosition[0]-2].tileState = 'B';
+                console.log('Pushed boulder Left')
+            }  
+        },
         amountOfDiamonds(){
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);            
@@ -285,16 +314,16 @@ export default{
         },
         updateEnvironments(){
             setTimeout(() => {
-                this.updateEnvironment -= 1
                 this.updateEnvironments()
                 this.enemyMove();
+                this.moveBoulders();
             }, 150)
         },
         setCurrentLevel(){
             this.diamondCount=0;
             this.totalAmountOfDiamonds=0;
-            Store.currentLevelNum = this.currentLevel;   
-            console.log(Store.currentLevelNum);         
+            this.enemyMovementCase = 0;
+            Store.currentLevelNum = this.currentLevel;
             this.map = Store.maps[Store.currentLevelNum-1];
             this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
             this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
@@ -318,14 +347,14 @@ export default{
         },
         setNextLevel(){
             this.currentLevel += 1;
-            this.setCurrentLevel();
-            this.$forceUpdate();
-            
-            this.fillTiles;
-            this.setKeyHandler();
-            this.updateEnvironments();        
-            this.getLevelTitle();
-            
+            if(this.currentLevel < 3){
+                this.setCurrentLevel();
+                this.$forceUpdate();                
+                this.fillTiles;
+                this.setKeyHandler();
+                this.updateEnvironments();        
+                this.getLevelTitle();
+            }
         }
     },
     computed: {
@@ -334,6 +363,6 @@ export default{
         },
     },    
     created() {
-        this.setCurrentLevel();        
+        this.setCurrentLevel();     
     }
 }
