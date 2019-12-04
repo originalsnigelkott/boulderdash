@@ -170,7 +170,10 @@ export default{
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'X';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
 
+            this.enemyCaugthYouGameOver()
+
             switch(enemyMovementCase){
+                
                 case 0:
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]-1].tileState === 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]-1;
@@ -322,6 +325,21 @@ export default{
                 }
         }      
     },
+    enemyCaugthYouGameOver(){
+        if(this.enemyPosition[1]-1 == this.playerPosition[1] && this.enemyPosition[0] == this.playerPosition[0]){
+            console.log('Got your feet')
+            this.gameOver = true;
+        }else if(this.enemyPosition[1]+1 == this.playerPosition[1] && this.enemyPosition[0] == this.playerPosition[0]){
+            console.log('Got your head')
+            this.gameOver = true;
+        }else if(this.enemyPosition[1] == this.playerPosition[1] && this.enemyPosition[0]-1 == this.playerPosition[0]){
+            console.log('Got your right arm')
+            this.gameOver = true;
+        }else if(this.enemyPosition[1] == this.playerPosition[1] && this.enemyPosition[0]+1 == this.playerPosition[0]){
+            console.log('Got your left arm')
+            this.gameOver = true;
+        }
+    },
         amountOfDiamonds(){
             this.totalAmountOfDiamonds++;
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);            
@@ -334,10 +352,10 @@ export default{
                 if(this.gameOver === true) {
                     this.setCurrentLevel(this.gameOver);
                 } else {
-                    this.updateEnvironments();
                     this.enemyMove();
                     this.setTileIsMoving();
                     this.moveBoulders();
+                    this.updateEnvironments();
                 }
             }, 150)
         },
