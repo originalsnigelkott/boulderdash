@@ -1,7 +1,7 @@
 const level = {
     title: 'Game over',
-    mapSizeX: this.map[0].length,
-    mapSizeY: this.map.length,
+    mapSizeX: 25,
+    mapSizeY: 19,
     map: [
         ['w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w',],
         ['w','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','w',],
@@ -22,5 +22,7 @@ const level = {
         ['w','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','w',],
         ['w','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','x','w',],
         ['w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w',],        
-    ]
+    ],
 }
+
+export default level
