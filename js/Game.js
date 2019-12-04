@@ -12,11 +12,17 @@ export default{
     },
     template: `
     <div class="grid">
+    <h1 v-if="gameOver === true" id="game-over"> Game Over!</h1>
       <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
+        :style="{
+                width: calculateTileWidth + '%',
+                height: calculateTileHeight + '%',
+                }"
         class="tile" >
-        <img  :src="tilePicture(tile.tileState)">
+        <img
+        :src="tilePicture(tile.tileState)">
         </div>
     </div>
     `,
@@ -32,7 +38,9 @@ export default{
             currentLevel: 1,
             map: [],
             mapSizeX: 20,
-            mapSizeY: 20
+            mapSizeY: 20,
+            gameOver: false,
+            style: ''
         }
     },
     methods: {
@@ -48,6 +56,12 @@ export default{
                 this.handleKeyUp(e);
             } else if (e.keyCode === 40) {
                 this.handleKeyDown(e);
+            }else if (e.keyCode === 69) {
+                this.style = 'e';
+                this.changeStyle();
+            }else if (e.keyCode === 68) {
+                this.style = 'd';
+                this.changeStyle();
             }
             this.setTileIsMoving();
             this.moveBoulders();
@@ -225,7 +239,7 @@ export default{
             }
         },
         tilePicture(tileState){
-            let pictureLocation = "img/" + tileState + ".png";
+            let pictureLocation = "img/" + tileState+this.style + ".png";
             return pictureLocation;
         },
         tileId(tilesCol, tilesRow){
@@ -270,6 +284,9 @@ export default{
                         //this.map[y+1][x] = 'B';
                         this.tiles[y+1][x].tileState = 'B';
                         this.tiles[y+1][x].isMoving = true;
+                        if(y + 1 === this.playerPosition[1] && x === this.playerPosition[0]) {
+                            this.gameOver = true;
+                        }
                     }
                 }
             }
@@ -338,6 +355,14 @@ export default{
             //enemy
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
         },
+        changeStyle(){
+            this.setCurrentLevel();
+            this.$forceUpdate();                
+            this.fillTiles;
+            this.setKeyHandler();
+            this.updateEnvironments();        
+            this.getLevelTitle();
+        },
         setNextLevel(){
             this.currentLevel += 1;
             if(this.currentLevel < 3){
@@ -354,8 +379,14 @@ export default{
         flatTiles() {
             return this.tiles.flat();
         },
+        calculateTileHeight() {
+            return 100 / this.mapSizeY;
+        },
+        calculateTileWidth() {
+            return 100 / this.mapSizeX;
+        },
     },    
     created() {
-        this.setCurrentLevel();        
+        this.setCurrentLevel();     
     }
 }

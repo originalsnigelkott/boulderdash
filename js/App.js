@@ -32,14 +32,17 @@ export default{
         id="gridBox"        
         :level="level1"
         :size="size"
+
         @getDiamondCount='getDiamondCount'
         @totalAmountOfDiamonds='diamonds'
         @currentLevelTitle='getLevelTitle'
-        />
-
+        />        
         <div 
-        id='highScoreBox'>
-        Highscores etc<br>
+        id='highScoreBox'
+        >
+        Highscores etc<br><br>
+        Change style (e key: Frozen, d key: Default)
+        </div>
         </div>
     </div>       
     `,
@@ -54,7 +57,7 @@ export default{
         }
     },
     created() {
-        this.size = 20;
+        this.size = 20;        
     },
     methods: {
         getDiamondCount(diamondCount) {
