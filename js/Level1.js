@@ -15,6 +15,7 @@ const level = {
     ],
     mapSizeX: 20,
     mapSizeY: 20,
+    style: 'd',
     map: [
         ['W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W' ,'W'],
         ['W', 'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'X' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'D' ,'W'],

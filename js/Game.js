@@ -40,7 +40,8 @@ export default{
             mapSizeX: 20,
             mapSizeY: 20,
             gameOver: false,
-            style: 'd'
+            style: 'd',
+            changeStyle: false
         }
     },
     methods: {
@@ -58,9 +59,11 @@ export default{
                 this.handleKeyDown(e);
             }else if (e.keyCode === 69) {
                 this.style = 'e';
+                this.changeStyle=true;
                 this.changeStyle();
             }else if (e.keyCode === 68) {
                 this.style = 'd';
+                this.changeStyle=true;
                 this.changeStyle();
             }
             console.log("Game over status: " + this.gameOver);
@@ -401,6 +404,9 @@ export default{
                 this.totalAmountOfDiamonds=0;
                 this.enemyMovementCase = 0;
                 Store.currentLevelNum = this.currentLevel;
+                if(this.changeStyle == false){
+                    this.style=Store.currentLevel.style[Store.currentLevelNum-1];
+                }
                 this.map = Store.maps[Store.currentLevelNum-1];
                 this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
                 this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
@@ -425,15 +431,19 @@ export default{
             }
         },
         changeStyle(){
+            console.log('change');
             this.setCurrentLevel();
             this.$forceUpdate();                
             this.fillTiles;
             this.setKeyHandler();
             this.updateEnvironments();        
             this.getLevelTitle();
+            
+            this.$forceUpdate();  
         },
         setNextLevel(){
             this.currentLevel += 1;
+            this.changeStyle=false;
             if(this.currentLevel < 3){
                 this.setCurrentLevel();
                 this.$forceUpdate();                
