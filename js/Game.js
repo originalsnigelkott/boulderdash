@@ -51,10 +51,10 @@ export default{
                 this.handleKeyDown(e);
             }else if (e.keyCode === 69) {
                 this.style = 'e';
-                this.setCurrentLevel();
+                this.changeStyle();
             }else if (e.keyCode === 68) {
                 this.style = 'd';
-                this.setCurrentLevel();
+                this.changeStyle();
             }
             this.setTileIsMoving();
             this.moveBoulders();
@@ -344,6 +344,14 @@ export default{
             this.getLevelTitle();
             //enemy
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
+        },
+        changeStyle(){
+            this.setCurrentLevel();
+            this.$forceUpdate();                
+            this.fillTiles;
+            this.setKeyHandler();
+            this.updateEnvironments();        
+            this.getLevelTitle();
         },
         setNextLevel(){
             this.currentLevel += 1;
