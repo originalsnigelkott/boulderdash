@@ -335,12 +335,16 @@ export default{
         setCurrentLevel(gameOver){
             if(gameOver) {
                 let gameOverMapIndex = Store.maps.length - 1;
+                this.currentLevel = gameOverMapIndex + 1;
+                Store.currentLevelNum = this.currentLevel;
                 this.map = Store.maps[gameOverMapIndex];
-                this.mapSizeX = Store.maps[gameOverMapIndex].mapSizeX;
-                this.mapSizeY = Store.maps[gameOverMapIndex].mapSizeY;
+                this.mapSizeX = Store.currentLevel.mapSizeX[gameOverMapIndex];
+                this.mapSizeY = Store.currentLevel.mapSizeY[gameOverMapIndex];
+                this.currentLevelTitle = Store.currentLevel.title[gameOverMapIndex];
                 this.tiles = [];
                 this.fillTiles();
                 this.$forceUpdate();
+                this.getLevelTitle();
             } else {
                 this.diamondCount=0;
                 this.totalAmountOfDiamonds=0;
