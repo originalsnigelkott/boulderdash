@@ -39,6 +39,7 @@ export default{
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
+<<<<<<< Updated upstream
             gameOver: false,
             style: 'd'
         }
