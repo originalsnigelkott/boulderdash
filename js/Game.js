@@ -435,10 +435,8 @@ export default{
             this.setCurrentLevel();
             this.$forceUpdate();                
             this.fillTiles;
-            this.setKeyHandler();
-            this.updateEnvironments();        
+            this.setKeyHandler(); 
             this.getLevelTitle();
-            
             this.$forceUpdate();  
         },
         setNextLevel(){
@@ -448,8 +446,7 @@ export default{
                 this.setCurrentLevel();
                 this.$forceUpdate();                
                 this.fillTiles;
-                this.setKeyHandler();
-                this.updateEnvironments();        
+                this.setKeyHandler();       
                 this.getLevelTitle();
             }
         }
