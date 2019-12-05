@@ -69,7 +69,7 @@ img{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 5.5vh;
+    font-size: 1em;
     width: 33.33333%;
 }
 .headerImg{

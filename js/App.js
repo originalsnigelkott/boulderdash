@@ -18,14 +18,16 @@ export default{
         <div id='gameInfoBox'> 
             <Timer 
             id='gameTimer'
-            ></Timer>
+            />
 
             <DiamondCounter 
             :diamondCount='diamondCount'
-            :totalAmountOfDiamonds='totalAmountOfDiamonds'/>
+            :totalAmountOfDiamonds='totalAmountOfDiamonds'
+            />
 
             <LevelBox
-            :currentLevelTitle= 'currentLevelTitle'/>
+            :currentLevelTitle= 'currentLevelTitle'
+            />
         </div>
 
         <Game 
@@ -37,12 +39,12 @@ export default{
         @totalAmountOfDiamonds='diamonds'
         @currentLevelTitle='getLevelTitle'
         />        
-        <div 
-        id='highScoreBox'
-        >
-        Highscores etc<br><br>
-        Change style (e key: Frozen, d key: Default)
-        </div>
+            <div 
+            id='highScoreBox'
+            >
+                Highscores etc<br><br>
+                Change style (e key: Frozen, d key: Default)
+            </div>
         </div>
     </div>       
     `,
