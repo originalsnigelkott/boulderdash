@@ -116,7 +116,7 @@ export default{
         },
         playerCanMoveTo(x,y){
             //inside the map
-            if(x < 0 ||x > this.size || y < 0 || y >= this.size){
+            if(x < 0 ||x > this.mapSizeX || y < 0 || y >= this.mapSizeY){
                 return false;
             }
             //you can only go down the road
@@ -127,7 +127,7 @@ export default{
             return true;
         },
         enemyCanMoveTo(x,y){
-            if(x < 0 ||x > this.size || y < 0 || y >= this.size){
+            if(x < 0 ||x > this.mapSizeX || y < 0 || y >= this.mapSizeY){
                 return false;
             }
             //you can only go on empty spaces(X)
@@ -434,7 +434,7 @@ export default{
             console.log('change');
             this.setCurrentLevel();
             this.$forceUpdate();                
-            this.fillTiles;
+            this.fillTiles();
             this.setKeyHandler(); 
             this.getLevelTitle();
             this.$forceUpdate();  
