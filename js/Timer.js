@@ -1,10 +1,12 @@
 export default{
     template:`
-        <div @click='startTimer'>
-            <h3 v-if='timeLimit != 0'> {{timeLimit}} </h3>
-            <h6 v-else> Game over </h6>
+        <div>
+            <h3> {{timeLimit}} </h3>
         </div>
     `,
+    props: {
+        gameStart: Boolean,
+    },
     data(){
         return{
             timeLimit: 45,
@@ -12,7 +14,7 @@ export default{
     },
     methods:{
         startTimer(){
-            if(this.timeLimit != 0) {
+            if(this.gameStart && this.timeLimit != 0) {
                 setTimeout(() => {
                     this.timeLimit -= 1
                     this.startTimer()
@@ -20,4 +22,9 @@ export default{
             }
         }, 
     },
+    watch: {
+        gameStart() {
+            this.startTimer()
+        }
+    }
 }

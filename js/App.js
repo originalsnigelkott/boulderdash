@@ -1,65 +1,42 @@
 import Game from './Game.js'
-import Level from './Level.js'
-//import Level1 from './Level1.js'
-import Timer from './Timer.js'
-import DiamondCounter from './DiamondCounter.js'
-import LevelBox from './LevelBox.js'
+import GameInfoControl from './GameInfoControl.js'
 
 export default{
     components: {
         Game,
-        Timer,
-        DiamondCounter,
-        LevelBox
+        GameInfoControl
     },
     template: `
     <div id="app">
-
-        <div id='gameInfoBox'> 
-            <Timer 
-            id='gameTimer'
-            />
-
-            <DiamondCounter 
-            :diamondCount='diamondCount'
-            :totalAmountOfDiamonds='totalAmountOfDiamonds'
-            />
-
-            <LevelBox
-            :currentLevelTitle= 'currentLevelTitle'
-            />
-        </div>
+        <GameInfoControl 
+        :currentLevelTitle="currentLevelTitle"
+        :totalAmountOfDiamonds="totalAmountOfDiamonds"
+        :diamondCount="diamondCount"
+        />
 
         <Game 
-        id="gridBox"        
-        :level="level1"
-        :size="size"
-
+        id="gridBox"
         @getDiamondCount='getDiamondCount'
         @totalAmountOfDiamonds='diamonds'
         @currentLevelTitle='getLevelTitle'
-        />        
-            <div 
-            id='highScoreBox'
-            >
-                Highscores etc<br><br>
-                Change style (e key: Frozen, d key: Default)
-            </div>
+        />
+
+        <div 
+        id='highScoreBox'
+        >
+            Highscores etc<br><br>
+            Change style (e key: Frozen, d key: Default)
         </div>
     </div>       
     `,
     data() {
         return {
-            level1: new Level(),
-            size: 0,
-            playerPosition: {},
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
             currentLevelTitle: ''
         }
     },
-    created() {
-        this.size = 20;        
+    created() {        
     },
     methods: {
         getDiamondCount(diamondCount) {
