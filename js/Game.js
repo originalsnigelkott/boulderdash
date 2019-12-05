@@ -64,11 +64,9 @@ export default{
             }else if (e.keyCode === 69) {
                 this.style = 'e';
                 this.changedStyle=true;
-                this.changeStyle();
             }else if (e.keyCode === 68) {
                 this.style = 'd';
                 this.changedStyle=true;
-                this.changeStyle();
             }
             console.log("Game over status: " + this.gameOver);
         },
@@ -438,6 +436,7 @@ export default{
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
                 //placing boulders from boulderPositions        
                 this.placeBoulders();
+                
                 this.tiles = [];
                 this.fillTiles(); 
                 this.$forceUpdate();
@@ -449,9 +448,6 @@ export default{
                 //enemy
                 //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             }
-        },
-        changeStyle(){
-            this.setCurrentLevel();
         },
         setNextLevel(){
             this.currentLevel += 1;
