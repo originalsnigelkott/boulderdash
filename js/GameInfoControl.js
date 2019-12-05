@@ -14,19 +14,47 @@ export default{
         totalAmountOfDiamonds: 0,
     },
     template: `
-        <div id="gameInfoBox">
-            <Timer 
-            id='gameTimer'
-            />
+        <div id="gameInfoControl">
+            <div id="gameInfoBox">
+                <Timer 
+                id='gameTimer'
+                :gameStart="gameStart"
+                />
 
-            <DiamondCounter 
-            :diamondCount='diamondCount'
-            :totalAmountOfDiamonds='totalAmountOfDiamonds'
-            />
+                <DiamondCounter 
+                :diamondCount='diamondCount'
+                :totalAmountOfDiamonds='totalAmountOfDiamonds'
+                />
 
-            <LevelBox
-            :currentLevelTitle= 'currentLevelTitle'
-            />
+                <LevelBox
+                :currentLevelTitle= 'currentLevelTitle'
+                />
+            </div>
+            <div id="gameControl">
+                <button
+                @click="startGame"
+                >Start game
+                </button>
+                <button
+                @click="resetGame"
+                >Reset game
+                </button>
+            </div>
         </div>
     `,
+    data() {
+        return{
+            gameStart: false,
+        }
+    },
+    methods: {
+        startGame(){
+            this.gameStart = true;
+            console.log("Start game pressed");
+        },
+        resetGame(){
+            this.gameStart = false;
+            console.log("Reset game pressed");
+        }
+    },
 }
