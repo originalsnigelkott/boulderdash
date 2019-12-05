@@ -439,8 +439,7 @@ export default{
                 //placing boulders from boulderPositions        
                 this.placeBoulders();
                 this.tiles = [];
-                this.fillTiles();
-
+                this.fillTiles(); 
                 this.$forceUpdate();
                 this.setKeyHandler();
                 this.clearUpdateEnvironments();
@@ -452,13 +451,7 @@ export default{
             }
         },
         changeStyle(){
-            console.log('change');
             this.setCurrentLevel();
-            this.$forceUpdate();                
-            this.fillTiles();
-            this.setKeyHandler(); 
-            this.getLevelTitle();
-            this.$forceUpdate();  
         },
         setNextLevel(){
             this.currentLevel += 1;
