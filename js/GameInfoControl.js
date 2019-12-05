@@ -32,10 +32,12 @@ export default{
             </div>
             <div id="gameControl">
                 <button
+                v-if='!gameStart'
                 @click="startGame"
                 >Start game
                 </button>
                 <button
+                v-if='gameStart'
                 @click="resetGame"
                 >Reset game
                 </button>
@@ -55,6 +57,17 @@ export default{
         resetGame(){
             this.gameStart = false;
             console.log("Reset game pressed");
+        },
+        setKeyHandler(e) {            
+            window.addEventListener("keydown", this.keyHandler);
+        },
+        keyHandler(e) {
+            if(e.keyCode === 13){ 
+                this.startGame();               
+            }
         }
     },
+    created() {
+        this.setKeyHandler() 
+    }
 }

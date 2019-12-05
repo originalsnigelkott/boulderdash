@@ -1,7 +1,7 @@
 import Game from './Game.js'
 import GameInfoControl from './GameInfoControl.js'
 
-export default{
+export default {
     components: {
         Game,
         GameInfoControl
@@ -23,9 +23,21 @@ export default{
 
         <div 
         id='highScoreBox'
-        >
-            Highscores etc<br><br>
-            Change style (e key: Frozen, d key: Default)
+        >       
+        <div id="gallery">
+            <div class="styleinfo">
+                <span class="">key: d</span>
+                <div class="imgbox">                
+                    <img src="/img/style_default.jpg" />
+                </div>
+            </div>
+                <div class="styleinfo">
+                <span class="">key: e</span>
+                <div class="imgbox">                
+                    <img src="/img/style_frozen.jpg" />
+                </div>
+            </div>
+        </div>     
         </div>
     </div>       
     `,
@@ -36,7 +48,7 @@ export default{
             currentLevelTitle: ''
         }
     },
-    created() {        
+    created() {
     },
     methods: {
         getDiamondCount(diamondCount) {
@@ -45,7 +57,7 @@ export default{
         diamonds(totalAmountOfDiamonds) {
             this.totalAmountOfDiamonds = totalAmountOfDiamonds;
         },
-        getLevelTitle(currentLevelTitle){
+        getLevelTitle(currentLevelTitle) {
             this.currentLevelTitle = currentLevelTitle;
         }
     }

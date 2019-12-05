@@ -1,4 +1,5 @@
 let enemyMovementCase = 0
+var gameTickRateFunction;
 
 
 import Tile from './Tile.js'
@@ -35,7 +36,7 @@ export default{
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
             currentLevelTitle: '',
-            currentLevel: 1,
+            currentLevel: 0,
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
@@ -49,6 +50,9 @@ export default{
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
+            if(e.keyCode === 13 && this.currentLevel == 0){
+                this.setNextLevel();
+            }
             if (e.keyCode === 37) {
                 this.handleKeyLeft(e);
             } else if (e.keyCode === 39) {
@@ -60,11 +64,9 @@ export default{
             }else if (e.keyCode === 69) {
                 this.style = 'e';
                 this.changedStyle=true;
-                this.changeStyle();
             }else if (e.keyCode === 68) {
                 this.style = 'd';
                 this.changedStyle=true;
-                this.changeStyle();
             }
             console.log("Game over status: " + this.gameOver);
         },
@@ -331,19 +333,32 @@ export default{
         for(let i = 0; i < this.boulderPositions.length ; i++){
             let x = this.boulderPositions[i][0] 
             let y = this.boulderPositions[i][1]
-            if(this.tiles[y-1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y-1][x+1].tileState === 'X'){
+            if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' && (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                console.log('You died from a boulder falling from the Right')
+                this.boulderPositions[i][1] = this.boulderPositions[i][1];
+                this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
+                this.tiles[y][x].tileState = 'X'
+                this.tiles[y+1][x-1].tileState = 'X'
+                this.tiles[y][x-1].tileState = 'B'
+            }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                console.log('You died from a boulder falling from the Left')
+                this.boulderPositions[i][1] = this.boulderPositions[i][1];
+                this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
+                this.tiles[y][x].tileState = 'X'
+                this.tiles[y+1][x+1].tileState = 'X'
+                this.tiles[y][x+1].tileState = 'B'
+            }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y+1][x+1].tileState === 'X'){
                 this.boulderPositions[i][1] = this.boulderPositions[i][1];
                 this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                 this.tiles[y][x].tileState = 'X'
                 this.tiles[y][x+1].tileState = 'B'
-            }else if(this.tiles[y-1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y-1][x-1].tileState === 'X'){
+            }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y+1][x-1].tileState === 'X'){
                 this.boulderPositions[i][1] = this.boulderPositions[i][1];
                 this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                 this.tiles[y][x].tileState = 'X'
                 this.tiles[y][x-1].tileState = 'B'
             }
         }
-
     },
 
     enemyCaugthYouGameOver(){
@@ -369,22 +384,25 @@ export default{
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
         updateEnvironments(){
-           setTimeout(() => {
+            gameTickRateFunction = setTimeout(() => {
                 if(this.gameOver === true) {
                     this.setCurrentLevel(this.gameOver);
                 } else {
-                    this.enemyMove();
                     this.setTileIsMoving();
                     this.moveBoulders();
+                    this.enemyMove();
                     this.updateEnvironments();
                 }
             }, 150)
         },
+        clearUpdateEnvironments() {
+            clearTimeout(gameTickRateFunction);
+          },
         CheckForBoulderStacks(){
             setTimeout(() => {
                 this.bouldersFallingFromStack();
                 this.CheckForBoulderStacks();
-             }, 500)
+             }, 1500)
          },
         setCurrentLevel(gameOver){
             if(gameOver) {
@@ -405,39 +423,31 @@ export default{
                 this.enemyMovementCase = 0;
                 Store.currentLevelNum = this.currentLevel;
                 if(this.changedStyle == false){
-                    this.style=Store.currentLevel.style[Store.currentLevelNum-1];
+                    this.style=Store.currentLevel.style[Store.currentLevelNum];
                 }
-                this.map = Store.maps[Store.currentLevelNum-1];
-                this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
-                this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
-                this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
-                this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
-                this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
-                this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum-1];
+                this.map = Store.maps[Store.currentLevelNum];
+                this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum];
+                this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum];
+                this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum];
+                this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum];
+                this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum];
+                this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum];
                 //player
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
                 //placing boulders from boulderPositions        
                 this.placeBoulders();
+                
                 this.tiles = [];
-                this.fillTiles();
-
+                this.fillTiles(); 
                 this.$forceUpdate();
                 this.setKeyHandler();
+                this.clearUpdateEnvironments();
                 this.updateEnvironments();
-                this.CheckForBoulderStacks()        
+                this.CheckForBoulderStacks()
                 this.getLevelTitle();
                 //enemy
                 //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             }
-        },
-        changeStyle(){
-            console.log('change');
-            this.setCurrentLevel();
-            this.$forceUpdate();                
-            this.fillTiles();
-            this.setKeyHandler(); 
-            this.getLevelTitle();
-            this.$forceUpdate();  
         },
         setNextLevel(){
             this.currentLevel += 1;
