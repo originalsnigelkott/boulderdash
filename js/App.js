@@ -1,31 +1,18 @@
 import Game from './Game.js'
-import Timer from './Timer.js'
-import DiamondCounter from './DiamondCounter.js'
-import LevelBox from './LevelBox.js'
+import GameInfoControl from './GameInfoControl.js'
 
 export default{
     components: {
         Game,
-        Timer,
-        DiamondCounter,
-        LevelBox
+        GameInfoControl
     },
     template: `
     <div id="app">
-        <div id='gameInfoBox'> 
-            <Timer 
-            id='gameTimer'
-            />
-
-            <DiamondCounter 
-            :diamondCount='diamondCount'
-            :totalAmountOfDiamonds='totalAmountOfDiamonds'
-            />
-
-            <LevelBox
-            :currentLevelTitle= 'currentLevelTitle'
-            />
-        </div>
+        <GameInfoControl 
+        :currentLevelTitle="currentLevelTitle"
+        :totalAmountOfDiamonds="totalAmountOfDiamonds"
+        :diamondCount="diamondCount"
+        />
 
         <Game 
         id="gridBox"
