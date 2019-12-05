@@ -35,7 +35,7 @@ export default{
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
             currentLevelTitle: '',
-            currentLevel: 1,
+            currentLevel: 0,
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
@@ -49,6 +49,9 @@ export default{
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
+            if(e.keyCode === 13 && this.currentLevel == 0){
+                this.setNextLevel();
+            }
             if (e.keyCode === 37) {
                 this.handleKeyLeft(e);
             } else if (e.keyCode === 39) {
@@ -418,15 +421,15 @@ export default{
                 this.enemyMovementCase = 0;
                 Store.currentLevelNum = this.currentLevel;
                 if(this.changedStyle == false){
-                    this.style=Store.currentLevel.style[Store.currentLevelNum-1];
+                    this.style=Store.currentLevel.style[Store.currentLevelNum];
                 }
-                this.map = Store.maps[Store.currentLevelNum-1];
-                this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum-1];
-                this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum-1];
-                this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum-1];
-                this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum-1];
-                this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum-1];
-                this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum-1];
+                this.map = Store.maps[Store.currentLevelNum];
+                this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum];
+                this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum];
+                this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum];
+                this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum];
+                this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum];
+                this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum];
                 //player
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
                 //placing boulders from boulderPositions        
