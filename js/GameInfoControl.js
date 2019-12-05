@@ -32,10 +32,12 @@ export default{
             </div>
             <div id="gameControl">
                 <button
+                v-if='!gameStart'
                 @click="startGame"
                 >Start game
                 </button>
                 <button
+                v-if='gameStart'
                 @click="resetGame"
                 >Reset game
                 </button>
