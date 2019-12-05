@@ -1,4 +1,5 @@
 let enemyMovementCase = 0
+var gameTickRateFunction;
 
 
 import Tile from './Tile.js'
@@ -385,17 +386,20 @@ export default{
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
         updateEnvironments(){
-           setTimeout(() => {
+            gameTickRateFunction = setTimeout(() => {
                 if(this.gameOver === true) {
                     this.setCurrentLevel(this.gameOver);
                 } else {
-                    this.enemyMove();
                     this.setTileIsMoving();
                     this.moveBoulders();
+                    this.enemyMove();
                     this.updateEnvironments();
                 }
             }, 150)
         },
+        clearUpdateEnvironments() {
+            clearTimeout(gameTickRateFunction);
+          },
         CheckForBoulderStacks(){
             setTimeout(() => {
                 this.bouldersFallingFromStack();
@@ -439,6 +443,7 @@ export default{
 
                 this.$forceUpdate();
                 this.setKeyHandler();
+                this.clearUpdateEnvironments();
                 this.updateEnvironments();
                 this.CheckForBoulderStacks()
                 this.getLevelTitle();
