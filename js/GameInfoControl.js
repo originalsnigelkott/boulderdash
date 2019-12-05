@@ -57,6 +57,17 @@ export default{
         resetGame(){
             this.gameStart = false;
             console.log("Reset game pressed");
+        },
+        setKeyHandler(e) {            
+            window.addEventListener("keydown", this.keyHandler);
+        },
+        keyHandler(e) {
+            if(e.keyCode === 13){ 
+                this.startGame();               
+            }
         }
     },
+    created() {
+        this.setKeyHandler() 
+    }
 }
