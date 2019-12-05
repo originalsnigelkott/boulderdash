@@ -331,19 +331,32 @@ export default{
         for(let i = 0; i < this.boulderPositions.length ; i++){
             let x = this.boulderPositions[i][0] 
             let y = this.boulderPositions[i][1]
-            if(this.tiles[y-1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y-1][x+1].tileState === 'X'){
+            if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' && (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                console.log('You died from a boulder falling from the Right')
+                this.boulderPositions[i][1] = this.boulderPositions[i][1];
+                this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
+                this.tiles[y][x].tileState = 'X'
+                this.tiles[y+1][x-1].tileState = 'X'
+                this.tiles[y][x-1].tileState = 'B'
+            }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                console.log('You died from a boulder falling from the Left')
+                this.boulderPositions[i][1] = this.boulderPositions[i][1];
+                this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
+                this.tiles[y][x].tileState = 'X'
+                this.tiles[y+1][x+1].tileState = 'X'
+                this.tiles[y][x+1].tileState = 'B'
+            }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y+1][x+1].tileState === 'X'){
                 this.boulderPositions[i][1] = this.boulderPositions[i][1];
                 this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                 this.tiles[y][x].tileState = 'X'
                 this.tiles[y][x+1].tileState = 'B'
-            }else if(this.tiles[y-1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y-1][x-1].tileState === 'X'){
+            }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y+1][x-1].tileState === 'X'){
                 this.boulderPositions[i][1] = this.boulderPositions[i][1];
                 this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                 this.tiles[y][x].tileState = 'X'
                 this.tiles[y][x-1].tileState = 'B'
             }
         }
-
     },
 
     enemyCaugthYouGameOver(){
@@ -384,7 +397,7 @@ export default{
             setTimeout(() => {
                 this.bouldersFallingFromStack();
                 this.CheckForBoulderStacks();
-             }, 500)
+             }, 1500)
          },
         setCurrentLevel(gameOver){
             if(gameOver) {
@@ -424,7 +437,7 @@ export default{
                 this.$forceUpdate();
                 this.setKeyHandler();
                 this.updateEnvironments();
-                this.CheckForBoulderStacks()        
+                this.CheckForBoulderStacks()
                 this.getLevelTitle();
                 //enemy
                 //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
