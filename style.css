@@ -4,6 +4,10 @@
 }
 body{
     margin: 0%;
+    background-image: url('./img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
 }
 .grid{
     display: flex;
@@ -21,17 +25,13 @@ body{
 }
 #app{
 
-    color: wheat;
-    background-image: url('./img/background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-
+    color: wheat;    
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    width: 100vw;
+    margin: 20px;
 }
 
 #gameInfoBox{
@@ -42,7 +42,6 @@ body{
 }
 #highScoreBox{
     display: flex;
-    height: 20vh;
     width: 47.5vw;
     border: white solid 0.1px;
 }
@@ -78,4 +77,38 @@ img{
     width: 3vw;
     height: 5.2vh;
     margin-right: 2vw;
+}
+#container{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    align-items: stretch;
+}
+#gallery{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    align-items: center;
+    width: 100%;
+}
+.styleinfo{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;    
+    align-items: center;
+}
+.imgbox{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    margin: 5px;
+    width: 100px;
+}
+.box {
+    flex-grow: 1;
+    color: #fff;
+    align-self: center;
+}
+.box1 {
+    flex-grow: 2;
 }
