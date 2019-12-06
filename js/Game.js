@@ -10,7 +10,8 @@ export default{
         Tile,
     },
     props: {
-        size: Number,
+        startGame: false,
+        resetGame: false,
     },
     template: `
     <div class="grid">
@@ -470,6 +471,16 @@ export default{
         },
         calculateTileWidth() {
             return 100 / this.mapSizeX;
+        },
+    },
+    watch: {
+        startGame() {
+            if(this.startGame && this.currentLevel === 0) {
+                this.setNextLevel();
+            } else if(!this.startGame) {
+                this.currentLevel = 0;
+                this.setCurrentLevel();
+            }
         },
     },    
     created() {
