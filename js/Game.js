@@ -156,23 +156,28 @@ export default{
             return true;
         },
         playerMove(e){
-            //this.map[this.playerPosition[1]][this.playerPosition[0]] = 'X';
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
-            //changeDivContent(this.playerPosition[0],this.playerPosition[1]);
-            if(e.keyCode === 37){
-                //moveLeft x-1
-                this.playerPosition[0]=this.playerPosition[0]-1;
-            }
-            else if(e.keyCode === 39){
-            //moveRight x+1
-                this.playerPosition[0]=this.playerPosition[0]+1;
-            }          
-            else if(e.keyCode === 38){
-            //moveUp y-1'
-                this.playerPosition[1]=this.playerPosition[1]-1;
-            }else if(e.keyCode === 40){
-            //moveDown y+1
-                this.playerPosition[1]=this.playerPosition[1]+1;
+            switch (e.keyCode){
+                case 37: {
+                    //moveLeft x-1
+                    this.playerPosition[0]=this.playerPosition[0]-1;
+                    break;
+                }
+                case 38: {
+                    //moveUp y-1'
+                    this.playerPosition[1]=this.playerPosition[1]-1;
+                    break;
+                }
+                case 39: {
+                    //moveRight x+1
+                    this.playerPosition[0]=this.playerPosition[0]+1;
+                    break;
+                }
+                case 40: {
+                    //moveDown y+1
+                    this.playerPosition[1]=this.playerPosition[1]+1;
+                    break;
+                }
             }            
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
@@ -184,7 +189,6 @@ export default{
                 //console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
-            //this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
             this.$forceUpdate();
         },
@@ -510,6 +514,7 @@ export default{
                 this.setNextLevel();
             } else if(!this.startGame) {
                 this.currentLevel = 0;
+                this.gameOver = false;
                 this.setCurrentLevel();
             }
         },
