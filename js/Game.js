@@ -51,25 +51,40 @@ export default{
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
-            if(e.keyCode === 13 && this.currentLevel == 0){
-                this.setNextLevel();
+            switch (e.keyCode){
+                case 13: {
+                    if(this.currentLevel === 0) {
+                        this.setNextLevel();
+                    }
+                    break;
+                }
+                case 37: {
+                    this.handleKeyLeft(e);
+                    break;
+                }
+                case 38: {
+                    this.handleKeyUp(e);
+                    break;
+                }
+                case 39: {
+                    this.handleKeyRight(e);
+                    break;
+                }
+                case 40: {
+                    this.handleKeyDown(e);
+                    break;
+                }
+                case 68: {
+                    this.style = 'd';
+                    this.changedStyle=true;
+                    break;
+                }
+                case 69: {
+                    this.style = 'e';
+                    this.changedStyle=true;
+                    break;
+                }
             }
-            if (e.keyCode === 37) {
-                this.handleKeyLeft(e);
-            } else if (e.keyCode === 39) {
-                this.handleKeyRight(e);
-            }else if (e.keyCode === 38) {
-                this.handleKeyUp(e);
-            } else if (e.keyCode === 40) {
-                this.handleKeyDown(e);
-            }else if (e.keyCode === 69) {
-                this.style = 'e';
-                this.changedStyle=true;
-            }else if (e.keyCode === 68) {
-                this.style = 'd';
-                this.changedStyle=true;
-            }
-            console.log("Game over status: " + this.gameOver);
         },
         handleKeyUp(e) {
             //PlayerCanMoveTo - true -> move y-1
@@ -227,23 +242,39 @@ export default{
             for(let row = 0; row < this.mapSizeY; row++){
                 this.tiles[row] = [];
                 for(let col = 0; col < this.mapSizeX; col++){
-                    if( this.map[row][col] === 'D'){
-                        this.tiles[row].push(new Tile('D', row, col, false))
-                    }else if(this.map[row][col] === 'P'){
-                        this.tiles[row].push(new Tile('P', row, col, false))
-                    }else if(this.map[row][col] === 'W'){
-                        this.tiles[row].push(new Tile('W', row, col, false))
-                    }else if(this.map[row][col] === 'G'){
-                        this.amountOfDiamonds()
-                        this.tiles[row].push(new Tile('G', row, col, false))
-                    }else if(this.map[row][col] === 'B'){
-                        this.tiles[row].push(new Tile('B', row, col, false))
-                    }else if(this.map[row][col] === 'X'){
-                        this.tiles[row].push(new Tile('X', row, col, false))
-                    }else if(this.map[row][col] === 'E'){
-                        this.tiles[row].push(new Tile('E', row, col, false))
-                    }else if(this.map[row][col] === 'C'){
-                        this.tiles[row].push(new Tile('C', row, col, false))
+                    switch(this.map[row][col]) {
+                        case 'D': {
+                            this.tiles[row].push(new Tile('D', row, col, false))
+                            break;
+                        }
+                        case 'P': {
+                            this.tiles[row].push(new Tile('P', row, col, false))
+                            break;
+                        }
+                        case 'W': {
+                            this.tiles[row].push(new Tile('W', row, col, false))
+                            break;
+                        }
+                        case 'G': {
+                            this.tiles[row].push(new Tile('G', row, col, false))
+                            break;
+                        }
+                        case 'B': {
+                            this.tiles[row].push(new Tile('B', row, col, false))
+                            break;
+                        }
+                        case 'X': {
+                            this.tiles[row].push(new Tile('X', row, col, false))
+                            break;
+                        }
+                        case 'E': {
+                            this.tiles[row].push(new Tile('E', row, col, false))
+                            break;
+                        }
+                        case 'C': {
+                            this.tiles[row].push(new Tile('C', row, col, false))
+                            break;
+                        }
                     }
                 }
             }
