@@ -53,6 +53,7 @@ export default{
         startGame(){
             this.gameStart = true;
             console.log("Start game pressed");
+            this.$emit('gameStarted', this.gameStart)
         },
         resetGame(){
             this.gameStart = false;

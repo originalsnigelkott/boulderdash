@@ -12,6 +12,7 @@ export default {
         :currentLevelTitle="currentLevelTitle"
         :totalAmountOfDiamonds="totalAmountOfDiamonds"
         :diamondCount="diamondCount"
+        @gameStarted="startGame"
         />
 
         <Game 
@@ -19,6 +20,7 @@ export default {
         @getDiamondCount='getDiamondCount'
         @totalAmountOfDiamonds='diamonds'
         @currentLevelTitle='getLevelTitle'
+        :startGame="gameStarted"
         />
 
         <div 
@@ -45,7 +47,8 @@ export default {
         return {
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            currentLevelTitle: ''
+            currentLevelTitle: '',
+            gameStarted: Boolean,
         }
     },
     created() {
@@ -59,6 +62,9 @@ export default {
         },
         getLevelTitle(currentLevelTitle) {
             this.currentLevelTitle = currentLevelTitle;
+        },
+        startGame(gameStarted) {
+            this.gameStarted = gameStarted;
         }
     }
 }
