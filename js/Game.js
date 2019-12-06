@@ -10,7 +10,8 @@ export default{
         Tile,
     },
     props: {
-        startGame: Boolean,
+        startGame: false,
+        resetGame: false,
     },
     template: `
     <div class="grid">
@@ -476,8 +477,11 @@ export default{
         startGame() {
             if(this.startGame && this.currentLevel === 0) {
                 this.setNextLevel();
+            } else if(!this.startGame) {
+                this.currentLevel = 0;
+                this.setCurrentLevel();
             }
-        }
+        },
     },    
     created() {
         this.setCurrentLevel();     

@@ -53,11 +53,12 @@ export default{
         startGame(){
             this.gameStart = true;
             console.log("Start game pressed");
-            this.$emit('gameStarted', this.gameStart)
+            this.$emit('startGame')
         },
         resetGame(){
             this.gameStart = false;
             console.log("Reset game pressed");
+            this.$emit('resetGame')
         },
         setKeyHandler(e) {            
             window.addEventListener("keydown", this.keyHandler);

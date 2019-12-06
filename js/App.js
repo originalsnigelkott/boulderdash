@@ -12,7 +12,8 @@ export default {
         :currentLevelTitle="currentLevelTitle"
         :totalAmountOfDiamonds="totalAmountOfDiamonds"
         :diamondCount="diamondCount"
-        @gameStarted="startGame"
+        @startGame="startGame"
+        @resetGame="resetGame"
         />
 
         <Game 
@@ -63,8 +64,11 @@ export default {
         getLevelTitle(currentLevelTitle) {
             this.currentLevelTitle = currentLevelTitle;
         },
-        startGame(gameStarted) {
-            this.gameStarted = gameStarted;
-        }
+        startGame() {
+            this.gameStarted = true;
+        },
+        resetGame() {
+            this.gameStarted = false;
+        },
     }
 }
