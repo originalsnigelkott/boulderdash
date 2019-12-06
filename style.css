@@ -112,3 +112,10 @@ img{
 .box1 {
     flex-grow: 2;
 }
+#gallery{
+    display: flex;
+    flex-direction: column;
+
+    width: 8vw;
+    border: wheat 2px solid;
+}
