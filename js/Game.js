@@ -10,7 +10,8 @@ export default{
         Tile,
     },
     props: {
-        size: Number,
+        startGame: false,
+        resetGame: false,
     },
     template: `
     <div class="grid">
@@ -64,11 +65,9 @@ export default{
             }else if (e.keyCode === 69) {
                 this.style = 'e';
                 this.changedStyle=true;
-                this.changeStyle();
             }else if (e.keyCode === 68) {
                 this.style = 'd';
                 this.changedStyle=true;
-                this.changeStyle();
             }
             console.log("Game over status: " + this.gameOver);
         },
@@ -438,9 +437,9 @@ export default{
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
                 //placing boulders from boulderPositions        
                 this.placeBoulders();
+                
                 this.tiles = [];
-                this.fillTiles();
-
+                this.fillTiles(); 
                 this.$forceUpdate();
                 this.setKeyHandler();
                 this.clearUpdateEnvironments();
@@ -450,15 +449,6 @@ export default{
                 //enemy
                 //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             }
-        },
-        changeStyle(){
-            console.log('change');
-            this.setCurrentLevel();
-            this.$forceUpdate();                
-            this.fillTiles();
-            this.setKeyHandler(); 
-            this.getLevelTitle();
-            this.$forceUpdate();  
         },
         setNextLevel(){
             this.currentLevel += 1;
@@ -481,6 +471,16 @@ export default{
         },
         calculateTileWidth() {
             return 100 / this.mapSizeX;
+        },
+    },
+    watch: {
+        startGame() {
+            if(this.startGame && this.currentLevel === 0) {
+                this.setNextLevel();
+            } else if(!this.startGame) {
+                this.currentLevel = 0;
+                this.setCurrentLevel();
+            }
         },
     },    
     created() {
