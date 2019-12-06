@@ -4,17 +4,25 @@ var gameTickRateFunction;
 
 import Tile from './Tile.js'
 import Store from './Store.js'
+import ThemeMenu from './ThemeMenu.js'
 
 export default{
     components: {
         Tile,
+        ThemeMenu,
     },
     props: {
         startGame: false,
         resetGame: false,
     },
     template: `
+    <div>
+            <ThemeMenu
+            @changeTheme='changeTheme'
+            :theme='style'
+            />
     <div class="grid">
+
       <div :id="tileId(tile.position.x,tile.position.y)"
         v-for="(tile, i) in flatTiles"
         :key="'tile' + i + tile.position.x + tile.position.y"
@@ -26,6 +34,7 @@ export default{
         <img
         :src="tilePicture(tile.tileState)">
         </div>
+    </div>
     </div>
     `,
     data() {
@@ -495,7 +504,12 @@ export default{
                 this.setKeyHandler();       
                 this.getLevelTitle();
             }
-        }
+        },
+        changeTheme(style){
+            console.log('Theme changed')
+            this.style = style
+            this.changedStyle == true
+        },
     },
     computed: {
         flatTiles() {

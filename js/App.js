@@ -27,20 +27,7 @@ export default {
         <div 
         id='highScoreBox'
         >       
-        <div id="gallery">
-            <div class="styleinfo">
-                <span class="">key: d</span>
-                <div class="imgbox">                
-                    <img src="/img/style_default.jpg" />
-                </div>
-            </div>
-                <div class="styleinfo">
-                <span class="">key: e</span>
-                <div class="imgbox">                
-                    <img src="/img/style_frozen.jpg" />
-                </div>
-            </div>
-        </div>     
+  
         </div>
     </div>       
     `,
