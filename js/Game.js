@@ -322,10 +322,17 @@ export default{
                 let y = this.boulderPositions[i][1];
                 let x = this.boulderPositions[i][0];
                 if(this.tiles[y + 1][x].tileState === 'X' || (this.tiles[y + 1][x].tileState === 'P' && this.tiles[y][x].isMoving === true)) {
-                    //console.log("Boulder is now a moving tile " + i);                    
                     this.tiles[y][x].isMoving = true;
                 } else {
-                    //console.log("Boulder is not a moving tile " + i);
+                    this.tiles[y][x].isMoving = false;
+                }
+            }
+            for(let i = 0; i < this.diamondPositions.length; i++){
+                let y = this.diamondPositions[i][1];
+                let x = this.diamondPositions[i][0];
+                if(this.tiles[y + 1][x].tileState === 'X') {
+                    this.tiles[y][x].isMoving = true;
+                } else {
                     this.tiles[y][x].isMoving = false;
                 }
             }
@@ -353,12 +360,31 @@ export default{
                 }
             }
         },
-        canFallTo(x, y){
-            if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
-                //console.log('Boulder can move')
-                return true;
+        moveDiamonds(){
+            for(let i = 0; i < this.diamondPositions.length; i++){
+                let y = this.diamondPositions[i][1];
+                let x = this.diamondPositions[i][0];
+                if(this.tiles[y][x].isMoving === true){
+                    if(this.canFallTo(x, y)){
+                        this.diamondPositions[i][1]++;
+                        this.tiles[y][x].tileState = 'X';
+                        this.tiles[y][x].isMoving = 'false';
+                        this.tiles[y+1][x].tileState = 'G';
+                        this.tiles[y+1][x].isMoving = true;
+                    }
+                }
             }
-            //console.log('Boulder cant move')
+        },
+        canFallTo(x, y){
+            if(this.tiles[y][x].tileState === 'B') {
+                if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
+                    return true;
+                }
+            } else if(this.tiles[y][x].tileState === 'G') {
+                if(this.tiles[y + 1][x].tileState === 'X') {
+                    return true;
+                }
+            }
             return false;
         },
         playerPushingBoulderRight(){
@@ -443,6 +469,7 @@ export default{
                 } else {
                     this.setTileIsMoving();
                     this.moveBoulders();
+                    this.moveDiamonds();
                     this.enemyMove();
                     this.updateEnvironments();
                 }
