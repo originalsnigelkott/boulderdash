@@ -6,13 +6,21 @@ import level2 from './Level2.js'
 
 const currentLevelNum = 1;
 
+const levels = [
+    level0,
+    level1,
+    level2,
+    GameOverLevel,
+]
+/*
 const maps = [
     level0.map,
     level1.map,
     level2.map,
     GameOverLevel.map,
 ];
-
+*/
+/*
 const currentLevel = {
     title: [level0.title, level1.title, level2.title, GameOverLevel.title],
     mapSizeX: [level0.mapSizeX, level1.mapSizeX, level2.mapSizeX, GameOverLevel.mapSizeX],
@@ -22,9 +30,10 @@ const currentLevel = {
     boulderPositions: [level0.boulderPositions, level1.boulderPositions, level2.boulderPositions],
     style: [level0.style, level1.style, level2.style],
 };
-
+*/
 export default {
-    maps,
-    currentLevel,
-    currentLevelNum
+    //maps,
+    //currentLevel,
+    currentLevelNum,
+    levels,
 }

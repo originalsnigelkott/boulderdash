@@ -7,6 +7,7 @@ const level = {
         [8,5],
         [2,10],
     ],
+    diamondPositions: [],
     mapSizeX: 20,
     mapSizeY: 20,
     style: 'c',
