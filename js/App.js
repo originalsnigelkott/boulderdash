@@ -23,12 +23,6 @@ export default {
         @currentLevelTitle='getLevelTitle'
         :startGame="gameStarted"
         />
-
-        <div 
-        id='highScoreBox'
-        >       
-  
-        </div>
     </div>       
     `,
     data() {

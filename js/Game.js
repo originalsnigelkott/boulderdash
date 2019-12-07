@@ -17,24 +17,26 @@ export default{
     },
     template: `
     <div>
-            <ThemeMenu
-            @changeTheme='changeTheme'
-            :theme='style'
-            />
-    <div class="grid">
-
-      <div :id="tileId(tile.position.x,tile.position.y)"
-        v-for="(tile, i) in flatTiles"
-        :key="'tile' + i + tile.position.x + tile.position.y"
-        :style="{
+    <div id='gameScreen'>
+        <div class="grid">
+            <div :id="tileId(tile.position.x,tile.position.y)"
+            v-for="(tile, i) in flatTiles"
+            :key="'tile' + i + tile.position.x + tile.position.y"
+            :style="{
                 width: calculateTileWidth + '%',
                 height: calculateTileHeight + '%',
                 }"
-        class="tile" >
-        <img
-        :src="tilePicture(tile.tileState)">
+                class="tile" >
+                <img
+                :src="tilePicture(tile.tileState)">
+                </div>
+            </div>
+            <ThemeMenu
+            @changeTheme='changeTheme'
+            :theme='style'
+            id='themeMenu'
+            />
         </div>
-    </div>
     </div>
     `,
     data() {
@@ -139,6 +141,7 @@ export default{
             return true;
         },
         enemyCanMoveTo(x,y){
+            //inside the map
             if(x < 0 ||x > this.mapSizeX || y < 0 || y >= this.mapSizeY){
                 return false;
             }
@@ -412,7 +415,7 @@ export default{
             setTimeout(() => {
                 this.bouldersFallingFromStack();
                 this.CheckForBoulderStacks();
-             }, 1500)
+             }, 500)
          },
         setCurrentLevel(gameOver){
             if(gameOver) {
