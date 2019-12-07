@@ -33,6 +33,11 @@ export default{
                 clearTimeout(this.timer);
                 this.timeLimit = 45;
             }
+        },
+        timeLimit() {
+            if(this.timeLimit === 0) {
+                this.$emit('outOfTime')
+            }
         }
     },
 }
