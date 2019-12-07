@@ -13,6 +13,13 @@ const level = {
         [2,12],
         [2,13],
     ],
+    diamondPositions: [
+        [17,3],
+        [7,11],
+        [13,11],
+        [9,16],
+        [12,17],
+    ],
     mapSizeX: 20,
     mapSizeY: 20,
     style: 'd',
