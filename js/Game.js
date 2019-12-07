@@ -55,8 +55,7 @@ export default{
             mapSizeX: 20,
             mapSizeY: 20,
             style: 'd',
-            changedStyle: false,
-            level: Object,
+            changedStyle: false
         }
     },
     methods: {
@@ -64,39 +63,23 @@ export default{
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
-            switch (e.keyCode){
-                case 13: {
-                    if(this.currentLevel === 0) {
-                        this.setNextLevel();
-                    }
-                    break;
-                }
-                case 37: {
-                    this.handleKeyLeft(e);
-                    break;
-                }
-                case 38: {
-                    this.handleKeyUp(e);
-                    break;
-                }
-                case 39: {
-                    this.handleKeyRight(e);
-                    break;
-                }
-                case 40: {
-                    this.handleKeyDown(e);
-                    break;
-                }
-                case 68: {
-                    this.style = 'd';
-                    this.changedStyle=true;
-                    break;
-                }
-                case 69: {
-                    this.style = 'e';
-                    this.changedStyle=true;
-                    break;
-                }
+            if(e.keyCode === 13 && this.currentLevel == 0){
+                this.setNextLevel();
+            }
+            if (e.keyCode === 37) {
+                this.handleKeyLeft(e);
+            } else if (e.keyCode === 39) {
+                this.handleKeyRight(e);
+            }else if (e.keyCode === 38) {
+                this.handleKeyUp(e);
+            } else if (e.keyCode === 40) {
+                this.handleKeyDown(e);
+            }else if (e.keyCode === 69) {
+                this.style = 'e';
+                this.changedStyle=true;
+            }else if (e.keyCode === 68) {
+                this.style = 'd';
+                this.changedStyle=true;
             }
         },
         handleKeyUp(e) {
@@ -482,10 +465,10 @@ export default{
         },
         setCurrentLevel(gameOver){
             if(gameOver) {
-                let gameOverMapIndex = Store.levels.length - 1;
+                let gameOverMapIndex = Store.maps.length - 1;
                 this.currentLevel = gameOverMapIndex + 1;
                 Store.currentLevelNum = this.currentLevel;
-                this.level = Store.levels[gameOverMapIndex];
+                //this.level = Store.levels[gameOverMapIndex];
                 this.map = this.level.map;
                 this.mapSizeX = this.level.mapSizeX;
                 this.mapSizeY = this.level.mapSizeY;
@@ -498,27 +481,18 @@ export default{
                 this.diamondCount=0;
                 this.enemyMovementCase = 0;
                 Store.currentLevelNum = this.currentLevel;
-                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
                 if(this.changedStyle == false){
-                    this.style = this.level.style;
+                    this.style=Store.currentLevel.style[Store.currentLevelNum];
                 }
-                this.map = this.level.map;
-                this.mapSizeX = this.level.mapSizeX;
-                this.mapSizeY = this.level.mapSizeY;
-                this.currentLevelTitle = this.level.currentLevelTitle;
-                this.playerPosition = this.level.playerPosition;
-                this.enemyPosition = this.level.enemyPosition;
-                this.boulderPositions = this.level.boulderPositions;
-                this.diamondPositions = this.level.diamondPositions;
-                this.totalAmountOfDiamonds= this.diamondPositions.length;
-                /*this.map = _.cloneDeep(Store.maps[Store.currentLevelNum]);
-                this.mapSizeX = _.cloneDeep(Store.currentLevel.mapSizeX[Store.currentLevelNum]);
+                this.map = Store.maps[Store.currentLevelNum];
+                this.mapSizeX = Store.currentLevel.mapSizeX[Store.currentLevelNum];
                 this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum];
                 this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum];
                 this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum];
                 this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum];
                 this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum];
-                */
+                this.diamondPositions = Store.currentLevel.diamondPositions[Store.currentLevelNum];
+                this.totalAmountOfDiamonds = Store.currentLevel.diamondPositions[Store.currentLevelNum].length;
                 //player
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
                 //placing boulders from boulderPositions        
