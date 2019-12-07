@@ -14,6 +14,7 @@ export default{
     },
     props: {
         startGame: false,
+        gameOver: false,
     },
     template: `
     <div>
@@ -53,7 +54,6 @@ export default{
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
-            gameOver: false,
             style: 'd',
             changedStyle: false,
             level: Object,

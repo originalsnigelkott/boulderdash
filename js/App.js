@@ -14,6 +14,7 @@ export default {
         :diamondCount="diamondCount"
         @startGame="startGame"
         @resetGame="resetGame"
+        @outOfTime="outOfTime"
         />
 
         <Game 
@@ -22,6 +23,7 @@ export default {
         @totalAmountOfDiamonds='diamonds'
         @currentLevelTitle='getLevelTitle'
         :startGame="gameStarted"
+        :gameOver="gameOver"
         />
     </div>       
     `,
@@ -31,6 +33,7 @@ export default {
             totalAmountOfDiamonds: 0,
             currentLevelTitle: '',
             gameStarted: Boolean,
+            gameOver: Boolean,
         }
     },
     created() {
@@ -50,6 +53,10 @@ export default {
         },
         resetGame() {
             this.gameStarted = false;
+            this.gameOver = false;
+        },
+        outOfTime(){
+            this.gameOver = true;
         },
     }
 }

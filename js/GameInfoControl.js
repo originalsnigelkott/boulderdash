@@ -19,6 +19,7 @@ export default{
                 <Timer 
                 id='gameTimer'
                 :gameStart="gameStart"
+                @outOfTime="outOfTime"
                 />
 
                 <DiamondCounter 
@@ -52,6 +53,9 @@ export default{
         }
     },
     methods: {
+        outOfTime() {
+            this.$emit('outOfTime')
+        },
         startGame(){
             this.gameStart = true;
             console.log("Start game pressed");
