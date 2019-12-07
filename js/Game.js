@@ -5,6 +5,7 @@ var gameTickRateFunction;
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
+import DiamondCounter from './DiamondCounter.js';
 
 export default{
     components: {
@@ -13,6 +14,7 @@ export default{
     },
     props: {
         startGame: false,
+        gameOver: false,
     },
     template: `
     <div>
@@ -52,7 +54,6 @@ export default{
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
-            gameOver: false,
             style: 'd',
             changedStyle: false,
             level: Object,
@@ -198,8 +199,6 @@ export default{
                     console.log('next level');
                     this.setNextLevel();
                 }
-                this.$emit('getDiamondCount', this.diamondCount);
-                //console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
@@ -322,10 +321,17 @@ export default{
                 let y = this.boulderPositions[i][1];
                 let x = this.boulderPositions[i][0];
                 if(this.tiles[y + 1][x].tileState === 'X' || (this.tiles[y + 1][x].tileState === 'P' && this.tiles[y][x].isMoving === true)) {
-                    //console.log("Boulder is now a moving tile " + i);                    
                     this.tiles[y][x].isMoving = true;
                 } else {
-                    //console.log("Boulder is not a moving tile " + i);
+                    this.tiles[y][x].isMoving = false;
+                }
+            }
+            for(let i = 0; i < this.diamondPositions.length; i++){
+                let y = this.diamondPositions[i][1];
+                let x = this.diamondPositions[i][0];
+                if(this.tiles[y + 1][x].tileState === 'X') {
+                    this.tiles[y][x].isMoving = true;
+                } else {
                     this.tiles[y][x].isMoving = false;
                 }
             }
@@ -353,12 +359,31 @@ export default{
                 }
             }
         },
-        canFallTo(x, y){
-            if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
-                //console.log('Boulder can move')
-                return true;
+        moveDiamonds(){
+            for(let i = 0; i < this.diamondPositions.length; i++){
+                let y = this.diamondPositions[i][1];
+                let x = this.diamondPositions[i][0];
+                if(this.tiles[y][x].isMoving === true){
+                    if(this.canFallTo(x, y)){
+                        this.diamondPositions[i][1]++;
+                        this.tiles[y][x].tileState = 'X';
+                        this.tiles[y][x].isMoving = 'false';
+                        this.tiles[y+1][x].tileState = 'G';
+                        this.tiles[y+1][x].isMoving = true;
+                    }
+                }
             }
-            //console.log('Boulder cant move')
+        },
+        canFallTo(x, y){
+            if(this.tiles[y][x].tileState === 'B') {
+                if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
+                    return true;
+                }
+            } else if(this.tiles[y][x].tileState === 'G') {
+                if(this.tiles[y + 1][x].tileState === 'X') {
+                    return true;
+                }
+            }
             return false;
         },
         playerPushingBoulderRight(){
@@ -430,9 +455,6 @@ export default{
                 this.gameOver = true;
             }
         },
-        amountOfDiamonds(){
-            this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);            
-        },
         getLevelTitle(){
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
@@ -443,6 +465,7 @@ export default{
                 } else {
                     this.setTileIsMoving();
                     this.moveBoulders();
+                    this.moveDiamonds();
                     this.enemyMove();
                     this.updateEnvironments();
                 }
@@ -547,12 +570,16 @@ export default{
                 this.setNextLevel();
             } else if(!this.startGame) {
                 this.currentLevel = 0;
+                this.diamondCount = 0;
                 this.gameOver = false;
                 this.setCurrentLevel();
             }
         },
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
+        },
+        diamondCount() {
+            this.$emit('getDiamondCount', this.diamondCount);
         }
     },    
     created() {
