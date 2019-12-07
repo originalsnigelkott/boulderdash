@@ -1,7 +1,6 @@
 export default{
     template:`
         <div id="gallery">
-            <h1> Click to choose a theme</h1>
             <div class="styleinfo">
                 <div class="imgbox">                
                     <img src="/img/style_default.jpg"
