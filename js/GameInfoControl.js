@@ -29,20 +29,22 @@ export default{
                 <LevelBox
                 :currentLevelTitle= 'currentLevelTitle'
                 />
-            </div>
-            <div id="gameControl">
+                <div id="gameControl">
                 <button
+                id='startGameButton'
                 v-if='!gameStart'
                 @click="startGame"
                 >Start game
                 </button>
                 <button
+                id='resetGameButton'
                 v-if='gameStart'
                 @click="resetGame"
                 >Reset game
                 </button>
             </div>
         </div>
+    </div>
     `,
     data() {
         return{
