@@ -5,6 +5,7 @@ var gameTickRateFunction;
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
+import DiamondCounter from './DiamondCounter.js';
 
 export default{
     components: {
@@ -198,8 +199,6 @@ export default{
                     console.log('next level');
                     this.setNextLevel();
                 }
-                this.$emit('getDiamondCount', this.diamondCount);
-                //console.log('Diamond: '+this.diamondCount);
             }
             //new position on the map            
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
@@ -456,9 +455,6 @@ export default{
                 this.gameOver = true;
             }
         },
-        amountOfDiamonds(){
-            this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);            
-        },
         getLevelTitle(){
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
@@ -574,12 +570,16 @@ export default{
                 this.setNextLevel();
             } else if(!this.startGame) {
                 this.currentLevel = 0;
+                this.diamondCount = 0;
                 this.gameOver = false;
                 this.setCurrentLevel();
             }
         },
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
+        },
+        diamondCount() {
+            this.$emit('getDiamondCount', this.diamondCount);
         }
     },    
     created() {
