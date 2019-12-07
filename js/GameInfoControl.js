@@ -19,6 +19,7 @@ export default{
                 <Timer 
                 id='gameTimer'
                 :gameStart="gameStart"
+                @outOfTime="outOfTime"
                 />
 
                 <DiamondCounter 
@@ -29,20 +30,22 @@ export default{
                 <LevelBox
                 :currentLevelTitle= 'currentLevelTitle'
                 />
-            </div>
-            <div id="gameControl">
+                <div id="gameControl">
                 <button
+                id='startGameButton'
                 v-if='!gameStart'
                 @click="startGame"
                 >Start game
                 </button>
                 <button
+                id='resetGameButton'
                 v-if='gameStart'
                 @click="resetGame"
                 >Reset game
                 </button>
             </div>
         </div>
+    </div>
     `,
     data() {
         return{
@@ -50,13 +53,18 @@ export default{
         }
     },
     methods: {
+        outOfTime() {
+            this.$emit('outOfTime')
+        },
         startGame(){
             this.gameStart = true;
             console.log("Start game pressed");
+            this.$emit('startGame')
         },
         resetGame(){
             this.gameStart = false;
             console.log("Reset game pressed");
+            this.$emit('resetGame')
         },
         setKeyHandler(e) {            
             window.addEventListener("keydown", this.keyHandler);

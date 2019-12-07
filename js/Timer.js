@@ -12,21 +12,32 @@ export default{
     data(){
         return{
             timeLimit: 45,
+            timer: null
         }
     },
     methods:{
         startTimer(){
-            if(this.gameStart && this.timeLimit != 0) {
-                setTimeout(() => {
-                    this.timeLimit -= 1
-                    this.startTimer()
+            if(this.gameStart && this.timeLimit !== 0) {
+                this.timer = setTimeout(() => {
+                    this.timeLimit--;
+                    this.startTimer();
                 }, 1000)
             }
         }, 
     },
     watch: {
         gameStart() {
-            this.startTimer()
+            if (this.gameStart) {
+                this.startTimer()
+            } else {
+                clearTimeout(this.timer);
+                this.timeLimit = 45;
+            }
+        },
+        timeLimit() {
+            if(this.timeLimit === 0) {
+                this.$emit('outOfTime')
+            }
         }
-    }
+    },
 }

@@ -12,6 +12,9 @@ export default {
         :currentLevelTitle="currentLevelTitle"
         :totalAmountOfDiamonds="totalAmountOfDiamonds"
         :diamondCount="diamondCount"
+        @startGame="startGame"
+        @resetGame="resetGame"
+        @outOfTime="outOfTime"
         />
 
         <Game 
@@ -19,33 +22,18 @@ export default {
         @getDiamondCount='getDiamondCount'
         @totalAmountOfDiamonds='diamonds'
         @currentLevelTitle='getLevelTitle'
+        :startGame="gameStarted"
+        :gameOver="gameOver"
         />
-
-        <div 
-        id='highScoreBox'
-        >       
-        <div id="gallery">
-            <div class="styleinfo">
-                <span class="">key: d</span>
-                <div class="imgbox">                
-                    <img src="/img/style_default.jpg" />
-                </div>
-            </div>
-                <div class="styleinfo">
-                <span class="">key: e</span>
-                <div class="imgbox">                
-                    <img src="/img/style_frozen.jpg" />
-                </div>
-            </div>
-        </div>     
-        </div>
     </div>       
     `,
     data() {
         return {
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            currentLevelTitle: ''
+            currentLevelTitle: '',
+            gameStarted: Boolean,
+            gameOver: Boolean,
         }
     },
     created() {
@@ -59,6 +47,16 @@ export default {
         },
         getLevelTitle(currentLevelTitle) {
             this.currentLevelTitle = currentLevelTitle;
-        }
+        },
+        startGame() {
+            this.gameStarted = true;
+        },
+        resetGame() {
+            this.gameStarted = false;
+            this.gameOver = false;
+        },
+        outOfTime(){
+            this.gameOver = true;
+        },
     }
 }

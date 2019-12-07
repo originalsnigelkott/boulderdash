@@ -17,7 +17,6 @@ body{
     margin: auto;
     border: solid black 2px;
     background-color:rgb(39, 39, 39);
-    border: white solid 0.5px;
     position: relative;
 }
 .tile{
@@ -30,18 +29,14 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 95vh;
     margin: 20px;
+    margin-top: 2.5vh;
 }
 
 #gameInfoBox{
     display: flex;
-    height: 10vh;
-    width: 47.5vw;
-    border: white solid 0.1px;
-}
-#highScoreBox{
-    display: flex;
+    height: 7.5vh;
     width: 47.5vw;
     border: white solid 0.1px;
 }
@@ -59,7 +54,7 @@ img{
     display: flex;
     align-content: center;
     font-size: 1em;
-    width: 33.33333%;
+    width: 25%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -69,7 +64,8 @@ img{
     align-items: center;
     justify-content: center;
     font-size: 1em;
-    width: 33.33333%;
+    width: 25%;
+    border: solid white 0.1px;
 }
 .headerImg{
     display: flex;
@@ -102,7 +98,7 @@ img{
     justify-content: space-around;
     flex-flow: row wrap;
     margin: 5px;
-    width: 100px;
+    width: 12.5vw;
 }
 .box {
     flex-grow: 1;
@@ -111,4 +107,36 @@ img{
 }
 .box1 {
     flex-grow: 2;
+}
+#gallery{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    height: 67.5vh;
+    width: 15vw;
+}
+#gameScreen{
+    height: 85vh;
+    width: 47.5vw;
+    margin-top: 2vh;
+}
+#themeMenu{
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: row;
+}
+#startGameButton{
+    font-size: 3vh;
+    height: 7.5vh;
+    width: 11.9vw;
+    background-color: rgba(67, 190, 83, 0.61);
+    color: white;
+}
+#resetGameButton{
+    font-size: 3vh;
+    height: 7.5vh;
+    width: 11.9vw;
+    background-color: rgba(139, 9, 9, 0.534);
+    color: white;
 }

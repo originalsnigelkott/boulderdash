@@ -2,8 +2,8 @@ const level = {
     title: '',
     playerPosition: [7,3],
     enemyPosition: [1,1],
-    boulderPositions: [
-    ],
+    boulderPositions: [],
+    diamondPositions: [],
     mapSizeX: 25,
     mapSizeY: 19,
     style: 'd',

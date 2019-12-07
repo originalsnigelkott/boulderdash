@@ -1,8 +1,9 @@
 const level = {
     title: 'Game over',
-    playerPosition: null,
-    enemyPosition: null,
-    boulderPositions: null,
+    playerPosition: [],
+    enemyPosition: [],
+    boulderPositions: [],
+    diamondPositions: [],
     mapSizeX: 25,
     mapSizeY: 19,
     map: [
