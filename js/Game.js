@@ -177,6 +177,15 @@ export default{
             
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
+                let indexOfDiamond;
+                for(let i = 0; i < this.diamondPositions.length; i++) {
+                    if(this.diamondPositions[i][1] === this.playerPosition[1] && this.diamondPositions[i][0] === this.playerPosition[0]) {
+                        indexOfDiamond = i;
+                        break;
+                    }
+                }
+                this.diamondPositions.splice(indexOfDiamond, 1);
+                console.log(this.diamondPositions);
                 if(this.totalAmountOfDiamonds == this.diamondCount){
                     this.$emit('resetTimerOnLevelComplete');
                     console.log('next level');

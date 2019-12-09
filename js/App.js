@@ -65,13 +65,12 @@ export default {
             this.gameStarted = true;
         },
         resetGame() {
+            this.isTimeLimit = false;
+            this.gameStarted = false;
             this.gameReset = true;
         },
         outOfTime(){
-            this.isTimeLimit = false;
-        },
-        resetTimerOnLevelComplete(){
-            this.levelComplete = true;
-        },
-    },
+            this.isTimeLimit = true;
+        }
+    }
 }
