@@ -8,12 +8,13 @@ export default{
     `,
     props: {
         gameStart: Boolean,
-        gameReset: Boolean
+        gameReset: Boolean,
+        resetTimer: false,
     },
     data(){
         return{
             timeLimit: 45,
-            timer: null
+            timer: null,
         }
     },
     methods:{
@@ -25,6 +26,14 @@ export default{
                 }, 1000)
             }
         }, 
+        resetTimerOnLevelComplete(){
+            this.$emit('generateTimeleftToPoints', this.timeLimit)
+            console.log('Timer say hi')
+            clearTimeout(this.timer);
+            console.log('points')
+            this.timeLimit = 45;
+            this.startTimer()
+        },
     },
     watch: {
         gameStart() {
@@ -45,5 +54,10 @@ export default{
                 this.$emit('outOfTime')
             }
         },
+        resetTimer(){
+            if(this.resetTimer){
+                this.resetTimerOnLevelComplete();
+            }
+        }
     },
 }

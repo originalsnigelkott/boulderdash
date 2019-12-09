@@ -1,11 +1,9 @@
 let enemyMovementCase = 0
 var gameTickRateFunction;
 
-
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
-import DiamondCounter from './DiamondCounter.js';
 
 export default{
     components: {
@@ -19,18 +17,17 @@ export default{
     },
     template: `
     <div>
-    <div id='gameScreen'>
-        <div class="grid">
-            <div :id="tileId(tile.position.x,tile.position.y)"
-            v-for="(tile, i) in flatTiles"
-            :key="'tile' + i + tile.position.x + tile.position.y"
-            :style="{
-                width: calculateTileWidth + '%',
-                height: calculateTileHeight + '%',
-                }"
-                class="tile" >
-                <img
-                :src="tilePicture(tile.tileState)">
+        <div id='gameScreen'>
+            <div class="grid">
+                <div :id="tileId(tile.position.x,tile.position.y)"  v-for="(tile, i) in flatTiles"
+                :key="'tile' + i + tile.position.x + tile.position.y"
+                :style="{
+                    width: calculateTileWidth + '%',
+                    height: calculateTileHeight + '%',
+                    }"
+                    class="tile" >
+                    <img
+                    :src="tilePicture(tile.tileState)">
                 </div>
             </div>
             <ThemeMenu
@@ -38,6 +35,19 @@ export default{
             :theme='style'
             id='themeMenu'
             />
+        </div>
+        <div id='arrowsBox'>
+            <div class="aBox0">
+                <div class="arrow"><img src="/img/a_up.png" @click='moveWithArrow(38)' /></div>
+            </div>
+            <div class="aBox1">
+                <div class="arrow"><img src="/img/a_left.png"  @click='moveWithArrow(37)' /></div>
+                <div class="arrow"><img src="/img/ar.png" /></div>
+                <div class="arrow"><img src="/img/a_right.png"  @click='moveWithArrow(39)' /></div>
+            </div>
+            <div class="aBox0">
+                <div class="arrow"><img src="/img/a_down.png"  @click='moveWithArrow(40)' /></div>
+            </div>
         </div>
     </div>
     `,
@@ -66,67 +76,82 @@ export default{
     },
     methods: {
         keyHandler(e) {
+            let keyCode = e.keyCode;
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
-            if(e.keyCode === 13 && this.currentLevel == 0){
+            if(keyCode === 13 && this.currentLevel == 0){
                 this.setNextLevel();
             }
-            if (e.keyCode === 37) {
-                this.handleKeyLeft(e);
-            } else if (e.keyCode === 39) {
-                this.handleKeyRight(e);
-            }else if (e.keyCode === 38) {
-                this.handleKeyUp(e);
-            } else if (e.keyCode === 40) {
-                this.handleKeyDown(e);
-            }else if (e.keyCode === 69) {
+            if (keyCode === 37) {
+                this.handleKeyLeft(keyCode);
+            } else if (keyCode === 39) {
+                this.handleKeyRight(keyCode);
+            }else if (keyCode === 38) {
+                this.handleKeyUp(keyCode);
+            } else if (keyCode === 40) {
+                this.handleKeyDown(keyCode);
+            }else if (keyCode === 69) {
                 this.style = 'e';
                 this.imgSrc = './img/ge.png',
                 this.changedStyle=true;
-            }else if (e.keyCode === 68) {
+            }else if (keyCode === 68) {
                 this.style = 'd';
                 this.imgSrc = './img/gd.png',
                 this.changedStyle=true;
             }
         },
-        handleKeyUp(e) {
+        moveWithArrow(keyCode){
+            if(keyCode === 13 && this.currentLevel == 0){
+                this.setNextLevel();
+            }
+            if (keyCode === 37) {
+                this.handleKeyLeft(keyCode);
+            } else if (keyCode === 39) {
+                this.handleKeyRight(keyCode);
+            }else if (keyCode === 38) {
+                this.handleKeyUp(keyCode);
+            } else if (keyCode === 40) {
+                this.handleKeyDown(keyCode);
+            }
+        },
+        handleKeyUp(keyCode) {
             //PlayerCanMoveTo - true -> move y-1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Up: not possible');
             }            
         },
-        handleKeyDown(e){
+        handleKeyDown(keyCode){
             //PlayerCanMoveTo - true -> move y+1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Down: not possible');
             }    
         },
-        handleKeyLeft(e){
+        handleKeyLeft(keyCode){
             this.playerPushingBoulderLeft()
             //PlayerCanMoveTo - true -> move x-1
             if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Left: not possible');
             }    
         },
-        handleKeyRight(e){
+        handleKeyRight(keyCode){
             this.playerPushingBoulderRight()
 
             //PlayerCanMoveTo - true -> move x+1
             if(this.playerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
@@ -157,27 +182,37 @@ export default{
             }
             return true;
         },
-        playerMove(e){
+        playerMove(keyCode){
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
-            if(e.keyCode === 37){
+            if(keyCode === 37){
                 //moveLeft x-1
                 this.playerPosition[0]=this.playerPosition[0]-1;
             }
-            else if(e.keyCode === 39){
+            else if(keyCode === 39){
             //moveRight x+1
                 this.playerPosition[0]=this.playerPosition[0]+1;
             }          
-            else if(e.keyCode === 38){
+            else if(keyCode === 38){
             //moveUp y-1'
                 this.playerPosition[1]=this.playerPosition[1]-1;
-            }else if(e.keyCode === 40){
+            }else if(keyCode === 40){
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
             }      
             
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
+                let indexOfDiamond;
+                for(let i = 0; i < this.diamondPositions.length; i++) {
+                    if(this.diamondPositions[i][1] === this.playerPosition[1] && this.diamondPositions[i][0] === this.playerPosition[0]) {
+                        indexOfDiamond = i;
+                        break;
+                    }
+                }
+                this.diamondPositions.splice(indexOfDiamond, 1);
+                console.log(this.diamondPositions);
                 if(this.totalAmountOfDiamonds == this.diamondCount){
+                    this.$emit('resetTimerOnLevelComplete');
                     console.log('next level');
                     this.setNextLevel();
                 }
@@ -187,8 +222,12 @@ export default{
             this.$forceUpdate();
         },
         enemyMove(){
-            this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
+            
+            if(this.gameOver === true){
+                return;
+            }
 
+            this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
             this.enemyCaugthYouGameOver()
 
             switch(enemyMovementCase){                
@@ -229,7 +268,6 @@ export default{
                             break;
                         }
                     }
-
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='E';
             this.$forceUpdate();
@@ -385,26 +423,34 @@ export default{
             for(let i = 0; i < this.boulderPositions.length ; i++){
                 let x = this.boulderPositions[i][0] 
                 let y = this.boulderPositions[i][1]
-                if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' && (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' &&
+                 (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+
                     console.log('You died from a boulder falling from the Right')
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x-1].tileState = 'X'
                     this.tiles[y][x-1].tileState = 'B'
-                }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && 
+                (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+
                     console.log('You died from a boulder falling from the Left')
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x+1].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
-                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y+1][x+1].tileState === 'X'){
+                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' &&
+                 this.tiles[y+1][x+1].tileState === 'X'){
+
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
-                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y+1][x-1].tileState === 'X'){
+                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' &&
+                 this.tiles[y+1][x-1].tileState === 'X'){
+                     
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                     this.tiles[y][x].tileState = 'X'
@@ -455,7 +501,7 @@ export default{
                 this.CheckForBoulderStacks();
             }, 500)
         },
-        setCurrentLevel(){     
+        setCurrentLevel(){
             this.diamondCount=0;
             this.enemyMovementCase = 0;
             Store.currentLevelNum = this.currentLevel;
@@ -464,10 +510,9 @@ export default{
             }
             console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-            
-            if(this.changedStyle == false || this.currentLevel > 1){
+            //if(this.changedStyle == false){
                 this.style = this.level.style;
-            }
+            //}
             this.setObjectsPosition();
             this.tiles = [];
             this.fillTiles();
@@ -507,8 +552,11 @@ export default{
             }
             else{
                 this.currentLevel += 1;
+                console.log('Game reset')
+                console.log('Game')
                 if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
                     this.currentLevel = this.winLevel;
+                    this.$emit('playerPointsOnGameCompletion');
                 }
             }
             //Store.currentLevelNum = this.currentLevel;
@@ -517,7 +565,7 @@ export default{
         changeTheme(style){
             console.log('Theme changed')
             this.style = style
-            this.changedStyle = true
+            this.changedStyle == true
         },
     },
     computed: {
@@ -545,23 +593,18 @@ export default{
         },
         resetGame(){
             if(this.resetGame){
-                this.diamondCount=0;
-                this.enemyMovementCase = 0;
-                this.changedStyle=false;
-                Store.currentLevelNum = this.currentLevel;
-                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-                this.setObjectsPosition();
-                this.updateTiles();
-                this.$forceUpdate();                
-                this.setObjectsMove();
+                this.currentLevel = 0;
+                this.setCurrentLevel();
             }
         },
         outOfTime(){
-            this.gameOver = true;
-            this.setNextLevel();
+            if(this.outOfTime) {
+                this.gameOver = true;
+                this.setNextLevel();
+            }
         },
         timeLimit(){
-            console.log('game');
+            //console.log('game');
         },
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);

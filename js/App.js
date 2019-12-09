@@ -13,9 +13,12 @@ export default {
         :totalAmountOfDiamonds="totalAmountOfDiamonds"
         :diamondCount="diamondCount"
         :treasureImg="treasureImg"
+        :levelComplete='levelComplete'
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
+        @generateTimeleftToPoints='generateTimeleftToPoints'
+
         />
 
         <Game 
@@ -24,6 +27,8 @@ export default {
         @totalAmountOfDiamonds='diamonds'
         @getTreasureImg='getTreasureImg'
         @currentLevelTitle='getLevelTitle'
+        @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
+        @playerPointsOnGameCompletion='playerPointsOnGameCompletion'
         :startGame="gameStarted"
         :resetGame="gameReset"
         :outOfTime="isTimeLimit"
@@ -39,7 +44,9 @@ export default {
             gameStarted: Boolean,            
             gameOver: Boolean,
             gameReset: Boolean,
-            isTimeLimit: Boolean
+            isTimeLimit: Boolean,
+            levelComplete: false,
+            points: 0,
         }
     },
     created() {
@@ -47,6 +54,7 @@ export default {
     methods: {
         getDiamondCount(diamondCount) {
             this.diamondCount = diamondCount;
+            this.points += 1;
         },
         getTreasureImg(treasureImg){
             this.treasureImg = treasureImg;
@@ -58,13 +66,26 @@ export default {
             this.currentLevelTitle = currentLevelTitle;
         },
         startGame() {
+            this.gameReset = false;
             this.gameStarted = true;
+            this.levelComplete = false;
         },
         resetGame() {
+            this.isTimeLimit = false;
+            this.gameStarted = false;
             this.gameReset = true;
         },
         outOfTime(){
-            this.isTimeLimit = false;
+            this.isTimeLimit = true;
+        },
+        resetTimerOnLevelComplete(){
+            this.levelComplete = true;
+        },
+        playerPointsOnGameCompletion(){
+            alert('Congratulations you got '+ this.points + 'points!')
+        },
+        generateTimeleftToPoints(timeLeft){
+            this.points += timeLeft;
         }
     }
 }

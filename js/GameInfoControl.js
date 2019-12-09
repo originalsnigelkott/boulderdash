@@ -13,6 +13,7 @@ export default{
         diamondCount: 0,
         totalAmountOfDiamonds: 0,
         treasureImg: '',
+        levelComplete: Boolean,
     },
     template: `
         <div id="gameInfoControl">
@@ -20,8 +21,9 @@ export default{
                 <Timer 
                 id='gameTimer'
                 :gameStart="gameStart"
-                :gameReset="gameReset"
+                :resetTimer='resetTimer'
                 @outOfTime="outOfTime"
+                @generateTimeleftToPoints='generateTimeleftToPoints'
                 />
 
                 <DiamondCounter 
@@ -53,18 +55,20 @@ export default{
     data() {
         return{
             gameStart: false,
-            gameReset: false,
             gameOver: false,
+            resetTimer: false,
+            resetTimerOnLevelComplete: Boolean
         }
     },
     methods: {        
         startGame(){
             this.gameStart = true;
+            this.resetTimer = false;
             console.log("Start game pressed");
             this.$emit('startGame')
         },
         resetGame(){
-            this.gameReset = true;
+            this.gameStart = false;
             console.log("Reset game pressed");
             this.$emit('resetGame')
         },
@@ -79,6 +83,20 @@ export default{
         outOfTime(){
             this.gameOver = true;
             this.$emit('outOfTime')
+        },
+        resetTimerAfterLevelComplete(){
+            console.log('Timer reset')
+            this.resetTimer = true;
+        },
+        generateTimeleftToPoints(timeLeft){
+            this.$emit('generateTimeleftToPoints', timeLeft)
+        },
+    },
+    watch:{
+        levelComplete(){
+            if(this.levelComplete){
+                this.resetTimer = true;
+            }
         }
     },
     created() {
