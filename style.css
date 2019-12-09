@@ -23,7 +23,6 @@ body{
     border: solid black 0.5px;
 }
 #app{
-    flex-grow: 3;
     color: wheat;    
     display: flex;
     flex-direction: column;

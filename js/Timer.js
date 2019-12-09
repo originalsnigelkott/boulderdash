@@ -1,8 +1,7 @@
 export default{
     template:`
         <div>
-            <h3 v-if='timeLimit == 45'> Ready </h3>
-            <h3 v-if='timeLimit < 45 && timeLimit != 0'> {{timeLimit}} </h3>
+            <h3> {{timeLimit}} </h3>
             <h3 v-if='timeLimit == 0'> Out of time </h3>
         </div>
     `,
@@ -15,6 +14,7 @@ export default{
         return{
             timeLimit: 45,
             timer: null,
+            timeLeftAfterLevel: 0,
         }
     },
     methods:{
@@ -26,14 +26,6 @@ export default{
                 }, 1000)
             }
         }, 
-        resetTimerOnLevelComplete(){
-            this.$emit('generateTimeleftToPoints', this.timeLimit)
-            console.log('Timer say hi')
-            clearTimeout(this.timer);
-            console.log('points')
-            this.timeLimit = 45;
-            this.startTimer()
-        },
     },
     watch: {
         gameStart() {
@@ -56,7 +48,10 @@ export default{
         },
         resetTimer(){
             if(this.resetTimer){
-                this.resetTimerOnLevelComplete();
+                this.$emit('generateTimeleftToPoints', this.timeLimit)
+                clearTimeout(this.timer);
+                this.timeLimit = 45;
+                this.startTimer()
             }
         }
     },
