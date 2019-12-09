@@ -17,6 +17,7 @@ export default {
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
+        @generateTimeleftToPoints='generateTimeleftToPoints'
 
         />
 
@@ -26,6 +27,7 @@ export default {
         @getTreasureImg='getTreasureImg'
         @currentLevelTitle='getLevelTitle'
         @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
+        @playerPointsOnGameCompletion='playerPointsOnGameCompletion'
         :startGame="gameStarted"
         :resetGame="gameReset"
         :outOfTime="isTimeLimit"
@@ -43,6 +45,7 @@ export default {
             gameReset: Boolean,
             isTimeLimit: Boolean,
             levelComplete: false,
+            points: 0,
         }
     },
     created() {
@@ -50,6 +53,7 @@ export default {
     methods: {
         getDiamondCount(diamondCount) {
             this.diamondCount = diamondCount;
+            this.points += 1;
         },
         getTreasureImg(treasureImg){
             this.treasureImg = treasureImg;
@@ -63,6 +67,7 @@ export default {
         startGame() {
             this.gameReset = false;
             this.gameStarted = true;
+            this.levelComplete = false;
         },
         resetGame() {
             this.isTimeLimit = false;
@@ -75,5 +80,11 @@ export default {
         resetTimerOnLevelComplete(){
             this.levelComplete = true;
         },
+        playerPointsOnGameCompletion(){
+            alert('Congratulations you got '+ this.points + 'points!')
+        },
+        generateTimeleftToPoints(timeLeft){
+            this.points += timeLeft;
+        }
     }
 }

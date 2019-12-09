@@ -19,8 +19,8 @@ export default{
     <div id="gameInfoControl">
         <div id="gameInfoBox">
             <Timer
-            :gameStart="gameStart"
             :resetTimer='resetTimer'
+            :gameStart="gameStart"
             @outOfTime="outOfTime"
             />
             <DiamondCounter 
@@ -53,11 +53,13 @@ export default{
             gameStart: false,
             gameOver: false,
             resetTimer: false,
+            resetTimerOnLevelComplete: Boolean
         }
     },
     methods: {        
         startGame(){
             this.gameStart = true;
+            this.resetTimer = false;
             console.log("Start game pressed");
             this.$emit('startGame')
         },
@@ -81,7 +83,10 @@ export default{
         resetTimerAfterLevelComplete(){
             console.log('Timer reset')
             this.resetTimer = true;
-        }
+        },
+        generateTimeleftToPoints(timeLeft){
+            this.$emit('generateTimeleftToPoints', timeLeft)
+        },
     },
     watch:{
         levelComplete(){

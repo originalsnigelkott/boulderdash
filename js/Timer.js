@@ -9,7 +9,7 @@ export default{
     props: {
         gameStart: Boolean,
         gameReset: Boolean,
-        resetTimer: Boolean,
+        resetTimer: false,
     },
     data(){
         return{
@@ -27,9 +27,12 @@ export default{
             }
         }, 
         resetTimerOnLevelComplete(){
-                clearTimeout(this.timer);
-                this.timeLimit = 45;
-                this.startTimer()
+            this.$emit('generateTimeleftToPoints', this.timeLimit)
+            console.log('Timer say hi')
+            clearTimeout(this.timer);
+            console.log('points')
+            this.timeLimit = 45;
+            this.startTimer()
         },
     },
     watch: {
