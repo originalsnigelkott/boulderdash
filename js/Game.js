@@ -38,15 +38,15 @@ export default{
         </div>
         <div id='arrowsBox'>
             <div class="aBox0">
-                <div class="arrow"><img src="/img/a_up.png" @click='moveWithArrow(38)' /></div>
+                <div class="arrow"><img src="img/a_up.png" @click='moveWithArrow(38)' /></div>
             </div>
             <div class="aBox1">
-                <div class="arrow"><img src="/img/a_left.png"  @click='moveWithArrow(37)' /></div>
-                <div class="arrow"><img src="/img/ar.png" /></div>
-                <div class="arrow"><img src="/img/a_right.png"  @click='moveWithArrow(39)' /></div>
+                <div class="arrow"><img src="img/a_left.png"  @click='moveWithArrow(37)' /></div>
+                <div class="arrow"><img src="img/ar.png" /></div>
+                <div class="arrow"><img src="img/a_right.png"  @click='moveWithArrow(39)' /></div>
             </div>
             <div class="aBox0">
-                <div class="arrow"><img src="/img/a_down.png"  @click='moveWithArrow(40)' /></div>
+                <div class="arrow"><img src="img/a_down.png"  @click='moveWithArrow(40)' /></div>
             </div>
         </div>
     </div>

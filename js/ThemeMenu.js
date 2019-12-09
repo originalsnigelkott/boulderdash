@@ -3,13 +3,13 @@ export default{
         <div id="gallery">
             <div class="styleinfo">
                 <div class="imgbox">                
-                    <img src="/img/style_default.jpg"
+                    <img src="img/style_default.jpg"
                     @click='changeThemeToDefault' />
                 </div>
             </div>
                 <div class="styleinfo">
                 <div class="imgbox">                
-                    <img src="/img/style_frozen.jpg"
+                    <img src="img/style_frozen.jpg"
                     @click='changeThemeToFrozen' />
                 </div>
             </div>
