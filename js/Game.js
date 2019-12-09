@@ -14,7 +14,8 @@ export default{
     },
     props: {
         startGame: false,
-        gameOver: false,
+        resetGame: false,
+        outOfTime: false
     },
     template: `
     <div>
@@ -56,7 +57,11 @@ export default{
             mapSizeY: 20,
             style: 'd',
             changedStyle: false,
+            gameOver: false,
+            gameOverLevel: 3,
             level: Object,
+            winLevel: 4,
+            imgSrc: './img/g.png',
         }
     },
     methods: {
@@ -64,39 +69,25 @@ export default{
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
-            switch (e.keyCode){
-                case 13: {
-                    if(this.currentLevel === 0) {
-                        this.setNextLevel();
-                    }
-                    break;
-                }
-                case 37: {
-                    this.handleKeyLeft(e);
-                    break;
-                }
-                case 38: {
-                    this.handleKeyUp(e);
-                    break;
-                }
-                case 39: {
-                    this.handleKeyRight(e);
-                    break;
-                }
-                case 40: {
-                    this.handleKeyDown(e);
-                    break;
-                }
-                case 68: {
-                    this.style = 'd';
-                    this.changedStyle=true;
-                    break;
-                }
-                case 69: {
-                    this.style = 'e';
-                    this.changedStyle=true;
-                    break;
-                }
+            if(e.keyCode === 13 && this.currentLevel == 0){
+                this.setNextLevel();
+            }
+            if (e.keyCode === 37) {
+                this.handleKeyLeft(e);
+            } else if (e.keyCode === 39) {
+                this.handleKeyRight(e);
+            }else if (e.keyCode === 38) {
+                this.handleKeyUp(e);
+            } else if (e.keyCode === 40) {
+                this.handleKeyDown(e);
+            }else if (e.keyCode === 69) {
+                this.style = 'e';
+                this.imgSrc = './img/ge.png',
+                this.changedStyle=true;
+            }else if (e.keyCode === 68) {
+                this.style = 'd';
+                this.imgSrc = './img/gd.png',
+                this.changedStyle=true;
             }
         },
         handleKeyUp(e) {
@@ -120,9 +111,7 @@ export default{
             }    
         },
         handleKeyLeft(e){
-
             this.playerPushingBoulderLeft()
-
             //PlayerCanMoveTo - true -> move x-1
             if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
                 this.playerMove(e);
@@ -133,7 +122,6 @@ export default{
             }    
         },
         handleKeyRight(e){
-
             this.playerPushingBoulderRight()
 
             //PlayerCanMoveTo - true -> move x+1
@@ -171,28 +159,22 @@ export default{
         },
         playerMove(e){
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
-            switch (e.keyCode){
-                case 37: {
-                    //moveLeft x-1
-                    this.playerPosition[0]=this.playerPosition[0]-1;
-                    break;
-                }
-                case 38: {
-                    //moveUp y-1'
-                    this.playerPosition[1]=this.playerPosition[1]-1;
-                    break;
-                }
-                case 39: {
-                    //moveRight x+1
-                    this.playerPosition[0]=this.playerPosition[0]+1;
-                    break;
-                }
-                case 40: {
-                    //moveDown y+1
-                    this.playerPosition[1]=this.playerPosition[1]+1;
-                    break;
-                }
-            }            
+            if(e.keyCode === 37){
+                //moveLeft x-1
+                this.playerPosition[0]=this.playerPosition[0]-1;
+            }
+            else if(e.keyCode === 39){
+            //moveRight x+1
+                this.playerPosition[0]=this.playerPosition[0]+1;
+            }          
+            else if(e.keyCode === 38){
+            //moveUp y-1'
+                this.playerPosition[1]=this.playerPosition[1]-1;
+            }else if(e.keyCode === 40){
+            //moveDown y+1
+                this.playerPosition[1]=this.playerPosition[1]+1;
+            }      
+            
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
                 if(this.totalAmountOfDiamonds == this.diamondCount){
@@ -205,13 +187,11 @@ export default{
             this.$forceUpdate();
         },
         enemyMove(){
-            //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'X';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
 
             this.enemyCaugthYouGameOver()
 
-            switch(enemyMovementCase){
-                
+            switch(enemyMovementCase){                
                 case 0:
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]-1].tileState === 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]-1;
@@ -257,43 +237,35 @@ export default{
         fillTiles() {
             for(let row = 0; row < this.mapSizeY; row++){
                 this.tiles[row] = [];
-                for(let col = 0; col < this.mapSizeX; col++){
-                    switch(this.map[row][col]) {
-                        case 'D': {
-                            this.tiles[row].push(new Tile('D', row, col, false))
-                            break;
-                        }
-                        case 'P': {
-                            this.tiles[row].push(new Tile('P', row, col, false))
-                            break;
-                        }
-                        case 'W': {
-                            this.tiles[row].push(new Tile('W', row, col, false))
-                            break;
-                        }
-                        case 'G': {
-                            this.tiles[row].push(new Tile('G', row, col, false))
-                            break;
-                        }
-                        case 'B': {
-                            this.tiles[row].push(new Tile('B', row, col, false))
-                            break;
-                        }
-                        case 'X': {
-                            this.tiles[row].push(new Tile('X', row, col, false))
-                            break;
-                        }
-                        case 'E': {
-                            this.tiles[row].push(new Tile('E', row, col, false))
-                            break;
-                        }
-                        case 'C': {
-                            this.tiles[row].push(new Tile('C', row, col, false))
-                            break;
-                        }
+                for(let col = 0; col < this.mapSizeX; col++){                    
+                    if( this.map[row][col] === 'D'){
+                        this.tiles[row].push(new Tile('D', row, col, false))
+                    }else if(this.map[row][col] === 'P'){
+                        this.tiles[row].push(new Tile('P', row, col, false))
+                    }else if(this.map[row][col] === 'W'){
+                        this.tiles[row].push(new Tile('W', row, col, false))
+                    }else if(this.map[row][col] === 'G'){
+                        this.tiles[row].push(new Tile('G', row, col, false))
+                    }else if(this.map[row][col] === 'B'){
+                        this.tiles[row].push(new Tile('B', row, col, false))
+                    }else if(this.map[row][col] === 'X'){
+                        this.tiles[row].push(new Tile('X', row, col, false))
+                    }else if(this.map[row][col] === 'E'){
+                        this.tiles[row].push(new Tile('E', row, col, false))
+                    }else if(this.map[row][col] === 'C'){
+                        this.tiles[row].push(new Tile('C', row, col, false))
                     }
                 }
-            }
+            }            
+            this.$forceUpdate();
+        },
+        updateTiles(){            
+            for(let row = 0; row < this.mapSizeY; row++){
+                for(let col = 0; col < this.mapSizeX; col++){
+                    this.tiles[row][col].tileState=this.map[row][col];
+                }
+            }            
+            this.$forceUpdate();
         },
         tilePicture(tileState){
             let pictureLocation = "img/" + tileState+this.style + ".png";
@@ -354,6 +326,7 @@ export default{
                         this.tiles[y+1][x].isMoving = true;
                         if(y + 1 === this.playerPosition[1] && x === this.playerPosition[0]) {
                             this.gameOver = true;
+                            this.setNextLevel();
                         }
                     }
                 }
@@ -439,7 +412,6 @@ export default{
                 }
             }
         },
-
         enemyCaugthYouGameOver(){
             if(this.enemyPosition[1]-1 == this.playerPosition[1] && this.enemyPosition[0] == this.playerPosition[0]){
                 console.log('Got your feet')
@@ -454,6 +426,9 @@ export default{
                 console.log('Got your left arm')
                 this.gameOver = true;
             }
+            if(this.gameOver){                
+                this.setNextLevel();
+            }
         },
         getLevelTitle(){
             this.$emit('currentLevelTitle', this.currentLevelTitle);
@@ -461,7 +436,7 @@ export default{
         updateEnvironments(){
             gameTickRateFunction = setTimeout(() => {
                 if(this.gameOver === true) {
-                    this.setCurrentLevel(this.gameOver);
+                   // this.setCurrentLevel();
                 } else {
                     this.setTileIsMoving();
                     this.moveBoulders();
@@ -480,72 +455,63 @@ export default{
                 this.CheckForBoulderStacks();
             }, 500)
         },
-        setCurrentLevel(gameOver){
-            if(gameOver) {
-                let gameOverMapIndex = Store.levels.length - 1;
-                this.currentLevel = gameOverMapIndex + 1;
-                Store.currentLevelNum = this.currentLevel;
-                this.level = Store.levels[gameOverMapIndex];
-                this.map = this.level.map;
-                this.mapSizeX = this.level.mapSizeX;
-                this.mapSizeY = this.level.mapSizeY;
-                this.currentLevelTitle = this.level.currentLevelTitle;
-                this.tiles = [];
-                this.fillTiles();
-                this.$forceUpdate();
-                this.getLevelTitle();
-            } else {
-                this.diamondCount=0;
-                this.enemyMovementCase = 0;
-                Store.currentLevelNum = this.currentLevel;
-                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-                if(this.changedStyle == false){
-                    this.style = this.level.style;
-                }
-                this.map = this.level.map;
-                this.mapSizeX = this.level.mapSizeX;
-                this.mapSizeY = this.level.mapSizeY;
-                this.currentLevelTitle = this.level.currentLevelTitle;
-                this.playerPosition = this.level.playerPosition;
-                this.enemyPosition = this.level.enemyPosition;
-                this.boulderPositions = this.level.boulderPositions;
-                this.diamondPositions = this.level.diamondPositions;
-                this.totalAmountOfDiamonds= this.diamondPositions.length;
-                /*this.map = _.cloneDeep(Store.maps[Store.currentLevelNum]);
-                this.mapSizeX = _.cloneDeep(Store.currentLevel.mapSizeX[Store.currentLevelNum]);
-                this.mapSizeY = Store.currentLevel.mapSizeY[Store.currentLevelNum];
-                this.currentLevelTitle = Store.currentLevel.title[Store.currentLevelNum];
-                this.playerPosition = Store.currentLevel.playerPosition[Store.currentLevelNum];
-                this.enemyPosition = Store.currentLevel.enemyPosition[Store.currentLevelNum];
-                this.boulderPositions = Store.currentLevel.boulderPositions[Store.currentLevelNum];
-                */
+        setCurrentLevel(){     
+            this.diamondCount=0;
+            this.enemyMovementCase = 0;
+            Store.currentLevelNum = this.currentLevel;
+            if(this.currentLevel == this.gameOverLevel){
+                this.gameOver = true;
+            }
+            console.log(Store.currentLevelNum);
+            this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
+            //if(this.changedStyle == false){
+                this.style = this.level.style;
+            //}
+            this.setObjectsPosition();
+            this.tiles = [];
+            this.fillTiles();
+            this.$forceUpdate();
+            if(!this.gameOver && this.currentLevel < this.gameOverLevel){
+                this.setObjectsMove();
+            }
+            this.setKeyHandler();
+        },
+        setObjectsPosition(){            
+            this.map = this.level.map;
+            this.mapSizeX = this.level.mapSizeX;
+            this.mapSizeY = this.level.mapSizeY;
+            this.currentLevelTitle = this.level.currentLevelTitle;
+            this.playerPosition = this.level.playerPosition;
+            this.enemyPosition = this.level.enemyPosition;
+            this.boulderPositions = this.level.boulderPositions;
+            this.diamondPositions = this.level.diamondPositions;
+            this.totalAmountOfDiamonds= this.diamondPositions.length;
+            if(!this.gameOver && this.currentLevel < this.gameOverLevel){
                 //player
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
                 //placing boulders from boulderPositions        
                 this.placeBoulders();
-                this.placeDiamonds();
-                this.tiles = [];
-                this.fillTiles(); 
-                this.$forceUpdate();
-                this.setKeyHandler();
-                this.clearUpdateEnvironments();
-                this.updateEnvironments();
-                this.CheckForBoulderStacks()
+                this.placeDiamonds();                
                 this.getLevelTitle();
-                //enemy
-                //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             }
         },
+        setObjectsMove(){
+            this.clearUpdateEnvironments();
+            this.updateEnvironments();
+            this.CheckForBoulderStacks();
+        },
         setNextLevel(){
-            this.currentLevel += 1;
-            this.changedStyle=false;
-            if(this.currentLevel < 3){
-                this.setCurrentLevel();
-                this.$forceUpdate();                
-                this.fillTiles;
-                this.setKeyHandler();       
-                this.getLevelTitle();
+            if(this.gameOver){                
+                this.currentLevel = this.gameOverLevel;
             }
+            else{
+                this.currentLevel += 1;
+                if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
+                    this.currentLevel = this.winLevel;
+                }
+            }
+            //Store.currentLevelNum = this.currentLevel;
+            this.setCurrentLevel();
         },
         changeTheme(style){
             console.log('Theme changed')
@@ -573,16 +539,40 @@ export default{
                 this.diamondCount = 0;
                 this.gameOver = false;
                 this.setCurrentLevel();
+                this.$forceUpdate();
             }
+        },
+        resetGame(){
+            if(this.resetGame){
+                this.diamondCount=0;
+                this.enemyMovementCase = 0;
+                this.changedStyle=false;
+                Store.currentLevelNum = this.currentLevel;
+                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
+                this.setObjectsPosition();
+                this.updateTiles();
+                this.$forceUpdate();                
+                this.setObjectsMove();
+            }
+        },
+        outOfTime(){
+            this.gameOver = true;
+            this.setNextLevel();
+        },
+        timeLimit(){
+            console.log('game');
         },
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
         },
         diamondCount() {
             this.$emit('getDiamondCount', this.diamondCount);
-        }
+        },
+        treasureImg(){
+            this.$emit('getTreasureImg', this.imgSrc);
+        },
     },    
     created() {
-        this.setCurrentLevel();     
+        this.setCurrentLevel();
     }
 }
