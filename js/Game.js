@@ -101,10 +101,7 @@ export default{
                 this.changedStyle=true;
             }
         },
-        moveWithArrow(keyCode){
-            if(keyCode === 13 && this.currentLevel == 0){
-                this.setNextLevel();
-            }
+        moveWithArrow(keyCode){            
             if (keyCode === 37) {
                 this.handleKeyLeft(keyCode);
             } else if (keyCode === 39) {
@@ -510,9 +507,9 @@ export default{
             }
             console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-            //if(this.changedStyle == false){
+            if(this.changedStyle == false || this.currentLevel > 1){
                 this.style = this.level.style;
-            //}
+            }
             this.setObjectsPosition();
             this.tiles = [];
             this.fillTiles();
@@ -565,7 +562,7 @@ export default{
         changeTheme(style){
             console.log('Theme changed')
             this.style = style
-            this.changedStyle == true
+            this.changedStyle = true
         },
     },
     computed: {
