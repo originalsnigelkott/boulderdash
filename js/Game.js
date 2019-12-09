@@ -5,7 +5,6 @@ var gameTickRateFunction;
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
-import DiamondCounter from './DiamondCounter.js';
 
 export default{
     components: {
@@ -188,7 +187,7 @@ export default{
             this.$forceUpdate();
         },
         enemyMove(){
-            
+                return;
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
             this.enemyCaugthYouGameOver()
 
@@ -435,9 +434,7 @@ export default{
         },
         updateEnvironments(){
             gameTickRateFunction = setTimeout(() => {
-                if(this.gameOver === true) {
-                   // this.setCurrentLevel();
-                } else {
+                if(this.gameOver === false) {
                     this.setTileIsMoving();
                     this.moveBoulders();
                     this.moveDiamonds();
@@ -464,9 +461,10 @@ export default{
             }
             console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-            //if(this.changedStyle == false){
+            
+            if(this.changedStyle == false || this.currentLevel > 1){
                 this.style = this.level.style;
-            //}
+            }
             this.setObjectsPosition();
             this.tiles = [];
             this.fillTiles();
@@ -518,7 +516,7 @@ export default{
         changeTheme(style){
             console.log('Theme changed')
             this.style = style
-            this.changedStyle == true
+            this.changedStyle = true
         },
     },
     computed: {
@@ -546,20 +544,15 @@ export default{
         },
         resetGame(){
             if(this.resetGame){
-                this.diamondCount=0;
-                this.enemyMovementCase = 0;
-                this.changedStyle=false;
-                Store.currentLevelNum = this.currentLevel;
-                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-                this.setObjectsPosition();
-                this.updateTiles();
-                this.$forceUpdate();                
-                this.setObjectsMove();
+                this.currentLevel = 0;
+                this.setCurrentLevel();
             }
         },
         outOfTime(){
-            this.gameOver = true;
-            this.setNextLevel();
+            if(this.outOfTime) {
+                this.gameOver = true;
+                this.setNextLevel();
+            }
         },
         timeLimit(){
             //console.log('game');
