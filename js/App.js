@@ -20,8 +20,7 @@ export default {
 
         />
 
-        <Game 
-        id="gridBox"
+        <Game
         @getDiamondCount='getDiamondCount'
         @totalAmountOfDiamonds='diamonds'
         @getTreasureImg='getTreasureImg'

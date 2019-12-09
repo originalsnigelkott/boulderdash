@@ -19,9 +19,6 @@ body{
     background-color:rgb(39, 39, 39);
     position: relative;
 }
-.tile{
-    border: solid black 0.5px;
-}
 #app{
 
     color: wheat;    
@@ -39,11 +36,6 @@ body{
     height: 7.5vh;
     width: 47.5vw;
     border: white solid 0.1px;
-}
-#gridBox{
-    display: flex;
-    margin: 0%;
-    align-content: center;
 }
 img{
     width: 100%;

@@ -17,27 +17,25 @@ export default{
         outOfTime: false
     },
     template: `
-    <div>
     <div id='gameScreen'>
         <div class="grid">
-            <div :id="tileId(tile.position.x,tile.position.y)"
+            <div
+            :id="tileId(tile.position.x,tile.position.y)"
             v-for="(tile, i) in flatTiles"
             :key="'tile' + i + tile.position.x + tile.position.y"
             :style="{
                 width: calculateTileWidth + '%',
                 height: calculateTileHeight + '%',
                 }"
-                class="tile" >
+            >
                 <img
                 :src="tilePicture(tile.tileState)">
-                </div>
             </div>
-            <ThemeMenu
-            @changeTheme='changeTheme'
-            :theme='style'
-            id='themeMenu'
-            />
         </div>
+        <ThemeMenu
+        @changeTheme='changeTheme'
+        :theme='style'
+        />
     </div>
     `,
     data() {

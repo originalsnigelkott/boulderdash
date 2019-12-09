@@ -1,6 +1,6 @@
 export default{
     template:`
-        <div>
+        <div id='gameTimer'>
             <h3 v-if='timeLimit == 45'> Ready </h3>
             <h3 v-if='timeLimit < 45 && timeLimit != 0'> {{timeLimit}} </h3>
             <h3 v-if='timeLimit == 0'> Out of time </h3>

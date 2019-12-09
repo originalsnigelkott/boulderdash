@@ -16,25 +16,22 @@ export default{
         levelComplete: Boolean,
     },
     template: `
-        <div id="gameInfoControl">
-            <div id="gameInfoBox">
-                <Timer 
-                id='gameTimer'
-                :gameStart="gameStart"
-                :resetTimer='resetTimer'
-                @outOfTime="outOfTime"
-                />
-
-                <DiamondCounter 
-                :diamondCount='diamondCount'
-                :totalAmountOfDiamonds='totalAmountOfDiamonds'
-                :treasureImg='treasureImg'
-                />
-
-                <LevelBox
-                :currentLevelTitle= 'currentLevelTitle'
-                />
-                <div id="gameControl">
+    <div id="gameInfoControl">
+        <div id="gameInfoBox">
+            <Timer
+            :gameStart="gameStart"
+            :resetTimer='resetTimer'
+            @outOfTime="outOfTime"
+            />
+            <DiamondCounter 
+            :diamondCount='diamondCount'
+            :totalAmountOfDiamonds='totalAmountOfDiamonds'
+            :treasureImg='treasureImg'
+            />
+            <LevelBox
+            :currentLevelTitle= 'currentLevelTitle'
+            />
+            <div id="gameControl">
                 <button
                 id='startGameButton'
                 v-if='!gameStart'
