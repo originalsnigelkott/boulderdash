@@ -198,6 +198,10 @@ export default{
         },
         enemyMove(){
             
+            if(this.gameOver === true){
+                return;
+            }
+
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
             this.enemyCaugthYouGameOver()
 
