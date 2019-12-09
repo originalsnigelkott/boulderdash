@@ -71,9 +71,6 @@ export default {
         },
         outOfTime(){
             this.isTimeLimit = true;
-        },
-        resetTimerOnLevelComplete(){
-            this.levelComplete = true;
-        },
-    },
+        }
+    }
 }
