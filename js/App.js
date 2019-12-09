@@ -14,7 +14,7 @@ export default {
         :diamondCount="diamondCount"
         :treasureImg="treasureImg"
         :levelComplete='levelComplete'
-        :endTimer='endTimer'
+        :timerInAppStopped='timerInAppStopped'
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
@@ -47,7 +47,7 @@ export default {
             gameOver: Boolean,
             gameReset: Boolean,
             isTimeLimit: Boolean,
-            endTimer: Boolean,
+            timerInAppStopped: Boolean,
             levelComplete: false,
             points: 0,
             amountOfDiamondsPicked: 0,
@@ -78,7 +78,7 @@ export default {
             this.isTimeLimit = false;
             this.gameStarted = false;
             this.gameReset = true;
-            this.endTimer = false;
+            this.timerInAppStopped = false;
         },
         outOfTime(){
             this.isTimeLimit = true;
@@ -87,7 +87,7 @@ export default {
             this.levelComplete = true;
         },
         stopTimer(){
-            this.endTimer = true;
+            this.timerInAppStopped = true;
         },
         playerPointsOnGameCompletion(){
             alert('Congratulations you got '+ this.amountOfDiamondsPicked + 'diamonds!')

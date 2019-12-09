@@ -8,7 +8,7 @@ export default{
     props: {
         gameStart: Boolean,
         gameReset: Boolean,
-        pauseTimer: Boolean,
+        timerInGameControlStopped: Boolean,
         resetTimer: false,
     },
     data(){
@@ -55,8 +55,8 @@ export default{
                 this.startTimer()
             }
         },
-        pauseTimer(){
-            if(this.pauseTimer){
+        timerInGameControlStopped(){
+            if(this.timerInGameControlStopped){
                 clearTimeout(this.timer);
             }
         }
