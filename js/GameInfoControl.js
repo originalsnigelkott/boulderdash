@@ -89,7 +89,7 @@ export default{
             this.resetTimer = true;
         },
         generateTimeleftToPoints(timeLeft){
-            this.$emit('generateTimeleftToPoints', timeLeft)
+            this.$emit('convertTimeToPoints', timeLeft)
         },
     },
     watch:{
