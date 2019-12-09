@@ -1,7 +1,6 @@
 let enemyMovementCase = 0
 var gameTickRateFunction;
 
-
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
@@ -18,18 +17,17 @@ export default{
     },
     template: `
     <div>
-    <div id='gameScreen'>
-        <div class="grid">
-            <div :id="tileId(tile.position.x,tile.position.y)"
-            v-for="(tile, i) in flatTiles"
-            :key="'tile' + i + tile.position.x + tile.position.y"
-            :style="{
-                width: calculateTileWidth + '%',
-                height: calculateTileHeight + '%',
-                }"
-                class="tile" >
-                <img
-                :src="tilePicture(tile.tileState)">
+        <div id='gameScreen'>
+            <div class="grid">
+                <div :id="tileId(tile.position.x,tile.position.y)"  v-for="(tile, i) in flatTiles"
+                :key="'tile' + i + tile.position.x + tile.position.y"
+                :style="{
+                    width: calculateTileWidth + '%',
+                    height: calculateTileHeight + '%',
+                    }"
+                    class="tile" >
+                    <img
+                    :src="tilePicture(tile.tileState)">
                 </div>
             </div>
             <ThemeMenu
@@ -37,6 +35,19 @@ export default{
             :theme='style'
             id='themeMenu'
             />
+        </div>
+        <div id='arrowsBox'>
+            <div class="aBox0">
+                <div class="arrow"><img src="/img/a_up.png" @click='moveWithArrow(38)' /></div>
+            </div>
+            <div class="aBox1">
+                <div class="arrow"><img src="/img/a_left.png"  @click='moveWithArrow(37)' /></div>
+                <div class="arrow"><img src="/img/ar.png" /></div>
+                <div class="arrow"><img src="/img/a_right.png"  @click='moveWithArrow(39)' /></div>
+            </div>
+            <div class="aBox0">
+                <div class="arrow"><img src="/img/a_down.png"  @click='moveWithArrow(40)' /></div>
+            </div>
         </div>
     </div>
     `,
@@ -65,67 +76,82 @@ export default{
     },
     methods: {
         keyHandler(e) {
+            let keyCode = e.keyCode;
             /**
               37 - left, 39 - right, 38 - up, 40 - down
              */
-            if(e.keyCode === 13 && this.currentLevel == 0){
+            if(keyCode === 13 && this.currentLevel == 0){
                 this.setNextLevel();
             }
-            if (e.keyCode === 37) {
-                this.handleKeyLeft(e);
-            } else if (e.keyCode === 39) {
-                this.handleKeyRight(e);
-            }else if (e.keyCode === 38) {
-                this.handleKeyUp(e);
-            } else if (e.keyCode === 40) {
-                this.handleKeyDown(e);
-            }else if (e.keyCode === 69) {
+            if (keyCode === 37) {
+                this.handleKeyLeft(keyCode);
+            } else if (keyCode === 39) {
+                this.handleKeyRight(keyCode);
+            }else if (keyCode === 38) {
+                this.handleKeyUp(keyCode);
+            } else if (keyCode === 40) {
+                this.handleKeyDown(keyCode);
+            }else if (keyCode === 69) {
                 this.style = 'e';
                 this.imgSrc = './img/ge.png',
                 this.changedStyle=true;
-            }else if (e.keyCode === 68) {
+            }else if (keyCode === 68) {
                 this.style = 'd';
                 this.imgSrc = './img/gd.png',
                 this.changedStyle=true;
             }
         },
-        handleKeyUp(e) {
+        moveWithArrow(keyCode){
+            if(keyCode === 13 && this.currentLevel == 0){
+                this.setNextLevel();
+            }
+            if (keyCode === 37) {
+                this.handleKeyLeft(keyCode);
+            } else if (keyCode === 39) {
+                this.handleKeyRight(keyCode);
+            }else if (keyCode === 38) {
+                this.handleKeyUp(keyCode);
+            } else if (keyCode === 40) {
+                this.handleKeyDown(keyCode);
+            }
+        },
+        handleKeyUp(keyCode) {
             //PlayerCanMoveTo - true -> move y-1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Up: not possible');
             }            
         },
-        handleKeyDown(e){
+        handleKeyDown(keyCode){
             //PlayerCanMoveTo - true -> move y+1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Down: not possible');
             }    
         },
-        handleKeyLeft(e){
+        handleKeyLeft(keyCode){
             this.playerPushingBoulderLeft()
             //PlayerCanMoveTo - true -> move x-1
             if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Left: not possible');
             }    
         },
-        handleKeyRight(e){
+        handleKeyRight(keyCode){
             this.playerPushingBoulderRight()
 
             //PlayerCanMoveTo - true -> move x+1
             if(this.playerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
-                this.playerMove(e);
+                this.playerMove(keyCode);
                 //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
@@ -156,20 +182,20 @@ export default{
             }
             return true;
         },
-        playerMove(e){
+        playerMove(keyCode){
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
-            if(e.keyCode === 37){
+            if(keyCode === 37){
                 //moveLeft x-1
                 this.playerPosition[0]=this.playerPosition[0]-1;
             }
-            else if(e.keyCode === 39){
+            else if(keyCode === 39){
             //moveRight x+1
                 this.playerPosition[0]=this.playerPosition[0]+1;
             }          
-            else if(e.keyCode === 38){
+            else if(keyCode === 38){
             //moveUp y-1'
                 this.playerPosition[1]=this.playerPosition[1]-1;
-            }else if(e.keyCode === 40){
+            }else if(keyCode === 40){
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
             }      

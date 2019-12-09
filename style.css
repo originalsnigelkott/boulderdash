@@ -23,17 +23,39 @@ body{
     border: solid black 0.5px;
 }
 #app{
-
+    flex-grow: 3;
     color: wheat;    
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 95vh;
     margin: 20px;
     margin-top: 2.5vh;
 }
-
+#arrowsBox{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    min-width: 150px;
+}
+.aBox0, .aBox1{
+    display: flex;
+    flex-direction: row;
+    max-width: 150px;
+    max-height: 150px;
+}
+.aBox0{
+    align-self: center;
+}
+.arrow{
+    max-width: 50px;
+    max-height: 50px;
+}
+.arrow button{
+    padding: 0px;
+    background-color: #000;
+    border-style: none;    
+    max-height: 50px;
+}
 #gameInfoBox{
     display: flex;
     height: 7.5vh;
@@ -104,9 +126,6 @@ img{
     flex-grow: 1;
     color: #fff;
     align-self: center;
-}
-.box1 {
-    flex-grow: 2;
 }
 #gallery{
     display: flex;
