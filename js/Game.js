@@ -5,7 +5,6 @@ var gameTickRateFunction;
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
-import DiamondCounter from './DiamondCounter.js';
 
 export default{
     components: {
@@ -567,20 +566,15 @@ export default{
         },
         resetGame(){
             if(this.resetGame){
-                this.diamondCount=0;
-                this.enemyMovementCase = 0;
-                this.changedStyle=false;
-                Store.currentLevelNum = this.currentLevel;
-                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-                this.setObjectsPosition();
-                this.updateTiles();
-                this.$forceUpdate();                
-                this.setObjectsMove();
+                this.currentLevel = 0;
+                this.setCurrentLevel();
             }
         },
         outOfTime(){
-            this.gameOver = true;
-            this.setNextLevel();
+            if(this.outOfTime) {
+                this.gameOver = true;
+                this.setNextLevel();
+            }
         },
         timeLimit(){
             //console.log('game');
