@@ -55,6 +55,7 @@ export default{
     data() {
         return{
             gameStart: false,
+            gameReset: false,
         }
     },
     methods: {        
