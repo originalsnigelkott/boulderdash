@@ -124,7 +124,9 @@ img{
 #themeMenu{
     margin-top: 1vh;
     display: flex;
-    flex-direction: row;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    align-items: center;
 }
 #startGameButton{
     font-size: 3vh;
