@@ -13,9 +13,11 @@ export default {
         :totalAmountOfDiamonds="totalAmountOfDiamonds"
         :diamondCount="diamondCount"
         :treasureImg="treasureImg"
+        :levelComplete='levelComplete'
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
+
         />
 
         <Game 
@@ -24,6 +26,7 @@ export default {
         @totalAmountOfDiamonds='diamonds'
         @getTreasureImg='getTreasureImg'
         @currentLevelTitle='getLevelTitle'
+        @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
         :startGame="gameStarted"
         :resetGame="gameReset"
         :outOfTime="isTimeLimit"
@@ -39,7 +42,8 @@ export default {
             gameStarted: Boolean,            
             gameOver: Boolean,
             gameReset: Boolean,
-            isTimeLimit: Boolean
+            isTimeLimit: Boolean,
+            levelComplete: false,
         }
     },
     created() {
@@ -58,7 +62,6 @@ export default {
             this.currentLevelTitle = currentLevelTitle;
         },
         startGame() {
-            this.gameReset = false;
             this.gameStarted = true;
         },
         resetGame() {
@@ -68,6 +71,9 @@ export default {
         },
         outOfTime(){
             this.isTimeLimit = true;
-        }
-    }
+        },
+        resetTimerOnLevelComplete(){
+            this.levelComplete = true;
+        },
+    },
 }

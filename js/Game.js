@@ -5,6 +5,7 @@ var gameTickRateFunction;
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
+import DiamondCounter from './DiamondCounter.js';
 
 export default{
     components: {
@@ -186,6 +187,7 @@ export default{
                 this.diamondPositions.splice(indexOfDiamond, 1);
                 console.log(this.diamondPositions);
                 if(this.totalAmountOfDiamonds == this.diamondCount){
+                    this.$emit('resetTimerOnLevelComplete');
                     console.log('next level');
                     this.setNextLevel();
                 }
@@ -195,8 +197,8 @@ export default{
             this.$forceUpdate();
         },
         enemyMove(){
+            
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
-
             this.enemyCaugthYouGameOver()
 
             switch(enemyMovementCase){                
@@ -237,7 +239,6 @@ export default{
                             break;
                         }
                     }
-
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='E';
             this.$forceUpdate();
@@ -393,26 +394,34 @@ export default{
             for(let i = 0; i < this.boulderPositions.length ; i++){
                 let x = this.boulderPositions[i][0] 
                 let y = this.boulderPositions[i][1]
-                if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' && (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' &&
+                 (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+
                     console.log('You died from a boulder falling from the Right')
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x-1].tileState = 'X'
                     this.tiles[y][x-1].tileState = 'B'
-                }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+                }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && 
+                (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
+
                     console.log('You died from a boulder falling from the Left')
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x+1].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
-                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' && this.tiles[y+1][x+1].tileState === 'X'){
+                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' &&
+                 this.tiles[y+1][x+1].tileState === 'X'){
+
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
-                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' && this.tiles[y+1][x-1].tileState === 'X'){
+                }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' &&
+                 this.tiles[y+1][x-1].tileState === 'X'){
+                     
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                     this.tiles[y][x].tileState = 'X'
@@ -463,7 +472,7 @@ export default{
                 this.CheckForBoulderStacks();
             }, 500)
         },
-        setCurrentLevel(){     
+        setCurrentLevel(){
             this.diamondCount=0;
             this.enemyMovementCase = 0;
             Store.currentLevelNum = this.currentLevel;
@@ -472,10 +481,9 @@ export default{
             }
             console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
-            
-            if(this.changedStyle == false || this.currentLevel > 1){
+            //if(this.changedStyle == false){
                 this.style = this.level.style;
-            }
+            //}
             this.setObjectsPosition();
             this.tiles = [];
             this.fillTiles();
@@ -515,6 +523,8 @@ export default{
             }
             else{
                 this.currentLevel += 1;
+                console.log('Game reset')
+                console.log('Game')
                 if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
                     this.currentLevel = this.winLevel;
                 }
@@ -525,7 +535,7 @@ export default{
         changeTheme(style){
             console.log('Theme changed')
             this.style = style
-            this.changedStyle = true
+            this.changedStyle == true
         },
     },
     computed: {
@@ -553,18 +563,23 @@ export default{
         },
         resetGame(){
             if(this.resetGame){
-                this.currentLevel = 0;
-                this.setCurrentLevel();
+                this.diamondCount=0;
+                this.enemyMovementCase = 0;
+                this.changedStyle=false;
+                Store.currentLevelNum = this.currentLevel;
+                this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
+                this.setObjectsPosition();
+                this.updateTiles();
+                this.$forceUpdate();                
+                this.setObjectsMove();
             }
         },
         outOfTime(){
-            if(this.outOfTime) {
-                this.gameOver = true;
-                this.setNextLevel();
-            }
+            this.gameOver = true;
+            this.setNextLevel();
         },
         timeLimit(){
-            console.log('game');
+            //console.log('game');
         },
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
