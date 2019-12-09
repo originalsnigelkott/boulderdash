@@ -62,11 +62,12 @@ export default {
             this.gameStarted = true;
         },
         resetGame() {
+            this.isTimeLimit = false;
             this.gameStarted = false;
             this.gameReset = true;
         },
         outOfTime(){
-            this.isTimeLimit = false;
+            this.isTimeLimit = true;
         }
     }
 }

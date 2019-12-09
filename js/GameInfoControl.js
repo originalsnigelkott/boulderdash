@@ -52,7 +52,6 @@ export default{
     data() {
         return{
             gameStart: false,
-            gameOver: false,
         }
     },
     methods: {        
@@ -75,7 +74,6 @@ export default{
             }
         },
         outOfTime(){
-            this.gameOver = true;
             this.$emit('outOfTime')
         }
     },
