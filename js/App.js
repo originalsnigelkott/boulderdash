@@ -62,11 +62,9 @@ export default {
             this.currentLevelTitle = currentLevelTitle;
         },
         startGame() {
-            this.gameReset = false;
             this.gameStarted = true;
         },
         resetGame() {
-            this.gameStarted = false;
             this.gameReset = true;
         },
         outOfTime(){
