@@ -434,9 +434,7 @@ export default{
         },
         updateEnvironments(){
             gameTickRateFunction = setTimeout(() => {
-                if(this.gameOver === true) {
-                   // this.setCurrentLevel();
-                } else {
+                if(this.gameOver === false) {
                     this.setTileIsMoving();
                     this.moveBoulders();
                     this.moveDiamonds();
