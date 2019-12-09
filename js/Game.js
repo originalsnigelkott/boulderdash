@@ -178,6 +178,7 @@ export default{
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
                 if(this.totalAmountOfDiamonds == this.diamondCount){
+                    this.$emit('resetTimerOnLevelComplete');
                     console.log('next level');
                     this.setNextLevel();
                 }
@@ -187,8 +188,8 @@ export default{
             this.$forceUpdate();
         },
         enemyMove(){
+            
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
-
             this.enemyCaugthYouGameOver()
 
             switch(enemyMovementCase){                
@@ -229,7 +230,6 @@ export default{
                             break;
                         }
                     }
-
             //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='E';
             this.$forceUpdate();
@@ -455,7 +455,7 @@ export default{
                 this.CheckForBoulderStacks();
             }, 500)
         },
-        setCurrentLevel(){     
+        setCurrentLevel(){
             this.diamondCount=0;
             this.enemyMovementCase = 0;
             Store.currentLevelNum = this.currentLevel;
@@ -506,6 +506,8 @@ export default{
             }
             else{
                 this.currentLevel += 1;
+                console.log('Game reset')
+                console.log('Game')
                 if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
                     this.currentLevel = this.winLevel;
                 }
@@ -560,7 +562,7 @@ export default{
             this.setNextLevel();
         },
         timeLimit(){
-            console.log('game');
+            //console.log('game');
         },
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
