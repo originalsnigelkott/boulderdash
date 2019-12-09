@@ -8,6 +8,7 @@ export default{
     `,
     props: {
         gameStart: Boolean,
+        gameReset: Boolean
     },
     data(){
         return{
@@ -34,10 +35,15 @@ export default{
                 this.timeLimit = 45;
             }
         },
+        gameReset(){
+            clearTimeout(this.timer);
+            this.timeLimit = 45;
+            this.startTimer()
+        },
         timeLimit() {
             if(this.timeLimit === 0) {
                 this.$emit('outOfTime')
             }
-        }
+        },
     },
 }

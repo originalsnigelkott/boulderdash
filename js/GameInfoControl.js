@@ -12,6 +12,7 @@ export default{
         currentLevelTitle: '',
         diamondCount: 0,
         totalAmountOfDiamonds: 0,
+        treasureImg: '',
     },
     template: `
         <div id="gameInfoControl">
@@ -19,12 +20,14 @@ export default{
                 <Timer 
                 id='gameTimer'
                 :gameStart="gameStart"
+                :gameReset="gameReset"
                 @outOfTime="outOfTime"
                 />
 
                 <DiamondCounter 
                 :diamondCount='diamondCount'
                 :totalAmountOfDiamonds='totalAmountOfDiamonds'
+                :treasureImg='treasureImg'
                 />
 
                 <LevelBox
@@ -50,19 +53,18 @@ export default{
     data() {
         return{
             gameStart: false,
+            gameReset: false,
+            gameOver: false,
         }
     },
-    methods: {
-        outOfTime() {
-            this.$emit('outOfTime')
-        },
+    methods: {        
         startGame(){
             this.gameStart = true;
             console.log("Start game pressed");
             this.$emit('startGame')
         },
         resetGame(){
-            this.gameStart = false;
+            this.gameReset = true;
             console.log("Reset game pressed");
             this.$emit('resetGame')
         },
@@ -73,6 +75,10 @@ export default{
             if(e.keyCode === 13){ 
                 this.startGame();               
             }
+        },
+        outOfTime(){
+            this.gameOver = true;
+            this.$emit('outOfTime')
         }
     },
     created() {
