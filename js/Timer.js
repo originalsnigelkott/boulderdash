@@ -8,6 +8,7 @@ export default{
     props: {
         gameStart: Boolean,
         gameReset: Boolean,
+        pauseTimer: Boolean,
         resetTimer: false,
     },
     data(){
@@ -52,6 +53,11 @@ export default{
                 clearTimeout(this.timer);
                 this.timeLimit = 45;
                 this.startTimer()
+            }
+        },
+        pauseTimer(){
+            if(this.pauseTimer){
+                clearTimeout(this.timer);
             }
         }
     },

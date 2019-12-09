@@ -503,6 +503,7 @@ export default{
             this.enemyMovementCase = 0;
             Store.currentLevelNum = this.currentLevel;
             if(this.currentLevel == this.gameOverLevel){
+                this.$emit('stopTimer');
                 this.gameOver = true;
             }
             console.log(Store.currentLevelNum);
@@ -554,6 +555,7 @@ export default{
                 if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
                     this.currentLevel = this.winLevel;
                     this.$emit('playerPointsOnGameCompletion');
+                    this.$emit('stopTimer');
                 }
             }
             //Store.currentLevelNum = this.currentLevel;
