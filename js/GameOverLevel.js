@@ -6,6 +6,7 @@ const level = {
     diamondPositions: [],
     mapSizeX: 25,
     mapSizeY: 19,
+    style: 'd',
     map: [
         ['W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W','W',],
         ['W','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','W',],
