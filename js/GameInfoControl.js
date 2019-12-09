@@ -20,7 +20,6 @@ export default{
                 <Timer 
                 id='gameTimer'
                 :gameStart="gameStart"
-                :gameReset="gameReset"
                 @outOfTime="outOfTime"
                 />
 
@@ -53,7 +52,6 @@ export default{
     data() {
         return{
             gameStart: false,
-            gameReset: false,
             gameOver: false,
         }
     },
@@ -64,7 +62,7 @@ export default{
             this.$emit('startGame')
         },
         resetGame(){
-            this.gameReset = true;
+            this.gameStart = false;
             console.log("Reset game pressed");
             this.$emit('resetGame')
         },
