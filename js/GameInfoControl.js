@@ -56,6 +56,8 @@ export default{
         return{
             gameStart: false,
             gameReset: false,
+            gameOver: false,
+            resetTimer: false,
         }
     },
     methods: {        
@@ -78,6 +80,7 @@ export default{
             }
         },
         outOfTime(){
+            this.gameOver = true;
             this.$emit('outOfTime')
         },
         resetTimerAfterLevelComplete(){
