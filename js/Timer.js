@@ -14,7 +14,7 @@ export default{
     },
     data(){
         return{
-            timeLimit: 45,
+            timeLimit: 65,
             timer: null,
             timeLeftAfterLevel: 0,
         }
@@ -35,12 +35,12 @@ export default{
                 this.startTimer()
             } else {
                 clearTimeout(this.timer);
-                this.timeLimit = 45;
+                this.timeLimit = 65;
             }
         },
         gameReset(){
             clearTimeout(this.timer);
-            this.timeLimit = 45;
+            this.timeLimit = 65;
             this.startTimer()
         },
         timeLimit() {
@@ -48,16 +48,17 @@ export default{
                 this.$emit('outOfTime')
             }
         },
-        resetTimer(){
+        /*resetTimer(){
             if(this.resetTimer){
                 this.$emit('generateTimeleftToPoints', this.timeLimit)
                 clearTimeout(this.timer);
                 this.timeLimit = 45;
                 this.startTimer()
             }
-        },
+        },*/
         timerInGameControlStopped(){
             if(this.timerInGameControlStopped){
+                this.$emit('generateTimeleftToPoints', this.timeLimit)
                 clearTimeout(this.timer);
             }
         }
