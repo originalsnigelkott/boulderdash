@@ -1,19 +1,19 @@
 export default{
     template:`
-        <div id="gallery">
-            <div class="styleinfo">
-                <div class="imgbox">                
-                    <img src="/img/style_default.jpg"
-                    @click='changeThemeToDefault' />
-                </div>
-            </div>
-                <div class="styleinfo">
-                <div class="imgbox">                
-                    <img src="/img/style_frozen.jpg"
-                    @click='changeThemeToFrozen' />
-                </div>
+    <div id='themeMenu'>
+        <div class="styleinfo">
+            <div class="imgbox">                
+                <img src="/img/style_default.jpg"
+                @click='changeThemeToDefault' />
             </div>
         </div>
+        <div class="styleinfo">
+            <div class="imgbox">                
+                <img src="/img/style_frozen.jpg"
+                @click='changeThemeToFrozen' />
+            </div>
+        </div>
+    </div>
     `,
     data(){
         return{

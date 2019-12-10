@@ -14,21 +14,22 @@ export default {
         :diamondCount="diamondCount"
         :treasureImg="treasureImg"
         :levelComplete='levelComplete'
+        :timerInAppStopped='timerInAppStopped'
+        :playerWon='playerWon'
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
-        @convertTimeToPoints='convertTimeToPoints'
 
         />
 
-        <Game 
-        id="gridBox"
+        <Game
         @getDiamondCount='getDiamondCount'
         @totalAmountOfDiamonds='diamonds'
         @getTreasureImg='getTreasureImg'
         @currentLevelTitle='getLevelTitle'
         @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
-        @playerPointsOnGameCompletion='playerPointsOnGameCompletion'
+        @stopTimer='stopTimer'
+        @winCheck='winCheck'
         :startGame="gameStarted"
         :resetGame="gameReset"
         :outOfTime="isTimeLimit"
@@ -45,9 +46,9 @@ export default {
             gameOver: Boolean,
             gameReset: Boolean,
             isTimeLimit: Boolean,
+            timerInAppStopped: Boolean,
             levelComplete: false,
-            points: 0,
-            amountOfDiamondsPicked: 0,
+            playerWon: Boolean,
         }
     },
     created() {
@@ -55,7 +56,6 @@ export default {
     methods: {
         getDiamondCount(diamondCount) {
             this.diamondCount = diamondCount;
-            this.amountOfDiamondsPicked += 1;
         },
         getTreasureImg(treasureImg){
             this.treasureImg = treasureImg;
@@ -70,11 +70,13 @@ export default {
             this.gameReset = false;
             this.gameStarted = true;
             this.levelComplete = false;
+            this.playerWon = false;
         },
         resetGame() {
             this.isTimeLimit = false;
             this.gameStarted = false;
             this.gameReset = true;
+            this.timerInAppStopped = false;
         },
         outOfTime(){
             this.isTimeLimit = true;
@@ -82,13 +84,11 @@ export default {
         resetTimerOnLevelComplete(){
             this.levelComplete = true;
         },
-        playerPointsOnGameCompletion(){
-            alert('Congratulations you got '+ this.amountOfDiamondsPicked + 'diamonds!')
-            alert('Congratulations you got '+ this.points + 'seconds left!')
+        stopTimer(){
+            this.timerInAppStopped = true;
         },
-        convertTimeToPoints(timeLeft){
-            console.log('a')
-            this.points += timeLeft;
+        winCheck(){
+            this.playerWon = true;
         }
     }
 }
