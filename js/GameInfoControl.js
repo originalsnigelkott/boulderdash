@@ -52,6 +52,8 @@ export default{
                 </button>
             </div>
         </div>
+                <p v-if='score != 0'
+                id='scoreOutput'>Your score: {{this.score}} </p>
     </div>
     `,
     data() {
@@ -60,7 +62,8 @@ export default{
             gameOver: false,
             resetTimer: false,
             timerInGameControlStopped: false,
-            resetTimerOnLevelComplete: Boolean
+            resetTimerOnLevelComplete: Boolean,
+            score: 0,
         }
     },
     methods: {        
@@ -73,6 +76,7 @@ export default{
         },
         resetGame(){
             this.gameStart = false;
+            this.score = 0;
             console.log("Reset game pressed");
             this.$emit('resetGame')
         },
@@ -93,7 +97,7 @@ export default{
             this.resetTimer = true;
         },
         generateTimeleftToPoints(timeLeft){
-            this.$emit('convertTimeToPoints', timeLeft)
+            this.score = timeLeft*5
         },
     },
     watch:{

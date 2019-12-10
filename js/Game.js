@@ -554,7 +554,6 @@ export default{
                 console.log('Game')
                 if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
                     this.currentLevel = this.winLevel;
-                    this.$emit('playerPointsOnGameCompletion');
                     this.$emit('stopTimer');
                 }
             }

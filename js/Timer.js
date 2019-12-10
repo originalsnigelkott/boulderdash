@@ -1,7 +1,7 @@
 export default{
     template:`
         <div>
-            <h3> {{timeLimit}} </h3>
+            <h3 v-if='timeLimit != 0'> {{timeLimit}} </h3>
             <h3 v-if='timeLimit == 0'> Out of time </h3>
         </div>
     `,
@@ -13,7 +13,7 @@ export default{
     },
     data(){
         return{
-            timeLimit: 45,
+            timeLimit: 65,
             timer: null,
             timeLeftAfterLevel: 0,
         }
@@ -34,12 +34,12 @@ export default{
                 this.startTimer()
             } else {
                 clearTimeout(this.timer);
-                this.timeLimit = 45;
+                this.timeLimit = 65;
             }
         },
         gameReset(){
             clearTimeout(this.timer);
-            this.timeLimit = 45;
+            this.timeLimit = 65;
             this.startTimer()
         },
         timeLimit() {
@@ -47,16 +47,17 @@ export default{
                 this.$emit('outOfTime')
             }
         },
-        resetTimer(){
+        /*resetTimer(){
             if(this.resetTimer){
                 this.$emit('generateTimeleftToPoints', this.timeLimit)
                 clearTimeout(this.timer);
                 this.timeLimit = 45;
                 this.startTimer()
             }
-        },
+        },*/
         timerInGameControlStopped(){
             if(this.timerInGameControlStopped){
+                this.$emit('generateTimeleftToPoints', this.timeLimit)
                 clearTimeout(this.timer);
             }
         }
