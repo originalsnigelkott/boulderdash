@@ -1,13 +1,59 @@
 *{
     box-sizing: border-box;
     text-align: center;
+    margin: 0;
 }
 body{
-    margin: 0%;
     background-image: url('./img/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-
+    
+}
+#app{
+    color: wheat;    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+.container{
+    display: flex;
+}
+#gameInfoControl{
+    margin: 1% 0;
+    width: 60%;
+}
+#gameInfoBox{
+    border: white solid 0.1px;
+}
+#gameTimer, #levelBox{
+    font-size: 1em;
+    width: 25%;
+    border: solid white 0.1px;
+}
+#diamondCounter{
+    border: solid white 0.1px;
+    align-items: center;
+    font-size: 1em;
+    max-width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#startGameButton{
+    font-size: 2vh;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(67, 190, 83, 0.61);
+    color: white;
+}
+#resetGameButton{
+    font-size: 2vh;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(139, 9, 9, 0.534);
+    color: white;
 }
 .grid{
     display: flex;
@@ -19,14 +65,12 @@ body{
     background-color:rgb(39, 39, 39);
     position: relative;
 }
-#app{
-    color: wheat;    
+#themeMenu{
+    margin-top: 1vh;
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
+    flex-flow: row wrap;
     align-items: center;
-    height: 95vh;
-    margin: 20px;
-    margin-top: 2.5vh;
 }
 #arrowsBox{
     display: flex;
@@ -53,41 +97,16 @@ body{
     border-style: none;    
     max-height: 50px;
 }
-#gameInfoBox{
-    display: flex;
-    height: 7.5vh;
-    width: 47.5vw;
-    margin-top: 0%;
-    border: white solid 0.1px;
-}
 img{
     width: 100%;
     height: 100%;
 }
-#diamondCounter{
-    border: solid white 0.1px;
-    display: flex;
-    align-content: center;
-    font-size: 1em;
-    width: 25%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-#gameTimer, #levelBox{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1em;
-    width: 25%;
-    border: solid white 0.1px;
-}
 .headerImg{
     display: flex;
     align-self: center;
-    width: 3vw;
-    height: 5.2vh;
-    margin-right: 2vw;
+    width: 40%;
+    height: 40%;
+    margin: 5%;
 }
 #container{
     display: flex;
@@ -124,35 +143,8 @@ img{
     display: flex;
     flex-direction: column;
     justify-content: start;
-
     height: 67.5vh;
     width: 15vw;
-}
-#gameScreen{
-    height: 85vh;
-    width: 47.5vw;
-    margin-top: 0.5vh;
-}
-#themeMenu{
-    margin-top: 1vh;
-    display: flex;
-    justify-content: space-around;
-    flex-flow: row wrap;
-    align-items: center;
-}
-#startGameButton{
-    font-size: 3vh;
-    height: 7.5vh;
-    width: 11.9vw;
-    background-color: rgba(67, 190, 83, 0.61);
-    color: white;
-}
-#resetGameButton{
-    font-size: 3vh;
-    height: 7.5vh;
-    width: 11.9vw;
-    background-color: rgba(139, 9, 9, 0.534);
-    color: white;
 }
 #scoreBox{
     display: flex;

@@ -18,8 +18,10 @@ export default{
         playerWon: Boolean
     },
     template: `
-        <div id="gameInfoControl">
-            <div id="gameInfoBox">
+        <div id="gameInfoControl"
+        class="container">
+            <div id="gameInfoBox"
+            class="container">
                 <Timer 
                 :gameStart="gameStart"
                 :resetTimer='resetTimer'
@@ -35,7 +37,8 @@ export default{
                 <LevelBox
                 :currentLevelTitle= 'currentLevelTitle'
                 />
-                <div id="gameControl">
+                <div id="gameControl"
+                class="container">
                 <button
                 id='startGameButton'
                 v-if='!gameStart'
