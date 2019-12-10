@@ -14,10 +14,11 @@ export default {
         :diamondCount="diamondCount"
         :treasureImg="treasureImg"
         :levelComplete='levelComplete'
+        :timerInAppStopped='timerInAppStopped'
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
-        @generateTimeleftToPoints='generateTimeleftToPoints'
+        @convertTimeToPoints='convertTimeToPoints'
 
         />
 
@@ -28,6 +29,7 @@ export default {
         @currentLevelTitle='getLevelTitle'
         @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
         @playerPointsOnGameCompletion='playerPointsOnGameCompletion'
+        @stopTimer='stopTimer'
         :startGame="gameStarted"
         :resetGame="gameReset"
         :outOfTime="isTimeLimit"
@@ -44,8 +46,10 @@ export default {
             gameOver: Boolean,
             gameReset: Boolean,
             isTimeLimit: Boolean,
+            timerInAppStopped: Boolean,
             levelComplete: false,
             points: 0,
+            amountOfDiamondsPicked: 0,
         }
     },
     created() {
@@ -53,7 +57,7 @@ export default {
     methods: {
         getDiamondCount(diamondCount) {
             this.diamondCount = diamondCount;
-            this.points += 1;
+            this.amountOfDiamondsPicked += 1;
         },
         getTreasureImg(treasureImg){
             this.treasureImg = treasureImg;
@@ -73,6 +77,7 @@ export default {
             this.isTimeLimit = false;
             this.gameStarted = false;
             this.gameReset = true;
+            this.timerInAppStopped = false;
         },
         outOfTime(){
             this.isTimeLimit = true;
@@ -80,11 +85,16 @@ export default {
         resetTimerOnLevelComplete(){
             this.levelComplete = true;
         },
-        playerPointsOnGameCompletion(){
-            alert('Congratulations you got '+ this.points + 'points!')
+        stopTimer(){
+            this.timerInAppStopped = true;
         },
-        generateTimeleftToPoints(timeLeft){
+        playerPointsOnGameCompletion(){
+            alert('Congratulations you got '+ this.amountOfDiamondsPicked + 'diamonds!')
+            alert('Congratulations you got '+ this.points + 'seconds left!')
+        },
+        convertTimeToPoints(timeLeft){
+            console.log('a')
             this.points += timeLeft;
-        }
+        },
     }
 }

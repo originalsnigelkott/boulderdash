@@ -14,24 +14,27 @@ export default{
         totalAmountOfDiamonds: 0,
         treasureImg: '',
         levelComplete: Boolean,
+        timerInAppStopped: false,
     },
     template: `
-    <div id="gameInfoControl">
-        <div id="gameInfoBox">
-            <Timer
-            :resetTimer='resetTimer'
-            :gameStart="gameStart"
-            @outOfTime="outOfTime"
-            />
-            <DiamondCounter 
-            :diamondCount='diamondCount'
-            :totalAmountOfDiamonds='totalAmountOfDiamonds'
-            :treasureImg='treasureImg'
-            />
-            <LevelBox
-            :currentLevelTitle= 'currentLevelTitle'
-            />
-            <div id="gameControl">
+        <div id="gameInfoControl">
+            <div id="gameInfoBox">
+                <Timer 
+                :gameStart="gameStart"
+                :resetTimer='resetTimer'
+                :timerInGameControlStopped='timerInGameControlStopped'
+                @outOfTime="outOfTime"
+                @generateTimeleftToPoints='generateTimeleftToPoints'
+                />
+                <DiamondCounter 
+                :diamondCount='diamondCount'
+                :totalAmountOfDiamonds='totalAmountOfDiamonds'
+                :treasureImg='treasureImg'
+                />
+                <LevelBox
+                :currentLevelTitle= 'currentLevelTitle'
+                />
+                <div id="gameControl">
                 <button
                 id='startGameButton'
                 v-if='!gameStart'
@@ -53,6 +56,7 @@ export default{
             gameStart: false,
             gameOver: false,
             resetTimer: false,
+            timerInGameControlStopped: false,
             resetTimerOnLevelComplete: Boolean
         }
     },
@@ -60,6 +64,7 @@ export default{
         startGame(){
             this.gameStart = true;
             this.resetTimer = false;
+            this.timerInGameControlStopped = false;
             console.log("Start game pressed");
             this.$emit('startGame')
         },
@@ -85,13 +90,18 @@ export default{
             this.resetTimer = true;
         },
         generateTimeleftToPoints(timeLeft){
-            this.$emit('generateTimeleftToPoints', timeLeft)
+            this.$emit('convertTimeToPoints', timeLeft)
         },
     },
     watch:{
         levelComplete(){
             if(this.levelComplete){
                 this.resetTimer = true;
+            }
+        },
+        timerInAppStopped(){
+            if(this.timerInAppStopped){
+                this.timerInGameControlStopped = true
             }
         }
     },
