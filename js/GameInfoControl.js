@@ -20,20 +20,17 @@ export default{
         <div id="gameInfoControl">
             <div id="gameInfoBox">
                 <Timer 
-                id='gameTimer'
                 :gameStart="gameStart"
                 :resetTimer='resetTimer'
                 :timerInGameControlStopped='timerInGameControlStopped'
                 @outOfTime="outOfTime"
                 @generateTimeleftToPoints='generateTimeleftToPoints'
                 />
-
                 <DiamondCounter 
                 :diamondCount='diamondCount'
                 :totalAmountOfDiamonds='totalAmountOfDiamonds'
                 :treasureImg='treasureImg'
                 />
-
                 <LevelBox
                 :currentLevelTitle= 'currentLevelTitle'
                 />
