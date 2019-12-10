@@ -15,6 +15,7 @@ export default{
         treasureImg: '',
         levelComplete: Boolean,
         timerInAppStopped: false,
+        playerWon: Boolean
     },
     template: `
         <div id="gameInfoControl">
@@ -94,7 +95,9 @@ export default{
             this.resetTimer = true;
         },
         generateTimeleftToPoints(timeLeft){
-            this.score = timeLeft*5
+            if(this.playerWon){
+                this.score = timeLeft*5
+            }
         },
     },
     watch:{

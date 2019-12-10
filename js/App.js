@@ -15,6 +15,7 @@ export default {
         :treasureImg="treasureImg"
         :levelComplete='levelComplete'
         :timerInAppStopped='timerInAppStopped'
+        :playerWon='playerWon'
         @startGame="startGame"
         @resetGame="resetGame"
         @outOfTime="outOfTime"
@@ -28,6 +29,7 @@ export default {
         @currentLevelTitle='getLevelTitle'
         @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
         @stopTimer='stopTimer'
+        @winCheck='winCheck'
         :startGame="gameStarted"
         :resetGame="gameReset"
         :outOfTime="isTimeLimit"
@@ -46,6 +48,7 @@ export default {
             isTimeLimit: Boolean,
             timerInAppStopped: Boolean,
             levelComplete: false,
+            playerWon: Boolean,
         }
     },
     created() {
@@ -67,6 +70,7 @@ export default {
             this.gameReset = false;
             this.gameStarted = true;
             this.levelComplete = false;
+            this.playerWon = false;
         },
         resetGame() {
             this.isTimeLimit = false;
@@ -83,5 +87,8 @@ export default {
         stopTimer(){
             this.timerInAppStopped = true;
         },
+        winCheck(){
+            this.playerWon = true;
+        }
     }
 }
