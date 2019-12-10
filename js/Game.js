@@ -16,26 +16,25 @@ export default{
         outOfTime: false
     },
     template: `
-    <div>
-        <div id='gameScreen'>
-            <div class="grid">
-                <div :id="tileId(tile.position.x,tile.position.y)"  v-for="(tile, i) in flatTiles"
-                :key="'tile' + i + tile.position.x + tile.position.y"
-                :style="{
-                    width: calculateTileWidth + '%',
-                    height: calculateTileHeight + '%',
-                    }"
-                    class="tile" >
-                    <img
-                    :src="tilePicture(tile.tileState)">
-                </div>
+    <div id='gameScreen'>
+        <div class="grid">
+            <div
+            :id="tileId(tile.position.x,tile.position.y)"
+            v-for="(tile, i) in flatTiles"
+            :key="'tile' + i + tile.position.x + tile.position.y"
+            :style="{
+                width: calculateTileWidth + '%',
+                height: calculateTileHeight + '%',
+                }"
+            >
+                <img
+                :src="tilePicture(tile.tileState)">
             </div>
-            <ThemeMenu
-            @changeTheme='changeTheme'
-            :theme='style'
-            id='themeMenu'
-            />
         </div>
+        <ThemeMenu
+        @changeTheme='changeTheme'
+        :theme='style'
+        />
         <div id='arrowsBox'>
             <div class="aBox0">
                 <div class="arrow"><img src="img/a_up.png" @click='moveWithArrow(38)' /></div>
