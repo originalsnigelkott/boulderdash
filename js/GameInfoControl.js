@@ -50,8 +50,10 @@ export default{
                 </button>
             </div>
         </div>
-                <div v-if='score != 0'
-                id='scoreOutput'>Your score: {{this.score}} </div>
+                <div id='scoreOutput'>
+                    <p> Highest score {{ this.highestScore}} </p>
+                    <p v-if='score != 0'> Your score: {{this.score}} </p>
+                 </div> 
     </div>
     `,
     data() {
@@ -62,6 +64,7 @@ export default{
             timerInGameControlStopped: false,
             resetTimerOnLevelComplete: Boolean,
             score: 0,
+            highestScore: 0,
         }
     },
     methods: {        
@@ -97,6 +100,9 @@ export default{
         generateTimeleftToPoints(timeLeft){
             if(this.playerWon){
                 this.score = timeLeft*5
+                if(this.score > this.highestScore){
+                    this.highestScore = this.score
+                }
             }
         },
     },
