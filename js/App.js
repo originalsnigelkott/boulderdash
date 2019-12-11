@@ -22,6 +22,7 @@ export default {
                     <ul class="keyCodeList"><b>Theme</b>
                         <li>Default <div class="keybImg"><img src="img/m.png" /></div></li>
                         <li>Frozen <div class="keybImg"><img src="img/e.png" /></div></li>
+                        <li>Retro <div class="keybImg"><img src="img/r.png" /></div></li>
                     </ul>
                 </div>
             </div>
@@ -30,10 +31,10 @@ export default {
                 :currentLevelTitle="currentLevelTitle"
                 :totalAmountOfDiamonds="totalAmountOfDiamonds"
                 :diamondCount="diamondCount"
-                :treasureImg='treasureImg'
                 :levelComplete='levelComplete'
                 :timerInAppStopped='timerInAppStopped'
-                :playerWon='playerWon'
+                :playerWon='playerWon'                
+                :treasureImg='treasureImg'
                 @startGame="startGame"
                 @resetGame="resetGame"
                 @outOfTime="outOfTime"
@@ -67,7 +68,7 @@ export default {
         return {
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            treasureImg: './img/g.png',
+            treasureImg: 'img/gd.png',
             currentLevelTitle: '',
             gameStarted: Boolean,            
             gameOver: Boolean,
@@ -86,6 +87,7 @@ export default {
             this.diamondCount = diamondCount;
         },
         getTreasureImg(treasureImg){
+            //console.log(treasureImg);
             this.treasureImg = treasureImg;
         },
         diamonds(totalAmountOfDiamonds) {
