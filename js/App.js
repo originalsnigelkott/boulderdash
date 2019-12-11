@@ -8,32 +8,50 @@ export default {
     },
     template: `
     <div id="app">
-        <GameInfoControl 
-        :currentLevelTitle="currentLevelTitle"
-        :totalAmountOfDiamonds="totalAmountOfDiamonds"
-        :diamondCount="diamondCount"
-        :treasureImg="treasureImg"
-        :levelComplete='levelComplete'
-        :timerInAppStopped='timerInAppStopped'
-        :playerWon='playerWon'
-        @startGame="startGame"
-        @resetGame="resetGame"
-        @outOfTime="outOfTime"
+        <div id="counter">
+            <div id="keyGuide">
+                <div class="keyGuideList">
+                    <ul class="keyCodeList"><b>Movement</b>
+                        <li>Up <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
+                        <li>Down <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
+                        <li>Left <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
+                        <li>Right <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
+                    </ul>
+                    <ul class="keyCodeList"><b>Theme</b>
+                        <li>Default <div class="keybImg"><img src="img/m.png" /></div></li>
+                        <li>Frozen <div class="keybImg"><img src="img/e.png" /></div></li>
+                    </ul>
+                </div>
+            </div>
+            <div id='game'>
+                <GameInfoControl 
+                :currentLevelTitle="currentLevelTitle"
+                :totalAmountOfDiamonds="totalAmountOfDiamonds"
+                :diamondCount="diamondCount"
+                :treasureImg="treasureImg"
+                :levelComplete='levelComplete'
+                :timerInAppStopped='timerInAppStopped'
+                :playerWon='playerWon'
+                @startGame="startGame"
+                @resetGame="resetGame"
+                @outOfTime="outOfTime"
 
-        />
+                />
 
-        <Game
-        @getDiamondCount='getDiamondCount'
-        @totalAmountOfDiamonds='diamonds'
-        @getTreasureImg='getTreasureImg'
-        @currentLevelTitle='getLevelTitle'
-        @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
-        @stopTimer='stopTimer'
-        @winCheck='winCheck'
-        :startGame="gameStarted"
-        :resetGame="gameReset"
-        :outOfTime="isTimeLimit"
-        />
+                <Game
+                @getDiamondCount='getDiamondCount'
+                @totalAmountOfDiamonds='diamonds'
+                @getTreasureImg='getTreasureImg'
+                @currentLevelTitle='getLevelTitle'
+                @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
+                @stopTimer='stopTimer'
+                @winCheck='winCheck'
+                :startGame="gameStarted"
+                :resetGame="gameReset"
+                :outOfTime="isTimeLimit"
+                />
+            </div>
+        </div>
     </div>       
     `,
     data() {
