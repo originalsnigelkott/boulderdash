@@ -48,7 +48,7 @@ export default {
             isTimeLimit: Boolean,
             timerInAppStopped: Boolean,
             levelComplete: false,
-            playerWon: Boolean,
+            playerWon: false,
         }
     },
     created() {
