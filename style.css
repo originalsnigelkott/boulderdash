@@ -29,14 +29,15 @@ body{
     flex-direction: row;
 }
 #app{
-    flex-grow: 3;
     color: wheat;    
     display: flex;
     flex-direction: column;
     height: 95vh;
-    margin: 0px 20px;
     margin-top: 2.5vh;
     justify-content: center;
+}
+#game{
+    margin-top: 10px;
 }
 #arrowsBox{
     display: flex;
