@@ -196,6 +196,7 @@ img{
     background-image: url('./img/keyboard.png');
     background-repeat: no-repeat;
     background-size: cover;
+    margin-left: 10px;
 }
 #keyGuide h1{
     font-size: 14px;
@@ -211,13 +212,14 @@ img{
     margin: 5px;
     display: flex;
     flex-direction: row;
+    align-items: center;
 }
 .keyGuideList{
-    background-color: #bebaba;
+    background-color: #918c8c;
     opacity: 0.9;
     border-radius: 10px;
 }
 .keybImg{
-    width: 20px;    
+    width: 25px;    
     margin-left: 10px;
 }
