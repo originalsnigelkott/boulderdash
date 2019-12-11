@@ -577,6 +577,13 @@ export default{
         calculateTileWidth() {
             return 100 / this.mapSizeX;
         },
+        calculateGridHeight() {
+            return 350;
+        },
+        calculateGridWidth() {
+            console.log(this.mapSizeX / this.mapSizeY)
+            return 350 * (this.mapSizeX / this.mapSizeY);
+        },
     },
     watch: {
         startGame() {
