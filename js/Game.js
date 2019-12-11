@@ -1,16 +1,15 @@
 import Tile from './Tile.js'
 import Store from './Store.js'
-import ThemeMenu from './ThemeMenu.js'
 
 export default{
     components: {
         Tile,
-        ThemeMenu,
     },
     props: {
         startGame: false,
         resetGame: false,
-        outOfTime: false
+        outOfTime: false,
+        newStyle: ''
     },
     template: `
     <div id='gridBox'>
@@ -43,13 +42,6 @@ export default{
                 </div>
             </div>
         </div>
-        <div id='themeGallery'>
-        <ThemeMenu
-            @changeTheme='changeTheme'
-            :theme='style'
-            id='themeMenu'
-            />
-        </div>    
     </div>
     `,
     data() {
@@ -66,7 +58,6 @@ export default{
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
-            style: 'd',
             changedStyle: false,
             gameOver: false,
             gameOverLevel: 3,
@@ -75,6 +66,7 @@ export default{
             imgSrc: './img/g.png',
             enemyMovementCase: 0,
             gameTickRateFunction: undefined,
+            style: ''
         }
     },
     methods: {
@@ -423,9 +415,11 @@ export default{
             }      
         },
         bouldersFallingFromStack(){
+            
             for(let i = 0; i < this.boulderPositions.length ; i++){
                 let x = this.boulderPositions[i][0] 
                 let y = this.boulderPositions[i][1]
+
                 if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' &&
                  (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
 
@@ -435,6 +429,7 @@ export default{
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x-1].tileState = 'X'
                     this.tiles[y][x-1].tileState = 'B'
+
                 }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && 
                 (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
 
@@ -444,6 +439,7 @@ export default{
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x+1].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
+
                 }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' &&
                  this.tiles[y+1][x+1].tileState === 'X'){
 
@@ -451,6 +447,7 @@ export default{
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
+
                 }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' &&
                  this.tiles[y+1][x-1].tileState === 'X'){
                      
@@ -567,11 +564,6 @@ export default{
             //Store.currentLevelNum = this.currentLevel;
             this.setCurrentLevel();
         },
-        changeTheme(style){
-            console.log('Theme changed')
-            this.style = style
-            this.changedStyle = true
-        },
     },
     computed: {
         flatTiles() {
@@ -619,7 +611,16 @@ export default{
         },
         treasureImg(){
             this.$emit('getTreasureImg', this.imgSrc);
+        },        
+        changeTheme(){
+            console.log('Theme changed');
+           // this.style = this.nyStyle
         },
+        newStyle: function(newStyle) { // watch it
+            console.log('ny style: ', newStyle)
+            this.style = this.newStyle
+            this.changedStyle = true;
+        }
     },    
     created() {
         this.setCurrentLevel();
