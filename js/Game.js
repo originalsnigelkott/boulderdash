@@ -79,23 +79,26 @@ export default{
             let keyCode = e.keyCode;
             /**
               37 - left, 39 - right, 38 - up, 40 - down
+              W (87) is up, A(65) is left, S (83) is down, and D(68) is right
              */
+            console.log(keyCode)
             if(keyCode === 13 && this.currentLevel == 0){
                 this.setNextLevel();
             }
-            if (keyCode === 37) {
+            if (keyCode === 37 || keyCode === 65) {
                 this.handleKeyLeft(keyCode);
-            } else if (keyCode === 39) {
+            } else if (keyCode === 68 || keyCode === 39) {
                 this.handleKeyRight(keyCode);
-            }else if (keyCode === 38) {
+            }else if (keyCode === 38 || keyCode === 87) {
                 this.handleKeyUp(keyCode);
-            } else if (keyCode === 40) {
+            } else if (keyCode === 40 || keyCode === 83) {
                 this.handleKeyDown(keyCode);
             }else if (keyCode === 69) {
                 this.style = 'e';
                 this.imgSrc = './img/ge.png',
                 this.changedStyle=true;
-            }else if (keyCode === 68) {
+            }else if (keyCode === 77) {
+                //key m
                 this.style = 'd';
                 this.imgSrc = './img/gd.png',
                 this.changedStyle=true;
@@ -181,18 +184,18 @@ export default{
         },
         playerMove(keyCode){
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
-            if(keyCode === 37){
+            if(keyCode === 37 || keyCode === 65){
                 //moveLeft x-1
                 this.playerPosition[0]=this.playerPosition[0]-1;
             }
-            else if(keyCode === 39){
+            else if(keyCode === 68 || keyCode === 39){
             //moveRight x+1
                 this.playerPosition[0]=this.playerPosition[0]+1;
             }          
-            else if(keyCode === 38){
+            else if(keyCode === 38 || keyCode === 87){
             //moveUp y-1'
                 this.playerPosition[1]=this.playerPosition[1]-1;
-            }else if(keyCode === 40){
+            }else if(keyCode === 40 || keyCode === 83){
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
             }      
@@ -524,7 +527,7 @@ export default{
             this.map = this.level.map;
             this.mapSizeX = this.level.mapSizeX;
             this.mapSizeY = this.level.mapSizeY;
-            this.currentLevelTitle = this.level.currentLevelTitle;
+            this.currentLevelTitle = this.level.title;
             this.playerPosition = this.level.playerPosition;
             this.enemyPosition = this.level.enemyPosition;
             this.boulderPositions = this.level.boulderPositions;
