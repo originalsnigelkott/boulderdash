@@ -12,10 +12,10 @@ export default{
         currentLevelTitle: '',
         diamondCount: 0,
         totalAmountOfDiamonds: 0,
-        treasureImg: '',
         levelComplete: Boolean,
         timerInAppStopped: false,
-        playerWon: false
+        playerWon: false,
+        treasureImg: '',
     },
     template: `
         <div id="gameInfoControl">
@@ -74,6 +74,7 @@ export default{
             this.timerInGameControlStopped = false;
             console.log("Start game pressed");
             this.$emit('startGame')
+            console.log(this.treasureImg)
         },
         resetGame(){
             this.gameStart = false;
