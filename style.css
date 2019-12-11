@@ -8,7 +8,7 @@ body{
     background-image: url('./img/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-
+    font-family:  'Work Sans', sans-serif;
 }
 .grid{
     display: flex;
@@ -23,14 +23,18 @@ body{
 .tile{
     border: solid black 0.5px;
 }
+#counter{
+    display: flex;
+    flex-direction: row;
+}
 #app{
+    flex-grow: 3;
     color: wheat;    
     display: flex;
     flex-direction: column;
     height: 95vh;
     margin: 0px 20px;
     margin-top: 2.5vh;
-    align-items: center;
     justify-content: center;
 }
 #arrowsBox{
@@ -178,4 +182,44 @@ img{
     margin-top: 2vh;
     margin-bottom: 0.3vh;
     width: 47.5vw;
+}
+#keyGuide{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 200px;
+    background-color:#595856;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 5px;
+    background-image: url('./img/keyboard.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 10px;
+}
+#keyGuide h1{
+    font-size: 14px;
+}
+.keyCodeList{
+    list-style: none;
+    text-align: left;
+    padding: 5px;
+}
+
+.keyCodeList li{
+    text-align: left;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.keyGuideList{
+    background-color: #918c8c;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+.keybImg{
+    width: 25px;    
+    margin-left: 10px;
 }
