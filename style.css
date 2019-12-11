@@ -26,7 +26,8 @@ body{
 }
 #counter{
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;    
+    justify-content: space-around;
 }
 #app{
     color: wheat;    
@@ -34,7 +35,6 @@ body{
     flex-direction: column;
     height: 95vh;
     margin-top: 2.5vh;
-    justify-content: center;
 }
 #game{
     margin-top: 10px;
@@ -126,19 +126,35 @@ img{
     justify-content: space-around;
     flex-flow: row wrap;
     margin: 5px;
-    width: 12.5vw;
+    max-width: 200px;
 }
 #gameScreen{
-    height: 85vh;
+    height: 68vh;
     width: 47.5vw;
     margin-top: 0vh;
+}
+#themeGallery{
+    margin: 0px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
 }
 #themeMenu{
     margin-top: 1vh;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
-    flex-flow: row wrap;
     align-items: center;
+}
+
+@media screen and  (max-width: 1300 px){    
+    #themeGallery{
+        flex-direction: row;
+    }
+    #themeMenu{
+        flex-direction: row;
+    }
 }
 #startGameButton{
     font-size: 3vh;
@@ -173,7 +189,6 @@ img{
     width: 47.5vw;
 }
 #keyGuide{
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-self: center;
@@ -185,8 +200,8 @@ img{
     background-repeat: no-repeat;
     background-size: cover;
     margin: 0px 30px;
-    min-width: 200px;
-    max-width: 400px;
+    min-width: 150px;
+    max-width: 300px;
 }
 .keyCodeList{
     list-style: none;
@@ -209,12 +224,4 @@ img{
 .keybImg{
     width: 25px;    
     margin: 0px 10px;
-}
-#themeGallery{
-    margin: 0px 30px;
-    display: flex;
-    justify-content: center;    
-    min-width: 200px;
-    max-width: 400px;
-    height: 67vh;
 }
