@@ -102,6 +102,7 @@ export default{
                 this.score = timeLeft*5
                 if(this.score > this.highestScore){
                     this.highestScore = this.score
+                    localStorage.setItem('savedHighestScore', JSON.stringify(this.highestScore))
                 }
             }
         },
@@ -119,6 +120,8 @@ export default{
         }
     },
     created() {
-        this.setKeyHandler() 
+        this.setKeyHandler();
+        let storedScore = localStorage.getItem('savedHighestScore');
+        this.highestScore = storedScore
     }
 }
