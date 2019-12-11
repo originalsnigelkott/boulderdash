@@ -138,7 +138,6 @@ img{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 67vh;
     align-self: center;
 }
 #themeMenu{
