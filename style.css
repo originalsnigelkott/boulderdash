@@ -4,78 +4,43 @@
     margin: 0;
 }
 body{
+    margin: 0%;
     background-image: url('./img/background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    
-}
-#app{
-    color: wheat;    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
-}
-.container{
-    display: flex;
-}
-#gameInfoControl{
-    margin: 1% 0;
-    width: 60%;
-}
-#gameInfoBox{
-    border: white solid 0.1px;
-}
-#gameTimer, #levelBox{
-    font-size: 1em;
-    width: 25%;
-    border: solid white 0.1px;
-}
-#diamondCounter{
-    border: solid white 0.1px;
-    align-items: center;
-    font-size: 1em;
-    max-width: 25%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-#startGameButton{
-    font-size: 2vh;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(67, 190, 83, 0.61);
-    color: white;
-}
-#resetGameButton{
-    font-size: 2vh;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(139, 9, 9, 0.534);
-    color: white;
+    font-family:  'Work Sans', sans-serif;
 }
 .grid{
     display: flex;
     width: 47.5vw;
-    height: 65.5vh;
+    height: 67.5vh;
     flex-wrap: wrap;
     margin: auto;
     border: solid black 2px;
     background-color:rgb(39, 39, 39);
     position: relative;
 }
-#themeMenu{
-    margin-top: 1vh;
+.tile{
+    border: solid black 0.5px;
+}
+#counter{
     display: flex;
-    justify-content: space-around;
-    flex-flow: row wrap;
-    align-items: center;
+    flex-direction: row;
+}
+#app{
+    flex-grow: 3;
+    color: wheat;    
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    margin: 0px 20px;
+    margin-top: 2.5vh;
+    justify-content: center;
 }
 #arrowsBox{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-self: center;
     min-width: 150px;
 }
 .aBox0, .aBox1{
@@ -97,22 +62,49 @@ body{
     border-style: none;    
     max-height: 50px;
 }
+#gridBox{
+    display: flex;
+    margin: 0%;
+    align-content: center;
+    width: 50%;
+}
+#gameInfoControl{
+    width: 50%;
+}
+#gameInfoBox{
+    display: flex;
+    height: 7.5vh;
+    width: 47.5vw;
+    border: white solid 0.1px;
+}
 img{
     width: 100%;
     height: 100%;
 }
+#diamondCounter{
+    border: solid white 0.1px;
+    display: flex;
+    align-content: center;
+    font-size: 1em;
+    width: 25%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#gameTimer, #levelBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    width: 25%;
+    border: solid white 0.1px;
+}
 .headerImg{
     display: flex;
     align-self: center;
-    width: 40%;
-    height: 40%;
-    margin: 5%;
-}
-#container{
-    display: flex;
-    justify-content: space-around;
-    flex-flow: row wrap;
-    align-items: stretch;
+    width: 3vw;
+    height: 5.2vh;
+    margin-right: 2vw;
 }
 #gallery{
     display: flex;
@@ -143,8 +135,35 @@ img{
     display: flex;
     flex-direction: column;
     justify-content: start;
+
     height: 67.5vh;
     width: 15vw;
+}
+#gameScreen{
+    height: 85vh;
+    width: 47.5vw;
+    margin-top: 0vh;
+}
+#themeMenu{
+    margin-top: 1vh;
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    align-items: center;
+}
+#startGameButton{
+    font-size: 3vh;
+    height: 7.5vh;
+    width: 11.9vw;
+    background-color: rgba(67, 190, 83, 0.61);
+    color: white;
+}
+#resetGameButton{
+    font-size: 3vh;
+    height: 7.5vh;
+    width: 11.9vw;
+    background-color: rgba(139, 9, 9, 0.534);
+    color: white;
 }
 #scoreBox{
     display: flex;
@@ -155,6 +174,52 @@ img{
     margin: 1%;
 }
 #scoreOutput{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
     font-size: 1.5em;
-    margin-top: 1vh;
+    margin-top: 2vh;
+    margin-bottom: 0.3vh;
+    width: 47.5vw;
+}
+#keyGuide{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 200px;
+    background-color:#595856;
+    font-size: 14px;
+    border-radius: 10px;
+    padding: 5px;
+    background-image: url('./img/keyboard.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 10px;
+}
+#keyGuide h1{
+    font-size: 14px;
+}
+.keyCodeList{
+    list-style: none;
+    text-align: left;
+    padding: 5px;
+}
+
+.keyCodeList li{
+    text-align: left;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.keyGuideList{
+    background-color: #918c8c;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+.keybImg{
+    width: 25px;    
+    margin-left: 10px;
 }

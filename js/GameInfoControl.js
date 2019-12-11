@@ -15,13 +15,11 @@ export default{
         treasureImg: '',
         levelComplete: Boolean,
         timerInAppStopped: false,
-        playerWon: Boolean
+        playerWon: false
     },
     template: `
-        <div id="gameInfoControl"
-        class="container">
-            <div id="gameInfoBox"
-            class="container">
+        <div id="gameInfoControl">
+            <div id="gameInfoBox">
                 <Timer 
                 :gameStart="gameStart"
                 :resetTimer='resetTimer'
@@ -37,8 +35,7 @@ export default{
                 <LevelBox
                 :currentLevelTitle= 'currentLevelTitle'
                 />
-                <div id="gameControl"
-                class="container">
+                <div id="gameControl">
                 <button
                 id='startGameButton'
                 v-if='!gameStart'
@@ -53,8 +50,10 @@ export default{
                 </button>
             </div>
         </div>
-                <p v-if='score != 0'
-                id='scoreOutput'>Your score: {{this.score}} </p>
+                <div id='scoreOutput'>
+                    <p> Highest score {{ this.highestScore}} </p>
+                    <p v-if='score != 0'> Your score: {{this.score}} </p>
+                 </div> 
     </div>
     `,
     data() {
@@ -65,6 +64,7 @@ export default{
             timerInGameControlStopped: false,
             resetTimerOnLevelComplete: Boolean,
             score: 0,
+            highestScore: 0,
         }
     },
     methods: {        
@@ -100,6 +100,9 @@ export default{
         generateTimeleftToPoints(timeLeft){
             if(this.playerWon){
                 this.score = timeLeft*5
+                if(this.score > this.highestScore){
+                    this.highestScore = this.score
+                }
             }
         },
     },
