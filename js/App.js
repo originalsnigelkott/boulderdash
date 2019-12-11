@@ -1,10 +1,12 @@
 import Game from './Game.js'
 import GameInfoControl from './GameInfoControl.js'
+import ThemeMenu from './ThemeMenu.js'
 
 export default {
     components: {
         Game,
-        GameInfoControl
+        GameInfoControl,
+        ThemeMenu
     },
     template: `
     <div id="app">
@@ -28,14 +30,13 @@ export default {
                 :currentLevelTitle="currentLevelTitle"
                 :totalAmountOfDiamonds="totalAmountOfDiamonds"
                 :diamondCount="diamondCount"
-                :treasureImg="treasureImg"
+                :treasureImg='treasureImg'
                 :levelComplete='levelComplete'
                 :timerInAppStopped='timerInAppStopped'
                 :playerWon='playerWon'
                 @startGame="startGame"
                 @resetGame="resetGame"
                 @outOfTime="outOfTime"
-
                 />
 
                 <Game
@@ -46,11 +47,19 @@ export default {
                 @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
                 @stopTimer='stopTimer'
                 @winCheck='winCheck'
+                :newStyle='style'
                 :startGame="gameStarted"
                 :resetGame="gameReset"
                 :outOfTime="isTimeLimit"
                 />
             </div>
+            
+            <div id='themeGallery'>
+                <ThemeMenu
+                    @changeTheme="changeTheme"
+                    id='themeMenu'                    
+                    />
+            </div>    
         </div>
     </div>       
     `,
@@ -67,6 +76,7 @@ export default {
             timerInAppStopped: Boolean,
             levelComplete: false,
             playerWon: false,
+            style: ''
         }
     },
     created() {
@@ -107,6 +117,10 @@ export default {
         },
         winCheck(){
             this.playerWon = true;
-        }
+        },        
+        changeTheme(style){          
+            //console.log('app Theme changed '+style)
+            this.style = style;
+        },
     }
 }
