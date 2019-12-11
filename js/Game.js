@@ -1,6 +1,3 @@
-let enemyMovementCase = 0
-var gameTickRateFunction;
-
 import Tile from './Tile.js'
 import Store from './Store.js'
 import ThemeMenu from './ThemeMenu.js'
@@ -72,6 +69,8 @@ export default{
             level: Object,
             winLevel: 4,
             imgSrc: './img/g.png',
+            enemyMovementCase: 0,
+            gameTickRateFunction: undefined,
         }
     },
     methods: {
@@ -230,14 +229,14 @@ export default{
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
             this.enemyCaugthYouGameOver()
 
-            switch(enemyMovementCase){                
+            switch(this.enemyMovementCase){                
                 case 0:
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]-1].tileState === 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]-1;
                             //console.log('Enemy moved left')
                             break;
                         }else{
-                            enemyMovementCase++;
+                            this.enemyMovementCase++;
                             break;
                         }
                 case 1:
@@ -246,7 +245,7 @@ export default{
                             //console.log('Enemy moved up')
                             break;
                         }else{
-                            enemyMovementCase++;
+                            this.enemyMovementCase++;
                             break;
                         }
                 case 2:
@@ -255,7 +254,7 @@ export default{
                             //console.log('Enemy moved right')
                             break;
                         }else{
-                            enemyMovementCase++;
+                            this.enemyMovementCase++;
                             break;
                         }
                 case 3:
@@ -264,7 +263,7 @@ export default{
                             //console.log('Enemy moved down')
                             break;
                         }else{
-                            enemyMovementCase = 0;
+                            this.enemyMovementCase = 0;
                             break;
                         }
                     }
@@ -480,7 +479,7 @@ export default{
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
         updateEnvironments(){
-            gameTickRateFunction = setTimeout(() => {
+            this.gameTickRateFunction = setTimeout(() => {
                 if(this.gameOver === true) {
                    // this.setCurrentLevel();
                 } else {
@@ -490,10 +489,10 @@ export default{
                     this.enemyMove();
                     this.updateEnvironments();
                 }
-            }, 150)
+            }, 75)
         },
         clearUpdateEnvironments() {
-            clearTimeout(gameTickRateFunction);
+            clearTimeout(this.gameTickRateFunction);
         },
         CheckForBoulderStacks(){
             setTimeout(() => {
