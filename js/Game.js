@@ -97,6 +97,11 @@ export default{
                 this.style = 'd';
                 this.imgSrc = './img/gd.png',
                 this.changedStyle=true;
+            }else if (keyCode === 82) {
+                //key rr
+                this.style = 'r';
+                this.imgSrc = './img/gr.png',
+                this.changedStyle=true;
             }
         },
         moveWithArrow(keyCode){            
