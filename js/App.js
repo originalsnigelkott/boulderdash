@@ -68,7 +68,7 @@ export default {
         return {
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            treasureImg: 'img/gd.png',
+            treasureImg: 'img/Gd.png',
             currentLevelTitle: '',
             gameStarted: Boolean,            
             gameOver: Boolean,
