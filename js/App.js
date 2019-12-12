@@ -14,15 +14,15 @@ export default {
             <div id="keyGuide">
                 <div class="keyGuideList">
                     <ul class="keyCodeList"><b>Movement</b>
-                        <li>Up <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
-                        <li>Down <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
-                        <li>Left <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
-                        <li>Right <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
+                        <li><span class="label">Up</span> <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
+                        <li><span class="label">Down</span> <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
+                        <li><span class="label">Left</span> <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
+                        <li><span class="label">Right</span> <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
                     </ul>
                     <ul class="keyCodeList"><b>Theme</b>
-                        <li>Default <div class="keybImg"><img src="img/m.png" /></div></li>
-                        <li>Frozen <div class="keybImg"><img src="img/e.png" /></div></li>
-                        <li>Retro <div class="keybImg"><img src="img/r.png" /></div></li>
+                        <li><span class="label">Default</span> <div class="keybImg"><img src="img/m.png" /></div></li>
+                        <li><span class="label">Frozen</span> <div class="keybImg"><img src="img/e.png" /></div></li>
+                        <li><span class="label">Retro</span> <div class="keybImg"><img src="img/r.png" /></div></li>
                     </ul>
                 </div>
             </div>
