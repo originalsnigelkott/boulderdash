@@ -135,10 +135,6 @@ img{
 }
 #themeGallery{
     margin: 0px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
 }
 #themeMenu{
     margin-top: 1vh;
@@ -146,12 +142,10 @@ img{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    height: 100%;
 }
 
-@media screen and  (max-width: 1300 px){    
-    #themeGallery{
-        flex-direction: row;
-    }
+@media screen and  (max-width: 1330px){
     #themeMenu{
         flex-direction: row;
     }
