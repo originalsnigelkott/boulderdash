@@ -12,35 +12,32 @@ export default{
         newStyle: ''
     },
     template: `
-    <div id='gridBox' class="container">
+    <div id='gridBox'>
         <div id='gameScreen'>
-            <div class="grid container">
-                <div
-                :id="tileId(tile.position.x,tile.position.y)"
-                v-for="(tile, i) in flatTiles"
+            <div class="grid">
+                <div :id="tileId(tile.position.x,tile.position.y)"  v-for="(tile, i) in flatTiles"
                 :key="'tile' + i + tile.position.x + tile.position.y"
                 :style="{
                     width: calculateTileWidth + '%',
                     height: calculateTileHeight + '%',
                     }"
-                class="tile"
-                >
-                <img
-                :src="tilePicture(tile.tileState)">
+                    class="tile" >
+                    <img
+                    :src="tilePicture(tile.tileState)">
                 </div>
             </div>            
         </div>
-        <div id='arrowsBox' class="container">
-            <div class="arrows container">
-                <div class="aBox0 container">
+        <div id='arrowsBox'>
+            <div class="arrows">
+                <div class="aBox0">
                     <div class="arrow"><img src="img/a_up.png" @click='moveWithArrow(38)' /></div>
                 </div>
-                <div class="aBox1 container">
+                <div class="aBox1">
                     <div class="arrow"><img src="img/a_left.png"  @click='moveWithArrow(37)' /></div>
                     <div class="arrow"><img src="img/ar.png" /></div>
                     <div class="arrow"><img src="img/a_right.png"  @click='moveWithArrow(39)' /></div>
                 </div>
-                <div class="aBox0 container">
+                <div class="aBox0">
                     <div class="arrow"><img src="img/a_down.png"  @click='moveWithArrow(40)' /></div>
                 </div>
             </div>
@@ -586,13 +583,6 @@ export default{
         },
         calculateTileWidth() {
             return 100 / this.mapSizeX;
-        },
-        calculateGridHeight() {
-            return 350;
-        },
-        calculateGridWidth() {
-            console.log(this.mapSizeX / this.mapSizeY)
-            return 350 * (this.mapSizeX / this.mapSizeY);
         },
     },
     watch: {
