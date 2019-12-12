@@ -70,13 +70,19 @@ export default{
         }
     },
     methods: {
+
+        //Method that handles playermovement with keys W, A, S, D
         keyHandler(e) {
             let keyCode = e.keyCode;
+
+            if(this.gameOver === true){
+                return;
+            }
+
             /**
               37 - left, 39 - right, 38 - up, 40 - down
               W (87) is up, A(65) is left, S (83) is down, and D(68) is right
              */
-            //console.log(keyCode)
             if(keyCode === 13 && this.currentLevel == 0){
                 this.setNextLevel();
             }
@@ -104,6 +110,8 @@ export default{
                 this.getTreasureImg();
             }
         },
+
+        //Methods that handles playermovement with the arrowkeys
         moveWithArrow(keyCode){            
             if (keyCode === 37) {
                 this.handleKeyLeft(keyCode);
@@ -119,7 +127,6 @@ export default{
             //PlayerCanMoveTo - true -> move y-1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]-1) == true){
                 this.playerMove(keyCode);
-                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Up: not possible');
@@ -129,7 +136,6 @@ export default{
             //PlayerCanMoveTo - true -> move y+1
             if(this.playerCanMoveTo(this.playerPosition[0],this.playerPosition[1]+1) == true){
                 this.playerMove(keyCode);
-                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Down: not possible');
@@ -140,7 +146,6 @@ export default{
             //PlayerCanMoveTo - true -> move x-1
             if(this.playerCanMoveTo(this.playerPosition[0]-1,this.playerPosition[1]) == true){
                 this.playerMove(keyCode);
-                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Left: not possible');
@@ -152,12 +157,13 @@ export default{
             //PlayerCanMoveTo - true -> move x+1
             if(this.playerCanMoveTo(this.playerPosition[0]+1,this.playerPosition[1]) == true){
                 this.playerMove(keyCode);
-                //console.log(this.playerPosition[0]+','+this.playerPosition[1]);
             }
             else{
                 console.log('Right: not possible');
             }    
         },
+
+        //Checks if the player is moving inside the map
         playerCanMoveTo(x,y){
             //inside the map
             if(x < 0 ||x > this.mapSizeX || y < 0 || y >= this.mapSizeY){
@@ -165,23 +171,25 @@ export default{
             }
             //you can only go down the road
             if(this.tiles[y][x].tileState !== 'D' && this.tiles[y][x].tileState !== 'X' && this.tiles[y][x].tileState !== 'G'){
-                //console.log(this.map[y][x], this.tiles[x][y].isMoving);
                 return false;
             }
             return true;
         },
+
+        //Checks if the enemy is moving inside the map
         enemyCanMoveTo(x,y){
             //inside the map
             if(x < 0 ||x > this.mapSizeX || y < 0 || y >= this.mapSizeY){
                 return false;
             }
-            //you can only go on empty spaces(X)
+            //Checks if the enemy is moving in an emptyspace(X)
             if(this.tiles[y][x].tileState !== 'X'){
-                //console.log(this.map[y][x]);
                 return false;
             }
             return true;
         },
+
+        //Playermovement
         playerMove(keyCode){
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='X';
             if(keyCode === 37 || keyCode === 65){
@@ -199,7 +207,7 @@ export default{
             //moveDown y+1
                 this.playerPosition[1]=this.playerPosition[1]+1;
             }      
-            
+            //If the tile you're trying to move to is 'G', register that a diamond was picked up
             if(this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState == 'G'){
                 this.diamondCount+=1;
                 let indexOfDiamond;
@@ -210,10 +218,7 @@ export default{
                     }
                 }
                 this.diamondPositions.splice(indexOfDiamond, 1);
-                console.log(this.diamondPositions);
                 if(this.totalAmountOfDiamonds == this.diamondCount){
-                    this.$emit('resetTimerOnLevelComplete');
-                    console.log('next level');
                     this.setNextLevel();
                 }
             }
@@ -221,57 +226,57 @@ export default{
             this.tiles[this.playerPosition[1]][this.playerPosition[0]].tileState='P';
             this.$forceUpdate();
         },
+
+        //Switchcase for enemy-movement-direction
         enemyMove(){
-            
-            if(this.gameOver === true){
-                return;
-            }
 
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='X';
             this.enemyCaugthYouGameOver()
 
-            switch(this.enemyMovementCase){                
-                case 0:
+            switch(this.enemyMovementCase){  
+                              
+                case 0: 
+                        //Enemy moves left
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]-1].tileState === 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]-1;
-                            //console.log('Enemy moved left')
                             break;
                         }else{
                             this.enemyMovementCase++;
                             break;
                         }
                 case 1:
+                        //Enemy moves up
                         if(this.tiles[this.enemyPosition[1]-1][this.enemyPosition[0]].tileState === 'X'){
                             this.enemyPosition[1]=this.enemyPosition[1]-1;
-                            //console.log('Enemy moved up')
                             break;
                         }else{
                             this.enemyMovementCase++;
                             break;
                         }
                 case 2:
+                        //Enemy moves right
                         if(this.tiles[this.enemyPosition[1]][this.enemyPosition[0]+1].tileState == 'X'){
                             this.enemyPosition[0]=this.enemyPosition[0]+1;
-                            //console.log('Enemy moved right')
                             break;
                         }else{
                             this.enemyMovementCase++;
                             break;
                         }
                 case 3:
+                        //Enemy moves down
                         if(this.tiles[this.enemyPosition[1]+1][this.enemyPosition[0]].tileState === 'X'){
                             this.enemyPosition[1]=this.enemyPosition[1]+1;
-                            //console.log('Enemy moved down')
                             break;
                         }else{
                             this.enemyMovementCase = 0;
                             break;
                         }
                     }
-            //this.map[this.enemyPosition[1]][this.enemyPosition[0]] = 'E';
             this.tiles[this.enemyPosition[1]][this.enemyPosition[0]].tileState='E';
             this.$forceUpdate();
         },
+
+        // Fills the tiles array with tile-objects
         fillTiles() {
             for(let row = 0; row < this.mapSizeY; row++){
                 this.tiles[row] = [];
@@ -297,35 +302,38 @@ export default{
             }            
             this.$forceUpdate();
         },
-        updateTiles(){            
-            for(let row = 0; row < this.mapSizeY; row++){
-                for(let col = 0; col < this.mapSizeX; col++){
-                    this.tiles[row][col].tileState=this.map[row][col];
-                }
-            }            
-            this.$forceUpdate();
-        },
+
+        //Returns the picture associated the tilestate and the style
         tilePicture(tileState){
             let pictureLocation = "img/" + tileState+this.style + ".png";
             return pictureLocation;
         },
+
         tileId(tilesCol, tilesRow){
             let tileId ='x'+tilesCol+'y'+tilesRow;
             return tileId;
         },
-        setKeyHandler(e) {            
+
+        // Function to handle playerkeyboard-input
+        setKeyHandler(e) {       
             window.addEventListener("keydown", this.keyHandler);
         },
+
+        // Place the boulders from boulderPositions
         placeBoulders(){
             for(let i = 0; i < this.boulderPositions.length; i++){
                 this.map[this.boulderPositions[i][1]][this.boulderPositions[i][0]] = 'B';
             }
         },
+
+        // Place the diamonds from diamondPositions
         placeDiamonds(){
             for(let i = 0; i < this.diamondPositions.length; i++){
                 this.map[this.diamondPositions[i][1]][this.diamondPositions[i][0]] = 'G';
             }
         },
+
+        // Checks if a tile below a Diamond or Boulder is empty(X), if so sets isMoving to true
         setTileIsMoving(){
             for(let i = 0; i < this.boulderPositions.length; i++){
                 let y = this.boulderPositions[i][1];
@@ -346,20 +354,18 @@ export default{
                 }
             }
         },
+
+        // Methods that checks .isMoving is true for a boulder, if true - the boulder falls
         moveBoulders(){
             for(let i = 0; i < this.boulderPositions.length; i++){
                 let y = this.boulderPositions[i][1];
                 let x = this.boulderPositions[i][0];
                 if(this.tiles[y][x].isMoving === true){
-                    //console.log('Boulder is a moving tile');
                     if(this.canFallTo(x, y)){
-                        //console.log('Boulder falling');
                         this.boulderPositions[i][1]++;
-                        //this.map[y][x]= 'X';
                         this.tiles[y][x].tileState = 'X';
                         this.tiles[y][x].isMoving = 'false';
 
-                        //this.map[y+1][x] = 'B';
                         this.tiles[y+1][x].tileState = 'B';
                         this.tiles[y+1][x].isMoving = true;
                         if(y + 1 === this.playerPosition[1] && x === this.playerPosition[0]) {
@@ -370,6 +376,8 @@ export default{
                 }
             }
         },
+
+        // Methods that checks .isMoving is true for a diamond, if true - the diamonds falls
         moveDiamonds(){
             for(let i = 0; i < this.diamondPositions.length; i++){
                 let y = this.diamondPositions[i][1];
@@ -385,6 +393,8 @@ export default{
                 }
             }
         },
+
+        //Methods that checks if it's empty(X) below a 
         canFallTo(x, y){
             if(this.tiles[y][x].tileState === 'B') {
                 if(this.tiles[y + 1][x].tileState === 'X' || this.tiles[y + 1][x].tileState === 'P'){
@@ -397,6 +407,8 @@ export default{
             }
             return false;
         },
+
+        //Checks if the tile to the right of a boulder is empty(X), if so allows the player to push it to the right
         playerPushingBoulderRight(){
                     for(let i = 0; i < this.boulderPositions.length ; i++){
                         let x = this.boulderPositions[i][0] 
@@ -408,6 +420,8 @@ export default{
                         }
                 }
         },
+
+        //Checks if the tile to the left of a boulder is empty(X), if so allows the player to push it to the left
         playerPushingBoulderLeft(){
             for(let i = 0; i < this.boulderPositions.length ; i++){
                 let x = this.boulderPositions[i][0] 
@@ -419,8 +433,9 @@ export default{
                 }
             }      
         },
+
+        //Checks if a boulder is on top of a another boulder and if it's empty around it, is so the boulder falls
         bouldersFallingFromStack(){
-            
             for(let i = 0; i < this.boulderPositions.length ; i++){
                 let x = this.boulderPositions[i][0] 
                 let y = this.boulderPositions[i][1]
@@ -428,7 +443,7 @@ export default{
                 if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' &&
                  (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
 
-                    console.log('You died from a boulder falling from the Right')
+                    //Boulder falling from the right and if the player is there, kills him/her
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                     this.tiles[y][x].tileState = 'X'
@@ -438,7 +453,7 @@ export default{
                 }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && 
                 (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
 
-                    console.log('You died from a boulder falling from the Left')
+                    //Boulder falling from the left and if the player is there, kills him/her
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
@@ -448,6 +463,7 @@ export default{
                 }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' &&
                  this.tiles[y+1][x+1].tileState === 'X'){
 
+                    //Boulder to empty space on the right
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
@@ -456,6 +472,7 @@ export default{
                 }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' &&
                  this.tiles[y+1][x-1].tileState === 'X'){
                      
+                    //Boulder to empty space on the left
                     this.boulderPositions[i][1] = this.boulderPositions[i][1];
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]-1;
                     this.tiles[y][x].tileState = 'X'
@@ -463,27 +480,29 @@ export default{
                 }
             }
         },
+        
+        //Checks if the enemy caught you, if so sets this.gameOver to true and ends the game
         enemyCaugthYouGameOver(){
             if(this.enemyPosition[1]-1 == this.playerPosition[1] && this.enemyPosition[0] == this.playerPosition[0]){
-                console.log('Got your feet')
                 this.gameOver = true;
             }else if(this.enemyPosition[1]+1 == this.playerPosition[1] && this.enemyPosition[0] == this.playerPosition[0]){
-                console.log('Got your head')
                 this.gameOver = true;
             }else if(this.enemyPosition[1] == this.playerPosition[1] && this.enemyPosition[0]-1 == this.playerPosition[0]){
-                console.log('Got your right arm')
                 this.gameOver = true;
             }else if(this.enemyPosition[1] == this.playerPosition[1] && this.enemyPosition[0]+1 == this.playerPosition[0]){
-                console.log('Got your left arm')
                 this.gameOver = true;
             }
             if(this.gameOver){                
                 this.setNextLevel();
             }
         },
+
+        //Send the levelTitle to App.js
         getLevelTitle(){
             this.$emit('currentLevelTitle', this.currentLevelTitle);
         },
+
+        //Timeout function that updates the game environment, boulders/enemy etc
         updateEnvironments(){
             this.gameTickRateFunction = setTimeout(() => {
                 if(this.gameOver === true) {
@@ -497,15 +516,21 @@ export default{
                 }
             }, 75)
         },
+
+        //ClearTimout function for updateEnvironments()
         clearUpdateEnvironments() {
             clearTimeout(this.gameTickRateFunction);
         },
+
+        // Timeout function that checks for boulderstacks
         CheckForBoulderStacks(){
             setTimeout(() => {
                 this.bouldersFallingFromStack();
                 this.CheckForBoulderStacks();
-            }, 500)
+            }, 75)
         },
+
+        //Sets the level that will be displayed/played
         setCurrentLevel(){
             this.diamondCount=0;
             this.enemyMovementCase = 0;
@@ -514,7 +539,6 @@ export default{
                 this.$emit('stopTimer');
                 this.gameOver = true;
             }
-            //console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
             if(this.changedStyle == false || this.currentLevel > 1){
                 this.style = this.level.style;
@@ -529,6 +553,8 @@ export default{
             }
             this.setKeyHandler();
         },
+
+        // Sets the map size and all the positions of the objects that belong to a level
         setObjectsPosition(){            
             this.map = this.level.map;
             this.mapSizeX = this.level.mapSizeX;
@@ -540,36 +566,38 @@ export default{
             this.diamondPositions = this.level.diamondPositions;
             this.totalAmountOfDiamonds= this.diamondPositions.length;
             if(!this.gameOver && this.currentLevel < this.gameOverLevel){
-                //player
+                //Placing the player from playerPositions
                 this.map[this.playerPosition[1]][this.playerPosition[0]] = 'P';
-                //placing boulders from boulderPositions        
+                //Placing boulders from boulderPositions        
                 this.placeBoulders();
                 this.placeDiamonds();                
                 this.getLevelTitle();
             }
         },
+
+        //Resets and restarts timeOut-functions that updates the game environment
         setObjectsMove(){
             this.clearUpdateEnvironments();
             this.updateEnvironments();
             this.CheckForBoulderStacks();
         },
+
+        //Loads the next level
         setNextLevel(){
             if(this.gameOver){                
                 this.currentLevel = this.gameOverLevel;
             }
             else{
                 this.currentLevel += 1;
-                console.log('Game reset')
-                console.log('Game')
                 if(this.currentLevel == this.gameOverLevel && this.gameOver === false){
                     this.currentLevel = this.winLevel;
                     this.$emit('winCheck')
                     this.$emit('stopTimer');
                 }
             }
-            //Store.currentLevelNum = this.currentLevel;
             this.setCurrentLevel();
         },        
+
         getTreasureImg(){
             this.$emit('getTreasureImg', 'img/G'+this.style+'.png');
         },  
@@ -586,6 +614,7 @@ export default{
         },
     },
     watch: {
+        // Watches the gameStarted Boolean in App.js
         startGame() {
             if(this.startGame && this.currentLevel === 0) {
                 this.setNextLevel();
@@ -597,33 +626,32 @@ export default{
                 this.$forceUpdate();
             }
         },
+
+        // Watches the gameReset Boolean in App.js
         resetGame(){
             if(this.resetGame){
                 this.currentLevel = 0;
                 this.setCurrentLevel();
             }
         },
+
+        // Watches the isTimeLimit Boolean in App.js
         outOfTime(){
             if(this.outOfTime) {
                 this.gameOver = true;
                 this.setNextLevel();
             }
         },
-        timeLimit(){
-            //console.log('game');
-        },
+
         totalAmountOfDiamonds() {
             this.$emit('totalAmountOfDiamonds', this.totalAmountOfDiamonds);
         },
+        
         diamondCount() {
             this.$emit('getDiamondCount', this.diamondCount);
-        },      
-        changeTheme(){
-            console.log('Theme changed');
-           // this.style = this.nyStyle
-        },
-        newStyle: function(newStyle) { // watch it
-            //console.log('ny style: ', newStyle)
+        },    
+
+        newStyle: function(newStyle) {
             this.style = this.newStyle;
             this.changedStyle = true;
             this.getTreasureImg();

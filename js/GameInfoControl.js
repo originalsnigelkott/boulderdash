@@ -68,6 +68,7 @@ export default{
         }
     },
     methods: {        
+        //Starts the game if startGameButton is pressed
         startGame(){
             this.gameStart = true;
             this.resetTimer = false;
@@ -76,6 +77,7 @@ export default{
             this.$emit('startGame')
             console.log(this.treasureImg)
         },
+        //Restarts the game if startGameButton is pressed
         resetGame(){
             this.gameStart = false;
             this.score = 0;
@@ -94,13 +96,11 @@ export default{
             this.gameOver = true;
             this.$emit('outOfTime')
         },
-        resetTimerAfterLevelComplete(){
-            console.log('Timer reset')
-            this.resetTimer = true;
-        },
+        //Awards the player with points after he/her finishes the game
         generateTimeleftToPoints(timeLeft){
             if(this.playerWon){
                 this.score = timeLeft*5
+                //Compares the players score with the highest score achieved
                 if(this.score > this.highestScore){
                     this.highestScore = this.score
                     localStorage.setItem('savedHighestScore', JSON.stringify(this.highestScore))
@@ -109,11 +109,6 @@ export default{
         },
     },
     watch:{
-        levelComplete(){
-            if(this.levelComplete){
-                this.resetTimer = true;
-            }
-        },
         timerInAppStopped(){
             if(this.timerInAppStopped){
                 this.timerInGameControlStopped = true

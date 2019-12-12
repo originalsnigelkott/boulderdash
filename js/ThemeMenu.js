@@ -27,14 +27,17 @@ export default{
         }
     },
     methods:{
+        //Changes the theme of the map to Frozen
         changeThemeToFrozen(){
             this.theme = 'e'
             this.$emit('changeTheme', this.theme)
         },
+        //Changes the theme of the map to Default
         changeThemeToDefault(){
             this.theme = 'd'
             this.$emit('changeTheme', this.theme)
         },
+        //Changes the theme of the map to Retro
         changeThemeToRetro(){
             this.theme = 'r'
             this.$emit('changeTheme', this.theme)
