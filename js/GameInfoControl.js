@@ -19,7 +19,7 @@ export default{
     },
     template: `
     <div id="gameInfoControl">
-        <div id="gameInfoBox">
+        <div id="gameInfoBox" class="container">
             <Timer 
             :gameStart="gameStart"
             :resetTimer='resetTimer'
@@ -50,7 +50,7 @@ export default{
                 </button>
             </div>
         </div>
-            <div id='scoreOutput'>
+            <div id='scoreOutput' class="container">
                 <p> Highest score {{ this.highestScore}} </p>
                 <p v-if='score != 0'> Your score: {{this.score}} </p>
             </div> 

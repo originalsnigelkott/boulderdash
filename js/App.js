@@ -9,20 +9,20 @@ export default {
         ThemeMenu
     },
     template: `
-    <div id="app">
-        <div id="counter">
-            <div id="keyGuide">
+    <div id="app" class="container">
+        <div id="counter" class="container">
+            <div id="keyGuide" class="container">
                 <div class="keyGuideList">
                     <ul class="keyCodeList"><b>Movement</b>
-                        <li><span class="label">Up</span> <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
-                        <li><span class="label">Down</span> <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
-                        <li><span class="label">Left</span> <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
-                        <li><span class="label">Right</span> <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
+                        <li class="container"><span class="label">Up</span> <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
+                        <li class="container"><span class="label">Down</span> <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
+                        <li class="container"><span class="label">Left</span> <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
+                        <li class="container"><span class="label">Right</span> <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
                     </ul>
                     <ul class="keyCodeList"><b>Theme</b>
-                        <li><span class="label">Default</span> <div class="keybImg"><img src="img/m.png" /></div></li>
-                        <li><span class="label">Frozen</span> <div class="keybImg"><img src="img/e.png" /></div></li>
-                        <li><span class="label">Retro</span> <div class="keybImg"><img src="img/r.png" /></div></li>
+                        <li class="container"><span class="label">Default</span> <div class="keybImg"><img src="img/m.png" /></div></li>
+                        <li class="container"><span class="label">Frozen</span> <div class="keybImg"><img src="img/e.png" /></div></li>
+                        <li class="container"><span class="label">Retro</span> <div class="keybImg"><img src="img/r.png" /></div></li>
                     </ul>
                 </div>
             </div>
@@ -58,7 +58,7 @@ export default {
             <div id='themeGallery'>
                 <ThemeMenu
                     @changeTheme="changeTheme"
-                    />
+                />
             </div>    
         </div>
     </div>       

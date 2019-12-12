@@ -6,7 +6,7 @@ export default{
         Game,
     },
     template:`
-    <div id='levelBox'>
+    <div id='levelBox' class="container">
             <h3> {{ currentLevelTitle }}</h3> 
     </div>
     `,
