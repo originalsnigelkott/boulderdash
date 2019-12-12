@@ -26,7 +26,8 @@ body{
 }
 #counter{
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;    
+    justify-content: space-around;
 }
 #app{
     color: wheat;    
@@ -34,7 +35,6 @@ body{
     flex-direction: column;
     height: 95vh;
     margin-top: 2.5vh;
-    justify-content: center;
 }
 #game{
     margin-top: 10px;
@@ -42,7 +42,6 @@ body{
 #arrowsBox{
     display: flex;
     flex-direction: column;
-    align-self: top;
     justify-content: center;
     min-width: 150px;
     height: 67vh;
@@ -116,13 +115,6 @@ img{
     height: 5.2vh;
     margin-right: 2vw;
 }
-#gallery{
-    display: flex;
-    justify-content: space-around;
-    flex-flow: row wrap;
-    align-items: center;
-    width: 100%;
-}
 .styleinfo{
     display: flex;
     justify-content: space-around;
@@ -134,32 +126,29 @@ img{
     justify-content: space-around;
     flex-flow: row wrap;
     margin: 5px;
-    width: 12.5vw;
-}
-.box {
-    flex-grow: 1;
-    color: #fff;
-    align-self: center;
-}
-#gallery{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-
-    height: 67.5vh;
-    width: 15vw;
+    max-width: 200px;
 }
 #gameScreen{
-    height: 85vh;
+    height: 68vh;
     width: 47.5vw;
     margin-top: 0vh;
+}
+#themeGallery{
+    margin: 0px 30px;
 }
 #themeMenu{
     margin-top: 1vh;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
-    flex-flow: row wrap;
     align-items: center;
+    height: 100%;
+}
+
+@media screen and  (max-width: 1330px){
+    #themeMenu{
+        flex-direction: row;
+    }
 }
 #startGameButton{
     font-size: 3vh;
@@ -194,7 +183,6 @@ img{
     width: 47.5vw;
 }
 #keyGuide{
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-self: center;
@@ -202,28 +190,26 @@ img{
     font-size: 14px;
     border-radius: 10px;
     padding: 5px;
-    background-image: url('./img/keyboard.png');
-    background-repeat: no-repeat;
-    background-size: cover;
     margin: 0px 30px;
-    min-width: 200px;
-    max-width: 400px;
-}
-#keyGuide h1{
-    font-size: 14px;
+    min-width: 150px;
+    max-width: 300px;
 }
 .keyCodeList{
     list-style: none;
     text-align: left;
     padding: 5px;
 }
-
 .keyCodeList li{
     text-align: left;
     margin: 5px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    color: #78df4e;
+}
+.label{
+    width: 40px;
+    text-align: left;
 }
 .keyGuideList{
     background-color: #918c8c;
@@ -232,12 +218,5 @@ img{
 }
 .keybImg{
     width: 25px;    
-    margin: 0px 5px;
-}
-#themeGallery{
-    margin: 20px 30px;
-    display: flex;
-    justify-content: center;    
-    min-width: 200px;
-    max-width: 400px;
+    margin: 0px 10px;
 }

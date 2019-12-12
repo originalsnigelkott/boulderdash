@@ -1,16 +1,15 @@
 import Tile from './Tile.js'
 import Store from './Store.js'
-import ThemeMenu from './ThemeMenu.js'
 
 export default{
     components: {
         Tile,
-        ThemeMenu,
     },
     props: {
         startGame: false,
         resetGame: false,
-        outOfTime: false
+        outOfTime: false,
+        newStyle: ''
     },
     template: `
     <div id='gridBox'>
@@ -43,13 +42,6 @@ export default{
                 </div>
             </div>
         </div>
-        <div id='themeGallery'>
-        <ThemeMenu
-            @changeTheme='changeTheme'
-            :theme='style'
-            id='themeMenu'
-            />
-        </div>    
     </div>
     `,
     data() {
@@ -66,15 +58,15 @@ export default{
             map: [],
             mapSizeX: 20,
             mapSizeY: 20,
-            style: 'd',
             changedStyle: false,
             gameOver: false,
             gameOverLevel: 3,
             level: Object,
             winLevel: 4,
-            imgSrc: './img/g.png',
+            imgSrc: 'img/Gd.png',
             enemyMovementCase: 0,
             gameTickRateFunction: undefined,
+            style: ''
         }
     },
     methods: {
@@ -84,7 +76,7 @@ export default{
               37 - left, 39 - right, 38 - up, 40 - down
               W (87) is up, A(65) is left, S (83) is down, and D(68) is right
              */
-            console.log(keyCode)
+            //console.log(keyCode)
             if(keyCode === 13 && this.currentLevel == 0){
                 this.setNextLevel();
             }
@@ -97,14 +89,19 @@ export default{
             } else if (keyCode === 40 || keyCode === 83) {
                 this.handleKeyDown(keyCode);
             }else if (keyCode === 69) {
-                this.style = 'e';
-                this.imgSrc = './img/ge.png',
+                this.style = 'e';                
                 this.changedStyle=true;
+                this.getTreasureImg();
             }else if (keyCode === 77) {
                 //key m
                 this.style = 'd';
-                this.imgSrc = './img/gd.png',
-                this.changedStyle=true;
+                this.changedStyle=true;                
+                this.getTreasureImg();
+            }else if (keyCode === 82) {
+                //key rr
+                this.style = 'r';
+                this.changedStyle=true;                
+                this.getTreasureImg();
             }
         },
         moveWithArrow(keyCode){            
@@ -423,9 +420,11 @@ export default{
             }      
         },
         bouldersFallingFromStack(){
+            
             for(let i = 0; i < this.boulderPositions.length ; i++){
                 let x = this.boulderPositions[i][0] 
                 let y = this.boulderPositions[i][1]
+
                 if(this.tiles[y+1][x].tileState === 'B' && this.tiles[y][x-1].tileState === 'X' &&
                  (x-1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
 
@@ -435,6 +434,7 @@ export default{
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x-1].tileState = 'X'
                     this.tiles[y][x-1].tileState = 'B'
+
                 }else if(this.tiles[y+1][x].tileState === 'B'  && this.tiles[y][x+1].tileState === 'X' && 
                 (x+1 === this.playerPosition[0] && y+1 === this.playerPosition[1])){
 
@@ -444,6 +444,7 @@ export default{
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y+1][x+1].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
+
                 }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x+1].tileState === 'X' &&
                  this.tiles[y+1][x+1].tileState === 'X'){
 
@@ -451,6 +452,7 @@ export default{
                     this.boulderPositions[i][0] = this.boulderPositions[i][0]+1;
                     this.tiles[y][x].tileState = 'X'
                     this.tiles[y][x+1].tileState = 'B'
+
                 }else if(this.tiles[y+1][x].tileState === 'B' &&  this.tiles[y][x-1].tileState === 'X' &&
                  this.tiles[y+1][x-1].tileState === 'X'){
                      
@@ -512,10 +514,11 @@ export default{
                 this.$emit('stopTimer');
                 this.gameOver = true;
             }
-            console.log(Store.currentLevelNum);
+            //console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
             if(this.changedStyle == false || this.currentLevel > 1){
                 this.style = this.level.style;
+                this.getTreasureImg();
             }
             this.setObjectsPosition();
             this.tiles = [];
@@ -566,12 +569,10 @@ export default{
             }
             //Store.currentLevelNum = this.currentLevel;
             this.setCurrentLevel();
-        },
-        changeTheme(style){
-            console.log('Theme changed')
-            this.style = style
-            this.changedStyle = true
-        },
+        },        
+        getTreasureImg(){
+            this.$emit('getTreasureImg', 'img/G'+this.style+'.png');
+        },  
     },
     computed: {
         flatTiles() {
@@ -623,10 +624,17 @@ export default{
         },
         diamondCount() {
             this.$emit('getDiamondCount', this.diamondCount);
+        },      
+        changeTheme(){
+            console.log('Theme changed');
+           // this.style = this.nyStyle
         },
-        treasureImg(){
-            this.$emit('getTreasureImg', this.imgSrc);
-        },
+        newStyle: function(newStyle) { // watch it
+            //console.log('ny style: ', newStyle)
+            this.style = this.newStyle;
+            this.changedStyle = true;
+            this.getTreasureImg();
+        }
     },    
     created() {
         this.setCurrentLevel();

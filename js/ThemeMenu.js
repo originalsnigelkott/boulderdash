@@ -13,6 +13,12 @@ export default{
                 @click='changeThemeToFrozen' />
             </div>
         </div>
+        <div class="styleinfo">
+            <div class="imgbox">                
+                <img src="img/style_retro.jpg"
+                @click='changeThemeToRetro' />
+            </div>
+        </div>
     </div>
     `,
     data(){
@@ -27,6 +33,10 @@ export default{
         },
         changeThemeToDefault(){
             this.theme = 'd'
+            this.$emit('changeTheme', this.theme)
+        },
+        changeThemeToRetro(){
+            this.theme = 'r'
             this.$emit('changeTheme', this.theme)
         }
     }

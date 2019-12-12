@@ -1,10 +1,12 @@
 import Game from './Game.js'
 import GameInfoControl from './GameInfoControl.js'
+import ThemeMenu from './ThemeMenu.js'
 
 export default {
     components: {
         Game,
-        GameInfoControl
+        GameInfoControl,
+        ThemeMenu
     },
     template: `
     <div id="app">
@@ -12,14 +14,15 @@ export default {
             <div id="keyGuide">
                 <div class="keyGuideList">
                     <ul class="keyCodeList"><b>Movement</b>
-                        <li>Up <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
-                        <li>Down <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
-                        <li>Left <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
-                        <li>Right <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
+                        <li><span class="label">Up</span> <div class="keybImg"><img src="img/w_key.png" /></div> or <div class="keybImg"><img src="img/up.png" /></div></li>
+                        <li><span class="label">Down</span> <div class="keybImg"><img src="img/s.png" /></div> or <div class="keybImg"><img src="img/down.png" /></div></li>
+                        <li><span class="label">Left</span> <div class="keybImg"><img src="img/a.png" /></div> or <div class="keybImg"><img src="img/left.png" /></div></li>
+                        <li><span class="label">Right</span> <div class="keybImg"><img src="img/d.png" /></div> or <div class="keybImg"><img src="img/right.png" /></div></li>
                     </ul>
                     <ul class="keyCodeList"><b>Theme</b>
-                        <li>Default <div class="keybImg"><img src="img/m.png" /></div></li>
-                        <li>Frozen <div class="keybImg"><img src="img/e.png" /></div></li>
+                        <li><span class="label">Default</span> <div class="keybImg"><img src="img/m.png" /></div></li>
+                        <li><span class="label">Frozen</span> <div class="keybImg"><img src="img/e.png" /></div></li>
+                        <li><span class="label">Retro</span> <div class="keybImg"><img src="img/r.png" /></div></li>
                     </ul>
                 </div>
             </div>
@@ -28,14 +31,13 @@ export default {
                 :currentLevelTitle="currentLevelTitle"
                 :totalAmountOfDiamonds="totalAmountOfDiamonds"
                 :diamondCount="diamondCount"
-                :treasureImg="treasureImg"
                 :levelComplete='levelComplete'
                 :timerInAppStopped='timerInAppStopped'
-                :playerWon='playerWon'
+                :playerWon='playerWon'                
+                :treasureImg='treasureImg'
                 @startGame="startGame"
                 @resetGame="resetGame"
                 @outOfTime="outOfTime"
-
                 />
 
                 <Game
@@ -46,11 +48,19 @@ export default {
                 @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
                 @stopTimer='stopTimer'
                 @winCheck='winCheck'
+                :newStyle='style'
                 :startGame="gameStarted"
                 :resetGame="gameReset"
                 :outOfTime="isTimeLimit"
                 />
             </div>
+            
+            <div id='themeGallery'>
+                <ThemeMenu
+                    @changeTheme="changeTheme"
+                    id='themeMenu'                    
+                    />
+            </div>    
         </div>
     </div>       
     `,
@@ -58,7 +68,7 @@ export default {
         return {
             diamondCount: 0,
             totalAmountOfDiamonds: 0,
-            treasureImg: './img/g.png',
+            treasureImg: 'img/Gd.png',
             currentLevelTitle: '',
             gameStarted: Boolean,            
             gameOver: Boolean,
@@ -67,6 +77,7 @@ export default {
             timerInAppStopped: Boolean,
             levelComplete: false,
             playerWon: false,
+            style: ''
         }
     },
     created() {
@@ -76,6 +87,7 @@ export default {
             this.diamondCount = diamondCount;
         },
         getTreasureImg(treasureImg){
+            //console.log(treasureImg);
             this.treasureImg = treasureImg;
         },
         diamonds(totalAmountOfDiamonds) {
@@ -107,6 +119,10 @@ export default {
         },
         winCheck(){
             this.playerWon = true;
-        }
+        },        
+        changeTheme(style){          
+            //console.log('app Theme changed '+style)
+            this.style = style;
+        },
     }
 }
