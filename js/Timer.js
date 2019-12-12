@@ -20,16 +20,18 @@ export default{
         }
     },
     methods:{
+        //Starts the timer
         startTimer(){
             if(this.gameStart && this.timeLimit !== 0) {
                 this.timer = setTimeout(() => {
                     this.timeLimit--;
                     this.startTimer();
-                }, 1000)
+                }, 1000) // 1000ms = 1 second
             }
         }, 
     },
     watch: {
+        //If gameStart is true, trigger startTimer()
         gameStart() {
             if (this.gameStart) {
                 this.startTimer()
@@ -38,24 +40,19 @@ export default{
                 this.timeLimit = 65;
             }
         },
+        //Resets the timer and clears the timeOut-function in gameStart()
         gameReset(){
             clearTimeout(this.timer);
             this.timeLimit = 65;
             this.startTimer()
         },
+        //Ends the game upon the timer hitting 0
         timeLimit() {
             if(this.timeLimit === 0) {
                 this.$emit('outOfTime')
             }
         },
-        /*resetTimer(){
-            if(this.resetTimer){
-                this.$emit('generateTimeleftToPoints', this.timeLimit)
-                clearTimeout(this.timer);
-                this.timeLimit = 45;
-                this.startTimer()
-            }
-        },*/
+        //Stopps the timer if the game is over
         timerInGameControlStopped(){
             if(this.timerInGameControlStopped){
                 this.$emit('generateTimeleftToPoints', this.timeLimit)

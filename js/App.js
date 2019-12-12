@@ -45,7 +45,6 @@ export default {
                 @totalAmountOfDiamonds='diamonds'
                 @getTreasureImg='getTreasureImg'
                 @currentLevelTitle='getLevelTitle'
-                @resetTimerOnLevelComplete='resetTimerOnLevelComplete'
                 @stopTimer='stopTimer'
                 @winCheck='winCheck'
                 :newStyle='style'
@@ -83,25 +82,30 @@ export default {
     created() {
     },
     methods: {
+        // Keeps track of how many diamonds a player has picked up on the current level
         getDiamondCount(diamondCount) {
             this.diamondCount = diamondCount;
         },
+        //Updates the 'G'-image in GameInfoControl
         getTreasureImg(treasureImg){
-            //console.log(treasureImg);
             this.treasureImg = treasureImg;
         },
+        // Shows how many diamonds in total the current level beeing played has
         diamonds(totalAmountOfDiamonds) {
             this.totalAmountOfDiamonds = totalAmountOfDiamonds;
         },
+        // Shows the number or the level currently being played
         getLevelTitle(currentLevelTitle) {
             this.currentLevelTitle = currentLevelTitle;
         },
+        //Starts the game when the startGameButton in GameInfoControl.js is pressed 
         startGame() {
             this.gameReset = false;
             this.gameStarted = true;
             this.levelComplete = false;
             this.playerWon = false;
         },
+        //Resets the game when the resetGameButton in GameInfoControl.js is pressed 
         resetGame() {
             this.isTimeLimit = false;
             this.gameStarted = false;
@@ -111,17 +115,14 @@ export default {
         outOfTime(){
             this.isTimeLimit = true;
         },
-        resetTimerOnLevelComplete(){
-            this.levelComplete = true;
-        },
         stopTimer(){
             this.timerInAppStopped = true;
         },
+        //Checks if the player won the game or not
         winCheck(){
             this.playerWon = true;
         },        
         changeTheme(style){          
-            //console.log('app Theme changed '+style)
             this.style = style;
         },
     }
