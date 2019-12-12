@@ -63,7 +63,7 @@ export default{
             gameOverLevel: 3,
             level: Object,
             winLevel: 4,
-            imgSrc: 'img/gd.png',
+            imgSrc: 'img/Gd.png',
             enemyMovementCase: 0,
             gameTickRateFunction: undefined,
             style: ''
@@ -571,7 +571,7 @@ export default{
             this.setCurrentLevel();
         },        
         getTreasureImg(){
-            this.$emit('getTreasureImg', 'img/g'+this.style+'.png');
+            this.$emit('getTreasureImg', 'img/G'+this.style+'.png');
         },  
     },
     computed: {
