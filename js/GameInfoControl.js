@@ -18,24 +18,24 @@ export default{
         treasureImg: '',
     },
     template: `
-        <div id="gameInfoControl">
-            <div id="gameInfoBox">
-                <Timer 
-                :gameStart="gameStart"
-                :resetTimer='resetTimer'
-                :timerInGameControlStopped='timerInGameControlStopped'
-                @outOfTime="outOfTime"
-                @generateTimeleftToPoints='generateTimeleftToPoints'
-                />
-                <DiamondCounter 
-                :diamondCount='diamondCount'
-                :totalAmountOfDiamonds='totalAmountOfDiamonds'
-                :treasureImg='treasureImg'
-                />
-                <LevelBox
-                :currentLevelTitle= 'currentLevelTitle'
-                />
-                <div id="gameControl">
+    <div id="gameInfoControl">
+        <div id="gameInfoBox" class="container">
+            <Timer 
+            :gameStart="gameStart"
+            :resetTimer='resetTimer'
+            :timerInGameControlStopped='timerInGameControlStopped'
+            @outOfTime="outOfTime"
+            @generateTimeleftToPoints='generateTimeleftToPoints'
+            />
+            <DiamondCounter 
+            :diamondCount='diamondCount'
+            :totalAmountOfDiamonds='totalAmountOfDiamonds'
+            :treasureImg='treasureImg'
+            />
+            <LevelBox
+            :currentLevelTitle= 'currentLevelTitle'
+            />
+            <div id="gameControl">
                 <button
                 id='startGameButton'
                 v-if='!gameStart'
@@ -50,10 +50,10 @@ export default{
                 </button>
             </div>
         </div>
-                <div id='scoreOutput'>
-                    <p> Highest score {{ this.highestScore}} </p>
-                    <p v-if='score != 0'> Your score: {{this.score}} </p>
-                 </div> 
+            <div id='scoreOutput' class="container">
+                <p> Highest score {{ this.highestScore}} </p>
+                <p v-if='score != 0'> Your score: {{this.score}} </p>
+            </div> 
     </div>
     `,
     data() {
