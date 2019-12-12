@@ -135,10 +135,6 @@ img{
 }
 #themeGallery{
     margin: 0px 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-self: center;
 }
 #themeMenu{
     margin-top: 1vh;
@@ -146,12 +142,10 @@ img{
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    height: 100%;
 }
 
-@media screen and  (max-width: 1300 px){    
-    #themeGallery{
-        flex-direction: row;
-    }
+@media screen and  (max-width: 1330px){
     #themeMenu{
         flex-direction: row;
     }
@@ -196,9 +190,6 @@ img{
     font-size: 14px;
     border-radius: 10px;
     padding: 5px;
-    background-image: url('./img/keyboard.png');
-    background-repeat: no-repeat;
-    background-size: cover;
     margin: 0px 30px;
     min-width: 150px;
     max-width: 300px;
@@ -215,6 +206,10 @@ img{
     flex-direction: row;
     align-items: center;
     color: #78df4e;
+}
+.label{
+    width: 40px;
+    text-align: left;
 }
 .keyGuideList{
     background-color: #918c8c;

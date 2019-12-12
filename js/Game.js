@@ -63,7 +63,7 @@ export default{
             gameOverLevel: 3,
             level: Object,
             winLevel: 4,
-            imgSrc: './img/g.png',
+            imgSrc: 'img/Gd.png',
             enemyMovementCase: 0,
             gameTickRateFunction: undefined,
             style: ''
@@ -76,7 +76,7 @@ export default{
               37 - left, 39 - right, 38 - up, 40 - down
               W (87) is up, A(65) is left, S (83) is down, and D(68) is right
              */
-            console.log(keyCode)
+            //console.log(keyCode)
             if(keyCode === 13 && this.currentLevel == 0){
                 this.setNextLevel();
             }
@@ -89,19 +89,19 @@ export default{
             } else if (keyCode === 40 || keyCode === 83) {
                 this.handleKeyDown(keyCode);
             }else if (keyCode === 69) {
-                this.style = 'e';
-                this.imgSrc = './img/ge.png',
+                this.style = 'e';                
                 this.changedStyle=true;
+                this.getTreasureImg();
             }else if (keyCode === 77) {
                 //key m
                 this.style = 'd';
-                this.imgSrc = './img/gd.png',
-                this.changedStyle=true;
+                this.changedStyle=true;                
+                this.getTreasureImg();
             }else if (keyCode === 82) {
                 //key rr
                 this.style = 'r';
-                this.imgSrc = './img/gr.png',
-                this.changedStyle=true;
+                this.changedStyle=true;                
+                this.getTreasureImg();
             }
         },
         moveWithArrow(keyCode){            
@@ -514,10 +514,11 @@ export default{
                 this.$emit('stopTimer');
                 this.gameOver = true;
             }
-            console.log(Store.currentLevelNum);
+            //console.log(Store.currentLevelNum);
             this.level = _.cloneDeep(Store.levels[Store.currentLevelNum]);
             if(this.changedStyle == false || this.currentLevel > 1){
                 this.style = this.level.style;
+                this.getTreasureImg();
             }
             this.setObjectsPosition();
             this.tiles = [];
@@ -568,7 +569,10 @@ export default{
             }
             //Store.currentLevelNum = this.currentLevel;
             this.setCurrentLevel();
-        },
+        },        
+        getTreasureImg(){
+            this.$emit('getTreasureImg', 'img/G'+this.style+'.png');
+        },  
     },
     computed: {
         flatTiles() {
@@ -613,18 +617,16 @@ export default{
         },
         diamondCount() {
             this.$emit('getDiamondCount', this.diamondCount);
-        },
-        treasureImg(){
-            this.$emit('getTreasureImg', this.imgSrc);
-        },        
+        },      
         changeTheme(){
             console.log('Theme changed');
            // this.style = this.nyStyle
         },
         newStyle: function(newStyle) { // watch it
-            console.log('ny style: ', newStyle)
-            this.style = this.newStyle
+            //console.log('ny style: ', newStyle)
+            this.style = this.newStyle;
             this.changedStyle = true;
+            this.getTreasureImg();
         }
     },    
     created() {
