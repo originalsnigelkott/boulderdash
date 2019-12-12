@@ -36,7 +36,7 @@ export default{
             this.$emit('changeTheme', this.theme)
         },
         changeThemeToRetro(){
-            this.theme = 'R'
+            this.theme = 'r'
             this.$emit('changeTheme', this.theme)
         }
     }
