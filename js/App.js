@@ -58,7 +58,6 @@ export default {
             <div id='themeGallery'>
                 <ThemeMenu
                     @changeTheme="changeTheme"
-                    id='themeMenu'                    
                     />
             </div>    
         </div>

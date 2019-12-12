@@ -15,15 +15,18 @@ export default{
     <div id='gridBox'>
         <div id='gameScreen'>
             <div class="grid">
-                <div :id="tileId(tile.position.x,tile.position.y)"  v-for="(tile, i) in flatTiles"
+                <div
+                :id="tileId(tile.position.x,tile.position.y)"
+                v-for="(tile, i) in flatTiles"
                 :key="'tile' + i + tile.position.x + tile.position.y"
                 :style="{
                     width: calculateTileWidth + '%',
                     height: calculateTileHeight + '%',
                     }"
-                    class="tile" >
-                    <img
-                    :src="tilePicture(tile.tileState)">
+                class="tile"
+                >
+                <img
+                :src="tilePicture(tile.tileState)">
                 </div>
             </div>            
         </div>
