@@ -213,6 +213,10 @@ img{
     align-items: center;
     color: #78df4e;
 }
+.label{
+    width: 40px;
+    text-align: left;
+}
 .keyGuideList{
     background-color: #918c8c;
     opacity: 0.9;
